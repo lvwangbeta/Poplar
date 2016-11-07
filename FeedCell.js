@@ -16,7 +16,7 @@ var LikeAction = require('./component/actions/Like');
 var CommentAction = require('./component/actions/Comment');
 
 const windowWidth = Dimensions.get('window').width;
-const margin = 10;
+const margin = 20;
 const imgInterval = 5;
 
 var IMAGE_BASE_URL = 'http://7xkkim.com1.z0.glb.clouddn.com/';
@@ -110,7 +110,7 @@ var styles = StyleSheet.create({
   feedHeader: {
     flex: 1,
     flexDirection: 'row',
-    padding: 10,
+    margin: margin,
   },
   avatar: {
     width: 40,
@@ -139,7 +139,7 @@ var styles = StyleSheet.create({
   },
   feedContentText: {
     flex: 1,
-    margin: 10,
+    margin: margin,
     marginTop: 0,
     fontSize: 15,
     color: '#333333',
@@ -166,9 +166,9 @@ var styles = StyleSheet.create({
     //borderTopColor: '#EEEEEE',
     flex :1,
     flexDirection: 'row',
-    paddingTop: 10,
-    paddingRight: 10,
-    paddingBottom: 5,
+    marginTop: 10,
+    marginRight: margin,
+    marginBottom: 5,
   },
   feedActionComment: {
     width: 40,
