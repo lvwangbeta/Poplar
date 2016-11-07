@@ -38,15 +38,6 @@ var FeedDetail = React.createClass({
   render: function(){
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
-        <View style={{height: 50}}>
-          <View style={styles.navContainer}>
-            <TouchableOpacity onPress={this.back}>
-              <View style={styles.navBack}><Text>后退</Text></View>
-            </TouchableOpacity>
-            <View style={styles.navTitle}><Text>Tag</Text></View>
-            <View style={styles.navRight}><Text>关注</Text></View>
-          </View>
-        </View>
         <ScrollView>
           <View style={styles.container}>
               <View style={styles.feedHeader}>
