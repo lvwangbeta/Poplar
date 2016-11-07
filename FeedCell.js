@@ -9,8 +9,15 @@ import {
   Text,
   TouchableHighlight,
   TouchableNativeFeedback,
-  View
+  View,
+  Dimensions
 } from 'react-native';
+var LikeAction = require('./component/actions/Like');
+var CommentAction = require('./component/actions/Comment');
+
+const windowWidth = Dimensions.get('window').width;
+const margin = 10;
+const imgInterval = 5;
 
 var IMAGE_BASE_URL = 'http://7xkkim.com1.z0.glb.clouddn.com/';
 
@@ -24,6 +31,30 @@ var FeedCell = React.createClass({
         imagesView.push(<Image source={{uri:IMAGE_BASE_URL + images[i]}} style={styles.feedContentImage}/>);
     }
     return imagesView;
+  },
+
+  renderCommentList: function(){
+
+    return(
+      <View>
+        <Image style={{marginTop:5}} source={require('./imgs/triangle.png')} />
+      </View>
+    );
+
+  },
+
+  renderFeedContent: function(feed) {
+    if(feed.summary == null) {
+      return (
+        <View style={styles.feedContentImages}>{this.renderFeedImages(this.props.feed.content)}</View>
+      );
+    }
+    return (
+      <View>
+        <Text style={styles.feedContentText}>{this.props.feed.summary}</Text>
+        <View style={styles.feedContentImages}>{this.renderFeedImages(this.props.feed.content)}</View>
+      </View>
+    );
   },
 
   render: function(){
@@ -40,15 +71,20 @@ var FeedCell = React.createClass({
                   </View>
               </View>
               <View style={styles.feedContent}>
-                  <Text style={styles.feedContentText}>{this.props.feed.summary}</Text>
-                  <View style={styles.feedContentImages}>{this.renderFeedImages(this.props.feed.content)}</View>
+                {this.renderFeedContent(this.props.feed)}
               </View>
 
               <View style={styles.feedActions}>
-                  <View style={styles.feedActionShare}><Text>share</Text></View>
-                  <View style={styles.feedActionComment}><Text>comment</Text></View>
-                  <View style={styles.feedActionLike}><Text>like</Text></View>
+                  <View style={{flex:1}}></View>
+                  <View style={styles.feedActionComment}>
+                    <CommentAction counter={5} callbackParentSetReplyModalVisible={this.setReplyModalVisible}/>
+                    {this.renderCommentList()}
+                  </View>
+                  <View style={styles.feedActionLike}>
+                    <LikeAction counter={15} />
+                  </View>
               </View>
+
           </View>
 
         </TouchableHighlight>
@@ -65,10 +101,10 @@ var styles = StyleSheet.create({
     // flexDirection: 'row',
     // justifyContent: 'center',
     // alignItems: 'center',
+    marginBottom: 10,
     backgroundColor: 'white',
-    margin: 10,
-    borderRadius: 2,
-    borderWidth: 1,
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
     borderColor: '#EEEEEE',
   },
   feedHeader: {
@@ -86,6 +122,7 @@ var styles = StyleSheet.create({
   },
 
   feedUserName: {
+    marginTop: 3,
     fontSize: 17,
     color: '#00B5AD',
     lineHeight: 18,
@@ -101,11 +138,12 @@ var styles = StyleSheet.create({
 
   },
   feedContentText: {
+    flex: 1,
     margin: 10,
+    marginTop: 0,
     fontSize: 15,
     color: '#333333',
     lineHeight: 19,
-    flex: 1,
   },
   feedContentSingleImage: {
     flex: 1,
@@ -115,40 +153,31 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginLeft: 10,
-    marginBottom: 10,
+    marginTop: -15,
+    marginLeft: margin,
   },
   feedContentImage: {
-    width: 100,
-    height:100,
-    margin:1.5,
+    width: (windowWidth-margin*2-imgInterval*2) / 3,
+    height:(windowWidth-margin*2-imgInterval*2) / 3,
+    marginRight: imgInterval,
   },
   feedActions:{
-    borderTopWidth: 1,
-    borderTopColor: '#EEEEEE',
+    //borderWidth: 1,
+    //borderTopColor: '#EEEEEE',
+    flex :1,
     flexDirection: 'row',
-  },
-  feedActionShare: {
-    flex: 1,
-    padding: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRightWidth: 1,
-    borderRightColor: '#EEEEEE',
+    paddingTop: 10,
+    paddingRight: 10,
+    paddingBottom: 5,
   },
   feedActionComment: {
-    flex: 1,
+    width: 40,
     padding: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginRight: 5,
   },
   feedActionLike: {
-    flex: 1,
+    width: 40,
     padding: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderLeftWidth: 1,
-    borderLeftColor: '#EEEEEE',
   },
   thumbnail: {
     flex: 1,
