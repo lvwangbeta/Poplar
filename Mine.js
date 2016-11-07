@@ -3,10 +3,21 @@
 import React from 'react';
 var t = require('tcomb-form-native');
 var PoplarEnv = require('./PoplarEnv');
-import { StyleSheet,AsyncStorage, Text, View, TouchableHighlight } from 'react-native';
+import {
+    StyleSheet,
+    AsyncStorage,
+    Text,
+    View,
+    TouchableHighlight,
+    Image,
+    Dimensions,
+    ScrollView
+} from 'react-native';
 var store = require('./Store');
-
 var Form = t.form.Form;
+
+
+const windowWidth = Dimensions.get('window').width;
 
 var API_KEY = 'api_key';
 
@@ -99,8 +110,9 @@ var Mine = React.createClass({
       return (<View><Text>ccc</Text></View>);
     } else {
       return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
           {/* display */}
+          {/*
           <Form
             ref="form"
             type={Person}
@@ -110,7 +122,36 @@ var Mine = React.createClass({
           <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>登录</Text>
           </TouchableHighlight>
-        </View>
+          */}
+          <View style={styles.card}>
+            <View>
+              <Image resizeMode='cover' style={styles.background} source={require('./imgs/tag1.jpg')} />
+              <Image style={styles.avatar} source={require('./imgs/tag2.jpg')} />
+            </View>
+            <View style={styles.metas}>
+              <View style={styles.desc}>
+                <Text style={styles.name}>断鸿</Text>
+                <Text style={styles.motto}>Time to do it</Text>
+              </View>
+              <View
+                style={{flex: 1,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        borderBottomWidth: 1,
+                        borderBottomColor: '#F3F3F3',
+                        marginTop: 10,
+                        paddingBottom: 10,}}>
+                <View style={{flex: 1, flexDirection: 'column', alignItems: 'center',}}><Text>12</Text><Text>关注</Text></View>
+                <View style={{flex: 1, flexDirection: 'column', alignItems: 'center',}}><Text>56</Text><Text>粉丝</Text></View>
+                <View style={{flex: 1, flexDirection: 'column', alignItems: 'center',}}><Text>108</Text><Text>状态</Text></View>
+              </View>
+            </View>
+          </View>
+          <View style={styles.myfeedsList}>
+
+
+          </View>
+        </ScrollView>
       );
     }
 
@@ -120,10 +161,46 @@ var Mine = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    marginTop: 50,
-    padding: 20,
+    flex: 1,
     backgroundColor: '#ffffff',
+  },
+  card: {
+    position: 'relative',
+  },
+  background: {
+    height: 180,
+    width:windowWidth,
+  },
+  avatar: {
+    height: 80,
+    width: 80,
+    borderRadius: 40,
+    position: 'absolute',
+    bottom: -20,
+    left: windowWidth/2 - 40,
+    borderColor: 'white',
+    borderWidth: 2,
+  },
+  desc: {
+    borderBottomWidth: 0.3,
+    borderBottomColor: '#F3F3F3',
+  },
+  motto:{
+    marginTop: 10,
+    marginBottom: 10,
+    alignSelf: 'center',
+    fontSize: 15,
+    lineHeight: 14,
+    color: '#9B9B9B',
+  },
+  name: {
+    marginTop: 30,
+    alignSelf: 'center',
+    fontSize: 17,
+    lineHeight: 18,
+  },
+  myfeedsList: {
+
   },
   title: {
     fontSize: 30,

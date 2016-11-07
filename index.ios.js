@@ -90,20 +90,33 @@ var Poplar = React.createClass({
 
     console.log('user has login');
 
-    return (
-      // <View style={[styles.tabContent, {backgroundColor: color}]}>
-      //   <Text style={styles.tabText}>{pageText}</Text>
-      //   <Text style={styles.tabText}>{num} re-renders of the {pageText}</Text>
-      // </View>
-      <NavigatorIOS
-        style={styles.container}
-        initialRoute={{
-          title: title,
-          component: FeedList,
-          passProps: { token: this.state.token, secret:this.state.secret },
-        }}
-      />
-    );
+    if(title == '首页') {
+      return (
+        // <View style={[styles.tabContent, {backgroundColor: color}]}>
+        //   <Text style={styles.tabText}>{pageText}</Text>
+        //   <Text style={styles.tabText}>{num} re-renders of the {pageText}</Text>
+        // </View>
+        <NavigatorIOS
+          style={styles.container}
+          initialRoute={{
+            title: title,
+            component: FeedList,
+            passProps: { token: this.state.token, secret:this.state.secret },
+          }}
+        />
+      );
+    } else if(title == '我') {
+      return(
+        <NavigatorIOS
+          style={styles.container}
+          initialRoute={{
+            title: title,
+            component: Mine,
+            passProps: { token: this.state.token, secret:this.state.secret },
+          }}
+        />
+      );
+    }
   },
 
   onChildChanged: function (newState) {
@@ -189,7 +202,7 @@ var Poplar = React.createClass({
               presses: this.state.presses + 1
             });
           }}>
-          <Mine />
+          {this._renderContent('#414A8C', '我')}
         </TabBarIOS.Item>
       </TabBarIOS>
     );
