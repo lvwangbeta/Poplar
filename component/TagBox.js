@@ -23,7 +23,12 @@ const tagWidth = (windowWidth-margin*2-interval*2 ) / 3;
 var TagBox = React.createClass({
 
   showTagDetail: function() {
-    this.props.navigator.push({type:"tagDetail"});
+    this.props.navigator.push({
+      title: '正文',
+      component: TagDetail,
+      passProps: {secret:this.props.secret, token:this.props.token},
+    });
+    //this.props.navigator.push({type:"tagDetail"});
   },
 
   render: function() {

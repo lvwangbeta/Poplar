@@ -30,15 +30,6 @@ var TagDetail = React.createClass({
   render: function(){
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
-        <View style={{height: 50}}>
-          <View style={styles.navContainer}>
-            <TouchableOpacity onPress={this.back}>
-              <View style={styles.back}><Text>后退</Text></View>
-            </TouchableOpacity>
-            <View style={styles.title}><Text>Tag</Text></View>
-            <View style={styles.right}><Text>关注</Text></View>
-          </View>
-        </View>
         <ScrollView style={{flex: 1, flexDirection: 'column'}}>
           <View style={styles.header}>
             <Image resizeMode='cover' style={styles.headerImg} source={require('../imgs/tag2.jpg')} />
