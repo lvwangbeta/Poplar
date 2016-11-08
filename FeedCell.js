@@ -46,6 +46,7 @@ var FeedCell = React.createClass({
           likeCounter={this.props.feed.like_count}
           commentCounter={this.props.feed.comment_count}
           callbackParentSetReplyModalVisible={this.setReplyModalVisible}
+          limit={5}
         />
       );
   },

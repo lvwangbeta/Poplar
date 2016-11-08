@@ -33,6 +33,7 @@ var CommentList = React.createClass({
       commentCounter: this.props.commentCounter,
       likeed: this.props.likeed,
       commented: this.props.commented,
+      limit: this.props.limit, //评论显示行数
     };
   },
 
@@ -84,9 +85,8 @@ var CommentList = React.createClass({
       .then((responseData) => {
         console.log(responseData);
         this.setState({
-          //dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
-          commentsArray: responseData.comments,
-          dataSource: this.state.dataSource.cloneWithRows(responseData.comments),
+          commentsArray: responseData.comments.slice(0, this.state.limit),
+          dataSource: this.state.dataSource.cloneWithRows(responseData.comments.slice(0, this.state.limit)),
           loaded: true,
         });
       })
