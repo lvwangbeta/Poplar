@@ -82,18 +82,6 @@ var FeedCell = React.createClass({
                 {this.renderFeedContent(this.props.feed)}
               </View>
 
-              {/*
-              <View style={styles.feedActions}>
-                  <View style={{flex:1}}></View>
-                  <View style={styles.feedActionComment}>
-                    <CommentAction counter={this.props.feed.comment_count} callbackParentSetReplyModalVisible={this.setReplyModalVisible}/>
-                    {this.renderCommentList(this.props.feed.comment_count)}
-                  </View>
-                  <View style={styles.feedActionLike}>
-                    <LikeAction counter={this.props.feed.like_count} />
-                  </View>
-              </View>
-              */}
               {this.renderCommentList()}
 
           </View>
@@ -113,6 +101,7 @@ var styles = StyleSheet.create({
     // justifyContent: 'center',
     // alignItems: 'center',
     marginBottom: 10,
+    paddingBottom: 10,
     backgroundColor: 'white',
     borderTopWidth: 0.5,
     borderBottomWidth: 0.5,

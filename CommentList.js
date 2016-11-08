@@ -17,6 +17,7 @@ var CommentCell = require('./CommentCell');
 var NewComment = require('./component/NewComment');
 var LikeAction = require('./component/actions/Like');
 var CommentAction = require('./component/actions/Comment');
+var CommentBar = require('./component/CommentBar');
 
 var COMMENT_URL = 'http://localhost:8080/com.lvwang.osf/api/v1/comment/';
 
@@ -153,6 +154,7 @@ var CommentList = React.createClass({
     }
     return (
       <View>
+        {/*
         <NewComment
           visible={this.state.replyModalVisible}
           callbackParentSetReplyModalInVisible={this.setReplyModalInVisible}
@@ -160,7 +162,8 @@ var CommentList = React.createClass({
           object_type={this.props.object_type}
           object_id={this.props.object_id}
         />
-
+        */}
+        
         <View style={styles.feedActions}>
             <View style={{flex:1}}></View>
             <View style={styles.feedActionComment}>

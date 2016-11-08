@@ -8,6 +8,7 @@ import {
   Text,
   Image,
   View,
+  TextInput,
   TouchableHighlight,
   TouchableNativeFeedback,
 } from 'react-native';
@@ -15,6 +16,8 @@ import {
 var Md5 = require('./Md5');
 var FeedCell = require('./FeedCell');
 var FeedDetail = require('./FeedDetail');
+var CommentBar = require('./component/CommentBar');
+
 
 //var REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
 var REQUEST_URL = 'http://localhost:8080/com.lvwang.osf/api/v1/timeline/';
@@ -27,6 +30,7 @@ var FeedList = React.createClass({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       loaded: false,
+      commentBarVisible: false,
     };
   },
   componentDidMount: function() {
@@ -62,13 +66,14 @@ var FeedList = React.createClass({
       return this.renderLoadingView();
     }
     return (
-      <View style={{flex: 1}}>
+      <View>
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderFeed}
           style={styles.listView}
         />
-    </View>
+        <CommentBar visible={this.state.commentBarVisible}/>
+      </View>
     );
   },
 
