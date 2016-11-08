@@ -97,6 +97,8 @@ var FeedList = React.createClass({
       <FeedCell
         onSelect={() => this.selectFeed(feed)}
         feed={feed}
+        token={this.props.token}
+        secret={this.props.secret}
       />
       // <View style={styles.container}>
       //     <Image source={{uri:movie.posters.thumbnail}} style={styles.thumbnail}/>

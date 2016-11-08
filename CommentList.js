@@ -71,6 +71,7 @@ var CommentList = React.createClass({
     var sign = Md5.hex_md5('/com.lvwang.osf/api/v1/comment/'+type_str+'/'+this.props.object_id+'?ts=123456&'+this.props.secret);
     console.log('sign:' + sign);
     var url = COMMENT_URL+type_str+'/'+this.props.object_id+'?ts=123456&sign=' + sign;
+    console.log('get comment url : ' + url);
     var headers = {
       headers: {
         'Accept': 'application/json',
@@ -134,6 +135,18 @@ var CommentList = React.createClass({
 
   },
 
+  renderCommentTip : function(commentCounter) {
+    if(commentCounter > 0) {
+      return (
+        <View>
+          <Image style={{marginTop:5}} source={require('./imgs/triangle.png')} />
+        </View>
+      );
+    } else {
+      return (<View />);
+    }
+  },
+
   render: function() {
     if(!this.state.loaded) {
       return this.renderLoadingView();
@@ -152,26 +165,38 @@ var CommentList = React.createClass({
             <View style={{flex:1}}></View>
             <View style={styles.feedActionComment}>
               <CommentAction counter={this.state.commentCounter} callbackParentSetReplyModalVisible={this.setReplyModalVisible}/>
-              <View>
-                <Image style={{marginTop:5}} source={require('./imgs/triangle.png')} />
-              </View>
+              {this.renderCommentTip(this.state.commentCounter)}
             </View>
             <View style={styles.feedActionLike}>
               <LikeAction counter={this.state.likeCounter} />
             </View>
         </View>
+        {this.renderCommentList(this.state.commentCounter)}
+      </View>
+    );
+  },
 
+  renderCommentList: function(commentCounter) {
+
+    if(commentCounter > 0) {
+      return (
         <View style={styles.commentList}>
           <ListView
             dataSource={this.state.dataSource}
             renderRow={this.renderRow}
           />
         </View>
-      </View>
-    );
+      );
+    } else {
+      return (<View/>);
+    }
+
   },
 
   renderRow: function(comment) {
+    if(comment == null || comment == undefined) {
+      return (<View />);
+    }
     return(
       <CommentCell
           comment={comment}

@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 var LikeAction = require('./component/actions/Like');
 var CommentAction = require('./component/actions/Comment');
+var CommentList = require('./CommentList');
 
 const windowWidth = Dimensions.get('window').width;
 const margin = 20;
@@ -34,13 +35,19 @@ var FeedCell = React.createClass({
   },
 
   renderCommentList: function(){
-
-    return(
-      <View>
-        <Image style={{marginTop:5}} source={require('./imgs/triangle.png')} />
-      </View>
-    );
-
+      return(
+        <CommentList
+          secret={this.props.secret}
+          token={this.props.token}
+          object_type={this.props.feed.object_type}
+          object_id={this.props.feed.object_id}
+          liked={false}
+          commented={false}
+          likeCounter={this.props.feed.like_count}
+          commentCounter={this.props.feed.comment_count}
+          callbackParentSetReplyModalVisible={this.setReplyModalVisible}
+        />
+      );
   },
 
   renderFeedContent: function(feed) {
@@ -74,16 +81,19 @@ var FeedCell = React.createClass({
                 {this.renderFeedContent(this.props.feed)}
               </View>
 
+              {/*
               <View style={styles.feedActions}>
                   <View style={{flex:1}}></View>
                   <View style={styles.feedActionComment}>
-                    <CommentAction counter={5} callbackParentSetReplyModalVisible={this.setReplyModalVisible}/>
-                    {this.renderCommentList()}
+                    <CommentAction counter={this.props.feed.comment_count} callbackParentSetReplyModalVisible={this.setReplyModalVisible}/>
+                    {this.renderCommentList(this.props.feed.comment_count)}
                   </View>
                   <View style={styles.feedActionLike}>
-                    <LikeAction counter={15} />
+                    <LikeAction counter={this.props.feed.like_count} />
                   </View>
               </View>
+              */}
+              {this.renderCommentList()}
 
           </View>
 
@@ -140,7 +150,7 @@ var styles = StyleSheet.create({
   feedContentText: {
     flex: 1,
     margin: margin,
-    marginTop: 0,
+    marginTop: -10,
     fontSize: 15,
     color: '#333333',
     lineHeight: 19,
@@ -153,7 +163,7 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: -15,
+    marginTop: -30,
     marginLeft: margin,
   },
   feedContentImage: {
@@ -166,7 +176,7 @@ var styles = StyleSheet.create({
     //borderTopColor: '#EEEEEE',
     flex :1,
     flexDirection: 'row',
-    marginTop: 10,
+    marginTop: 15,
     marginRight: margin,
     marginBottom: 5,
   },
