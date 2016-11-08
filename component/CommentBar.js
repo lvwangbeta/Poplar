@@ -24,13 +24,24 @@ var CommentBar = React.createClass({
     });
   },
 
+  hide: function() {
+    this.props.hideCommentBar();
+  },
+
+  componentDidMount: function() {
+    this.refs.commentBar.focus();
+  },
+
   render: function(){
       return(
         <View style={styles.container}>
           <TextInput
-            style={{height: 40,borderWidth: 1, marginBottom: this.state.margin, paddingLeft: 10}}
+            ref='commentBar'
+            style={{height: 40,borderWidth: 1, marginBottom: 0, paddingLeft: 10}}
             placeholder='reply kevin:'
             keyboardType='web-search'
+            autoFocus={this.props.visible}
+            onBlur={this.hide}
             onChangeText={(text) => this.setState({text})}
           />
           <KeyboardSpacer/>
