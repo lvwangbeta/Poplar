@@ -8,6 +8,7 @@ import {
   Text,
   Image,
   View,
+  Dimensions,
   TextInput,
   TouchableHighlight,
   TouchableNativeFeedback,
@@ -18,8 +19,7 @@ var FeedCell = require('./FeedCell');
 var FeedDetail = require('./FeedDetail');
 var CommentBar = require('./component/CommentBar');
 
-
-//var REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
+const windowWidth = Dimensions.get('window').width;
 var REQUEST_URL = 'http://localhost:8080/com.lvwang.osf/api/v1/timeline/';
 
 var FeedList = React.createClass({
@@ -53,12 +53,31 @@ var FeedList = React.createClass({
       .then((responseData) => {
         console.log(responseData);
         this.setState({
-          //dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
           dataSource: this.state.dataSource.cloneWithRows(responseData.feeds),
           loaded: true,
         });
       })
       .done();
+  },
+
+  showCommentBar: function() {
+    this.setState({
+      commentBarVisible: true,
+    });
+  },
+
+  hideCommentBar: function() {
+    this.setState({
+      commentBarVisible: false,
+    });
+  },
+
+  renderCommentBar: function() {
+    if(this.state.commentBarVisible) {
+      return (<CommentBar visible={true} hideCommentBar={this.hideCommentBar}/>);
+    } else {
+      return (<View/>);
+    }
   },
 
   render: function() {
@@ -72,7 +91,7 @@ var FeedList = React.createClass({
           renderRow={this.renderFeed}
           style={styles.listView}
         />
-        <CommentBar visible={this.state.commentBarVisible}/>
+        {this.renderCommentBar()}
       </View>
     );
   },
@@ -104,14 +123,9 @@ var FeedList = React.createClass({
         feed={feed}
         token={this.props.token}
         secret={this.props.secret}
+        showCommentBar={this.showCommentBar}
+        hideCommentBar={this.hideCommentBar}
       />
-      // <View style={styles.container}>
-      //     <Image source={{uri:movie.posters.thumbnail}} style={styles.thumbnail}/>
-      //     <View style={styles.rightContainer}>
-      //       <Text>{movie.title}</Text>
-      //       <Text>{movie.year}</Text>
-      //     </View>
-      // </View>
     );
   }
 });

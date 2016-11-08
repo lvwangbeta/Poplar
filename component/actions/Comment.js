@@ -11,7 +11,7 @@ import {
 var Comment = React.createClass({
 
   pressComment: function() {
-    this.props.callbackParentSetReplyModalVisible();
+    this.props.showCommentBar();
   },
 
   render: function() {

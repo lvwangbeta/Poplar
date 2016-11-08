@@ -45,7 +45,8 @@ var FeedCell = React.createClass({
           commented={false}
           likeCounter={this.props.feed.like_count}
           commentCounter={this.props.feed.comment_count}
-          callbackParentSetReplyModalVisible={this.setReplyModalVisible}
+          showCommentBar={this.props.showCommentBar}
+          hideCommentBar={this.props.hideCommentBar}
           limit={5}
         />
       );
@@ -103,7 +104,7 @@ var styles = StyleSheet.create({
     marginBottom: 10,
     paddingBottom: 10,
     backgroundColor: 'white',
-    borderTopWidth: 0.5,
+    borderThopWidth: 0.5,
     borderBottomWidth: 0.5,
     borderColor: '#EEEEEE',
   },

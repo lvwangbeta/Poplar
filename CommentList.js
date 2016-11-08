@@ -163,11 +163,11 @@ var CommentList = React.createClass({
           object_id={this.props.object_id}
         />
         */}
-        
+
         <View style={styles.feedActions}>
             <View style={{flex:1}}></View>
             <View style={styles.feedActionComment}>
-              <CommentAction counter={this.state.commentCounter} callbackParentSetReplyModalVisible={this.setReplyModalVisible}/>
+              <CommentAction counter={this.state.commentCounter} showCommentBar={this.props.showCommentBar} hideCommentBar={this.props.hideCommentBar}/>
               {this.renderCommentTip(this.state.commentCounter)}
             </View>
             <View style={styles.feedActionLike}>
@@ -203,7 +203,8 @@ var CommentList = React.createClass({
     return(
       <CommentCell
           comment={comment}
-          callbackParentSetReplyModalVisible={this.setReplyModalVisible}
+          showCommentBar={this.props.showCommentBar}
+          hideCommentBar={this.props.hideCommentBar}
         />
     );
   },
