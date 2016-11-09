@@ -30,6 +30,8 @@ var FeedList = React.createClass({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       loaded: false,
+      isComment: false,
+      comment: null,
       commentBarVisible: false,
     };
   },
@@ -68,13 +70,14 @@ var FeedList = React.createClass({
 
   hideCommentBar: function() {
     this.setState({
+      isComment: false,
       commentBarVisible: false,
     });
   },
 
   renderCommentBar: function() {
     if(this.state.commentBarVisible) {
-      return (<CommentBar visible={true} hideCommentBar={this.hideCommentBar}/>);
+      return (<CommentBar visible={true} pushComment2Feed={this.pushComment2Feed} hideCommentBar={this.hideCommentBar}/>);
     } else {
       return (<View/>);
     }
@@ -87,6 +90,7 @@ var FeedList = React.createClass({
     return (
       <View>
         <ListView
+          isComment={this.state.isComment}
           dataSource={this.state.dataSource}
           renderRow={this.renderFeed}
           style={styles.listView}
@@ -115,6 +119,16 @@ var FeedList = React.createClass({
         passProps: {feed:feed, secret:this.props.secret, token:this.props.token},
       });
     }
+  },
+  pushComment2Feed: function(comment) {
+    console.log('pushComment2Feed');
+    this.setState({
+      isComment: true,
+      comment: comment,
+    }, ()=>{
+      console.log(this.state.comment);
+    });
+
   },
   renderFeed: function(feed) {
     return(

@@ -66,6 +66,10 @@ var FeedCell = React.createClass({
     );
   },
 
+  componentWillMount: function() {
+    console.log(this.props.newComment);
+  },
+
   render: function(){
     return (
       <View>
@@ -104,7 +108,7 @@ var styles = StyleSheet.create({
     marginBottom: 10,
     paddingBottom: 10,
     backgroundColor: 'white',
-    borderThopWidth: 0.5,
+    borderTopWidth: 0.5,
     borderBottomWidth: 0.5,
     borderColor: '#EEEEEE',
   },

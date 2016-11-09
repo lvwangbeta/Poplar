@@ -8,6 +8,7 @@ import {
   Text,
   Image,
   View,
+  TouchableOpacity,
   TouchableHighlight,
   TouchableNativeFeedback,
 } from 'react-native';
@@ -35,6 +36,9 @@ var CommentList = React.createClass({
       likeed: this.props.likeed,
       commented: this.props.commented,
       limit: this.props.limit, //评论显示行数
+
+      comment: null,
+      commentBarVisible: false,
     };
   },
 
@@ -116,21 +120,11 @@ var CommentList = React.createClass({
   addNewComment: function(comment) {
     console.log('add new comment to comments list');
     var commentsArray = this.state.commentsArray;
-    commentsArray.push({ id: 19,
-     comment_object_type: 2,
-     comment_object_id: 77,
-     comment_author: 23,
-     comment_author_name: 'demo1',
-     comment_author_avatar: '5245526e-9b78-4c69-9a99-4bd454f015a0.jpeg',
-     comment_ts: 1465097153000,
-     comment_content: '呵呵hhhhhh',
-     comment_parent: 0,
-     comment_parent_author: 0,
-     comment_parent_author_name: null });
+    commentsArray.push(comment);
 
 
     this.setState({
-      commentCounter: this.state.commentCounter + 1,
+      //commentCounter: this.state.commentCounter + 1,
       dataSource: this.state.dataSource.cloneWithRows(commentsArray),
     });
 
@@ -153,33 +147,73 @@ var CommentList = React.createClass({
       return this.renderLoadingView();
     }
     return (
-      <View>
-        {/*
-        <NewComment
-          visible={this.state.replyModalVisible}
-          callbackParentSetReplyModalInVisible={this.setReplyModalInVisible}
-          callbackParentPushNewComment={this.addNewComment}
-          object_type={this.props.object_type}
-          object_id={this.props.object_id}
-        />
-        */}
-
-        <View style={styles.feedActions}>
-            <View style={{flex:1}}></View>
-            <View style={styles.feedActionComment}>
-              <CommentAction counter={this.state.commentCounter} showCommentBar={this.props.showCommentBar} hideCommentBar={this.props.hideCommentBar}/>
-              {this.renderCommentTip(this.state.commentCounter)}
-            </View>
-            <View style={styles.feedActionLike}>
-              <LikeAction counter={this.state.likeCounter} />
-            </View>
+        <View style={{flex :1}}>
+          {/*
+          <NewComment
+            visible={this.state.replyModalVisible}
+            callbackParentSetReplyModalInVisible={this.setReplyModalInVisible}
+            callbackParentPushNewComment={this.addNewComment}
+            object_type={this.props.object_type}
+            object_id={this.props.object_id}
+          />
+          */}
+          <View style={styles.feedActions}>
+              <View style={{flex:1}}></View>
+              <View style={styles.feedActionComment}>
+                <CommentAction counter={this.state.commentCounter} showCommentBar={this.props.showCommentBar} hideCommentBar={this.props.hideCommentBar}/>
+                {this.renderCommentTip(this.state.commentCounter)}
+              </View>
+              <View style={styles.feedActionLike}>
+                <LikeAction counter={this.state.likeCounter} />
+              </View>
+          </View>
+          {this.renderCommentList(this.state.commentCounter)}
         </View>
-        {this.renderCommentList(this.state.commentCounter)}
-      </View>
+
     );
   },
 
+  pushComment2Feed: function(comment) {
+    console.log('pushComment2Feed');
+    var commentsArray = this.state.commentsArray;
+    commentsArray.push(comment);
+
+    this.setState({
+      isComment: true,
+      dataSource: this.state.dataSource.cloneWithRows(commentsArray),
+    });
+
+  },
+
+  showCommentBar: function() {
+    this.setState({
+      commentBarVisible: true,
+    });
+  },
+
+  hideCommentBar: function() {
+    this.setState({
+      isComment: false,
+      commentBarVisible: false,
+    });
+  },
+
+  renderCommentBar: function() {
+    if(this.state.commentBarVisible) {
+      return (<CommentBar visible={true} pushComment2Feed={this.pushComment2Feed} hideCommentBar={this.hideCommentBar}/>);
+    } else {
+      return (<View/>);
+    }
+  },
+
   renderCommentList: function(commentCounter) {
+
+    // console.log(this.props.newComment);
+    //
+    // if(this.props.newComment != null && this.props.newComment != undefined) {
+    //   console.log(this.props.newComment.comment_content);
+    //   this.addNewComment(this.props.newComment);
+    // }
 
     if(commentCounter > 0) {
       return (
