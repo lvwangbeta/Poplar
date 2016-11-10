@@ -12,6 +12,7 @@ var Comment = React.createClass({
 
   pressComment: function() {
     this.props.showCommentBar();
+    //this.props.push2FeedDetail();
   },
 
   render: function() {

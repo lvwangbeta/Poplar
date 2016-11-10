@@ -16,9 +16,8 @@ var Md5 = require('./Md5');
 var PoplarEnv = require('./PoplarEnv');
 var CommentCell = require('./CommentCell');
 var NewComment = require('./component/NewComment');
-var LikeAction = require('./component/actions/Like');
-var CommentAction = require('./component/actions/Comment');
 var CommentBar = require('./component/CommentBar');
+var FeedActions = require('./component/actions/FeedActions');
 
 var COMMENT_URL = 'http://localhost:8080/com.lvwang.osf/api/v1/comment/';
 
@@ -130,47 +129,12 @@ var CommentList = React.createClass({
 
   },
 
-  renderCommentTip : function(commentCounter) {
-    if(commentCounter > 0) {
-      return (
-        <View>
-          <Image style={{marginTop:5}} source={require('./imgs/triangle.png')} />
-        </View>
-      );
-    } else {
-      return (<View />);
-    }
-  },
 
   render: function() {
     if(!this.state.loaded) {
       return this.renderLoadingView();
     }
-    return (
-        <View style={{flex :1}}>
-          {/*
-          <NewComment
-            visible={this.state.replyModalVisible}
-            callbackParentSetReplyModalInVisible={this.setReplyModalInVisible}
-            callbackParentPushNewComment={this.addNewComment}
-            object_type={this.props.object_type}
-            object_id={this.props.object_id}
-          />
-          */}
-          <View style={styles.feedActions}>
-              <View style={{flex:1}}></View>
-              <View style={styles.feedActionComment}>
-                <CommentAction counter={this.state.commentCounter} showCommentBar={this.props.showCommentBar} hideCommentBar={this.props.hideCommentBar}/>
-                {this.renderCommentTip(this.state.commentCounter)}
-              </View>
-              <View style={styles.feedActionLike}>
-                <LikeAction counter={this.state.likeCounter} />
-              </View>
-          </View>
-          {this.renderCommentList(this.state.commentCounter)}
-        </View>
-
-    );
+    return this.renderCommentList(this.props.commentCounter);
   },
 
   pushComment2Feed: function(comment) {

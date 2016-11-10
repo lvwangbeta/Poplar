@@ -12,9 +12,9 @@ import {
   View,
   Dimensions
 } from 'react-native';
-var LikeAction = require('./component/actions/Like');
-var CommentAction = require('./component/actions/Comment');
+
 var CommentList = require('./CommentList');
+var FeedActions = require('./component/actions/FeedActions');
 
 const windowWidth = Dimensions.get('window').width;
 const margin = 20;
@@ -36,19 +36,23 @@ var FeedCell = React.createClass({
 
   renderCommentList: function(){
       return(
-        <CommentList
-          secret={this.props.secret}
-          token={this.props.token}
-          object_type={this.props.feed.object_type}
-          object_id={this.props.feed.object_id}
-          liked={false}
-          commented={false}
-          likeCounter={this.props.feed.like_count}
-          commentCounter={this.props.feed.comment_count}
-          showCommentBar={this.props.showCommentBar}
-          hideCommentBar={this.props.hideCommentBar}
-          limit={5}
-        />
+        <View style={{flex :1}}>
+          <FeedActions
+            likeCounter={this.props.feed.like_count}
+            commentCounter={this.props.feed.comment_count}
+            push2FeedDetail={this.props.push2FeedDetail}/>
+          <CommentList
+            secret={this.props.secret}
+            token={this.props.token}
+            object_type={this.props.feed.object_type}
+            object_id={this.props.feed.object_id}
+            liked={false}
+            commented={false}
+            commentCounter={this.props.feed.comment_count}
+            push2FeedDetail={this.props.push2FeedDetail}
+            limit={5}
+          />
+        </View>
       );
   },
 
@@ -86,7 +90,6 @@ var FeedCell = React.createClass({
               <View style={styles.feedContent}>
                 {this.renderFeedContent(this.props.feed)}
               </View>
-
               {this.renderCommentList()}
 
           </View>
@@ -101,10 +104,8 @@ var FeedCell = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // flexDirection: 'row',
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    flex: 1,
+    flexDirection: 'column',
     marginBottom: 10,
     paddingBottom: 10,
     backgroundColor: 'white',

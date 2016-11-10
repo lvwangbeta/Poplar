@@ -15,11 +15,22 @@ import {
   ScrollView
 } from 'react-native';
 
+var LikeAction = require('./component/actions/Like');
+var CommentAction = require('./component/actions/Comment');
+var CommentBar = require('./component/CommentBar');
 var CommentList = require('./CommentList');
 
 var IMAGE_BASE_URL = 'http://7xkkim.com1.z0.glb.clouddn.com/';
 
 var FeedDetail = React.createClass({
+
+  getInitialState: function() {
+    return ({
+      isComment: false,
+      comment: null,
+      commentBarVisible: false,
+    });
+  },
 
   renderFeedImages: function(content) {
     if(content == null) return [];
@@ -33,6 +44,40 @@ var FeedDetail = React.createClass({
 
   back: function(){
     this.props.navigator.pop();
+  },
+
+
+  renderCommentTip : function(commentCounter) {
+    if(commentCounter > 0) {
+      return (
+        <View>
+          <Image style={{marginTop:5}} source={require('./imgs/triangle.png')} />
+        </View>
+      );
+    } else {
+      return (<View />);
+    }
+  },
+
+  renderCommentBar: function() {
+    if(this.state.commentBarVisible) {
+      return (<CommentBar visible={true} pushComment2Feed={this.pushComment2Feed} hideCommentBar={this.hideCommentBar}/>);
+    } else {
+      return (<View/>);
+    }
+  },
+
+  showCommentBar: function() {
+    this.setState({
+      commentBarVisible: true,
+    });
+  },
+
+  hideCommentBar: function() {
+    this.setState({
+      isComment: false,
+      commentBarVisible: false,
+    });
   },
 
   render: function(){
@@ -53,6 +98,19 @@ var FeedDetail = React.createClass({
               </View>
           </View>
 
+          <View style={styles.feedActions}>
+              <View style={{flex:1}}></View>
+              <View style={styles.feedActionComment}>
+                {/*<CommentAction counter={this.state.commentCounter} showCommentBar={this.props.showCommentBar} hideCommentBar={this.props.hideCommentBar}/>*/}
+                {/*<CommentAction counter={this.state.commentCounter} push2FeedDetail={this.props.push2FeedDetail}/>*/}
+                <CommentAction counter={this.props.feed.comment_count} showCommentBar={this.showCommentBar}/>
+                {this.renderCommentTip(this.props.feed.comment_count)}
+              </View>
+              <View style={styles.feedActionLike}>
+                <LikeAction counter={this.props.feed.like_count} />
+              </View>
+          </View>
+
           <CommentList
             secret={this.props.secret}
             token={this.props.token}
@@ -61,11 +119,12 @@ var FeedDetail = React.createClass({
             liked={false}
             commented={false}
             likeCounter={6}
-            commentCounter={10}
+            commentCounter={this.props.feed.comment_count}
             callbackParentSetReplyModalVisible={this.setReplyModalVisible}
           />
 
         </ScrollView>
+        {this.renderCommentBar()}
       </View>
     )
   },
@@ -187,6 +246,23 @@ var styles = StyleSheet.create({
   navRight: {
     marginRight:10,
     marginTop:23,
+  },
+  feedActions:{
+    //borderWidth: 1,
+    //borderTopColor: '#EEEEEE',
+    flex :1,
+    flexDirection: 'row',
+    padding: 20,
+    paddingBottom: 5,
+  },
+  feedActionComment: {
+    width: 40,
+    padding: 5,
+    marginRight: 5,
+  },
+  feedActionLike: {
+    width: 40,
+    padding: 5,
   },
 });
 

@@ -81,8 +81,10 @@ var CommentBar = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex:1,
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
+    //flexDirection: 'column',
+    //justifyContent: 'flex-end',
+    position: 'absolute',
+    bottom: 50,
   },
   wrapper: {
     flex: 1,

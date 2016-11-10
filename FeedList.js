@@ -17,7 +17,6 @@ import {
 var Md5 = require('./Md5');
 var FeedCell = require('./FeedCell');
 var FeedDetail = require('./FeedDetail');
-var CommentBar = require('./component/CommentBar');
 
 const windowWidth = Dimensions.get('window').width;
 var REQUEST_URL = 'http://localhost:8080/com.lvwang.osf/api/v1/timeline/';
@@ -30,9 +29,6 @@ var FeedList = React.createClass({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       loaded: false,
-      isComment: false,
-      comment: null,
-      commentBarVisible: false,
     };
   },
   componentDidMount: function() {
@@ -62,27 +58,6 @@ var FeedList = React.createClass({
       .done();
   },
 
-  showCommentBar: function() {
-    this.setState({
-      commentBarVisible: true,
-    });
-  },
-
-  hideCommentBar: function() {
-    this.setState({
-      isComment: false,
-      commentBarVisible: false,
-    });
-  },
-
-  renderCommentBar: function() {
-    if(this.state.commentBarVisible) {
-      return (<CommentBar visible={true} pushComment2Feed={this.pushComment2Feed} hideCommentBar={this.hideCommentBar}/>);
-    } else {
-      return (<View/>);
-    }
-  },
-
   render: function() {
     if(!this.state.loaded) {
       return this.renderLoadingView();
@@ -95,7 +70,6 @@ var FeedList = React.createClass({
           renderRow={this.renderFeed}
           style={styles.listView}
         />
-        {this.renderCommentBar()}
       </View>
     );
   },
@@ -137,8 +111,7 @@ var FeedList = React.createClass({
         feed={feed}
         token={this.props.token}
         secret={this.props.secret}
-        showCommentBar={this.showCommentBar}
-        hideCommentBar={this.hideCommentBar}
+        push2FeedDetail={() => this.selectFeed(feed)}
       />
     );
   }
