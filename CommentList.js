@@ -162,12 +162,12 @@ var CommentList = React.createClass({
 
     if(commentCounter > 0) {
       return (
-        <View style={styles.commentList}>
+        <TouchableOpacity style={styles.commentList} onPress={this.props.push2FeedDetail}>
           <ListView
             dataSource={this.state.dataSource}
             renderRow={this.renderRow}
           />
-        </View>
+        </TouchableOpacity>
       );
     } else {
       return (<View/>);
@@ -182,6 +182,7 @@ var CommentList = React.createClass({
     return(
       <CommentCell
           comment={comment}
+          push2FeedDetail={this.props.push2FeedDetail}
           showCommentBar={this.props.showCommentBar}
           hideCommentBar={this.props.hideCommentBar}
         />

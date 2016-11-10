@@ -10,6 +10,7 @@ import {
   Image,
   View,
   Modal,
+  TouchableOpacity,
   TouchableHighlight,
   TouchableNativeFeedback,
 } from 'react-native';
@@ -25,7 +26,7 @@ var CommentCell = React.createClass({
   render: function(){
     return (
       <View>
-        <TouchableHighlight onPress={this.props.callbackParentSetReplyModalVisible}>
+        <TouchableOpacity onPress={this.props.push2FeedDetail}>
           <View style={styles.commentBox}>
             <Image style={styles.avatar} source={require('./imgs/avatar.png')} />
             <View>
@@ -33,7 +34,7 @@ var CommentCell = React.createClass({
                 <Text style={styles.comment}>{this.props.comment.comment_content}</Text>
             </View>
           </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     );
   },
