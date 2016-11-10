@@ -5,6 +5,7 @@ import {
   Image,
   Text,
   Modal,
+  TouchableOpacity,
   TouchableHighlight
 } from 'react-native';
 
@@ -19,9 +20,9 @@ var Comment = React.createClass({
     return (
       <View>
         <View style={{flexDirection: 'row'}}>
-          <TouchableHighlight onPress={this.pressComment}>
+          <TouchableOpacity onPress={this.pressComment}>
             <Image style={{marginRight: 5}} source={require('../../imgs/ios7-chatbubble-outline.png')} />
-          </TouchableHighlight>
+          </TouchableOpacity>
           <Text>{this.props.counter}</Text>
         </View>
       </View>

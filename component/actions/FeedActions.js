@@ -5,6 +5,7 @@ import {
   Image,
   Text,
   Modal,
+  TouchableOpacity,
   TouchableHighlight,
   StyleSheet
 } from 'react-native';
@@ -37,9 +38,9 @@ var FeedActions = React.createClass({
           <View style={styles.feedActionComment}>
             <View>
               <View style={{flexDirection: 'row'}}>
-                <TouchableHighlight onPress={this.pressComment}>
+                <TouchableOpacity onPress={this.pressComment}>
                   <Image style={{marginRight: 5}} source={require('../../imgs/ios7-chatbubble-outline.png')} />
-                </TouchableHighlight>
+                </TouchableOpacity>
                 <Text>{this.props.commentCounter}</Text>
               </View>
             </View>

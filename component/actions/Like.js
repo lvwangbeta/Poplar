@@ -4,6 +4,7 @@ import {
   View,
   Image,
   Text,
+  TouchableOpacity,
   TouchableHighlight
 } from 'react-native';
 
@@ -27,9 +28,9 @@ var Like = React.createClass({
   render: function(){
     return (
       <View style={{flexDirection: 'row'}}>
-        <TouchableHighlight onPress={this.pressLike}>
+        <TouchableOpacity onPress={this.pressLike}>
           <Image style={{marginRight: 5}} source={require('../../imgs/ios7-heart-outline.png')} />
-        </TouchableHighlight>
+        </TouchableOpacity>
         <Text>{this.state.counter}</Text>
       </View>
     );
