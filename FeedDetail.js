@@ -29,6 +29,7 @@ var FeedDetail = React.createClass({
       isComment: false,
       comment: null,
       commentBarVisible: false,
+      commentCounter: this.props.feed.comment_count,
     });
   },
 
@@ -59,9 +60,16 @@ var FeedDetail = React.createClass({
     }
   },
 
+  pushNewComment2List: function(comment) {
+    this.setState({
+      commentCounter: this.state.commentCounter + 1,
+      comment: comment,
+    });
+  },
+
   renderCommentBar: function() {
     if(this.state.commentBarVisible) {
-      return (<CommentBar visible={true} pushComment2Feed={this.pushComment2Feed} hideCommentBar={this.hideCommentBar}/>);
+      return (<CommentBar visible={true} pushNewComment2List={this.pushNewComment2List} hideCommentBar={this.hideCommentBar}/>);
     } else {
       return (<View/>);
     }
@@ -101,10 +109,8 @@ var FeedDetail = React.createClass({
           <View style={styles.feedActions}>
               <View style={{flex:1}}></View>
               <View style={styles.feedActionComment}>
-                {/*<CommentAction counter={this.state.commentCounter} showCommentBar={this.props.showCommentBar} hideCommentBar={this.props.hideCommentBar}/>*/}
-                {/*<CommentAction counter={this.state.commentCounter} push2FeedDetail={this.props.push2FeedDetail}/>*/}
-                <CommentAction counter={this.props.feed.comment_count} showCommentBar={this.showCommentBar}/>
-                {this.renderCommentTip(this.props.feed.comment_count)}
+                <CommentAction counter={this.state.commentCounter} showCommentBar={this.showCommentBar}/>
+                {this.renderCommentTip(this.state.commentCounter)}
               </View>
               <View style={styles.feedActionLike}>
                 <LikeAction counter={this.props.feed.like_count} />
@@ -119,8 +125,8 @@ var FeedDetail = React.createClass({
             liked={false}
             commented={false}
             likeCounter={6}
-            commentCounter={this.props.feed.comment_count}
-            callbackParentSetReplyModalVisible={this.setReplyModalVisible}
+            commentCounter={this.state.commentCounter}
+            newComment={this.state.comment}
           />
 
         </ScrollView>

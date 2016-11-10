@@ -16,7 +16,6 @@ var Md5 = require('./Md5');
 var PoplarEnv = require('./PoplarEnv');
 var CommentCell = require('./CommentCell');
 var NewComment = require('./component/NewComment');
-var CommentBar = require('./component/CommentBar');
 var FeedActions = require('./component/actions/FeedActions');
 
 var COMMENT_URL = 'http://localhost:8080/com.lvwang.osf/api/v1/comment/';
@@ -118,17 +117,24 @@ var CommentList = React.createClass({
 
   addNewComment: function(comment) {
     console.log('add new comment to comments list');
+    console.log(comment);
     var commentsArray = this.state.commentsArray;
     commentsArray.push(comment);
 
-
     this.setState({
-      //commentCounter: this.state.commentCounter + 1,
       dataSource: this.state.dataSource.cloneWithRows(commentsArray),
     });
 
   },
 
+  componentWillReceiveProps: function(nextProps) {
+
+    if(this.props.commentCounter == nextProps.commentCounter) return;
+
+    if(nextProps.newComment != undefined && nextProps.newComment != null) {
+        this.addNewComment(nextProps.newComment);
+    }
+  },
 
   render: function() {
     if(!this.state.loaded) {
@@ -137,17 +143,6 @@ var CommentList = React.createClass({
     return this.renderCommentList(this.props.commentCounter);
   },
 
-  pushComment2Feed: function(comment) {
-    console.log('pushComment2Feed');
-    var commentsArray = this.state.commentsArray;
-    commentsArray.push(comment);
-
-    this.setState({
-      isComment: true,
-      dataSource: this.state.dataSource.cloneWithRows(commentsArray),
-    });
-
-  },
 
   showCommentBar: function() {
     this.setState({
@@ -162,22 +157,8 @@ var CommentList = React.createClass({
     });
   },
 
-  renderCommentBar: function() {
-    if(this.state.commentBarVisible) {
-      return (<CommentBar visible={true} pushComment2Feed={this.pushComment2Feed} hideCommentBar={this.hideCommentBar}/>);
-    } else {
-      return (<View/>);
-    }
-  },
 
   renderCommentList: function(commentCounter) {
-
-    // console.log(this.props.newComment);
-    //
-    // if(this.props.newComment != null && this.props.newComment != undefined) {
-    //   console.log(this.props.newComment.comment_content);
-    //   this.addNewComment(this.props.newComment);
-    // }
 
     if(commentCounter > 0) {
       return (

@@ -47,9 +47,9 @@ var CommentBar = React.createClass({
      comment_parent_author_name: null };
 
 
-     this.props.pushComment2Feed(comment);
+     this.props.pushNewComment2List(comment);
      console.log('call back');
-     //this.hide();
+     this.hide();
   },
 
   render: function(){
