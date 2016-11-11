@@ -30,6 +30,7 @@ var FeedDetail = React.createClass({
       comment: null,
       commentBarVisible: false,
       commentCounter: this.props.feed.comment_count,
+      commentParent:null,
     });
   },
 
@@ -69,7 +70,11 @@ var FeedDetail = React.createClass({
 
   renderCommentBar: function() {
     if(this.state.commentBarVisible) {
-      return (<CommentBar visible={true} pushNewComment2List={this.pushNewComment2List} hideCommentBar={this.hideCommentBar}/>);
+      return (<CommentBar
+                commentParent={this.state.commentParent}
+                visible={true}
+                pushNewComment2List={this.pushNewComment2List}
+                hideCommentBar={this.hideCommentBar}/>);
     } else {
       return (<View/>);
     }
@@ -85,6 +90,13 @@ var FeedDetail = React.createClass({
     this.setState({
       isComment: false,
       commentBarVisible: false,
+    });
+  },
+
+  reply: function(comment) {
+    this.setState({
+      commentBarVisible: true,
+      commentParent:comment,
     });
   },
 
@@ -127,6 +139,8 @@ var FeedDetail = React.createClass({
             likeCounter={6}
             commentCounter={this.state.commentCounter}
             newComment={this.state.comment}
+            from={'FeedDetail'}
+            reply={this.reply}
           />
 
         </ScrollView>

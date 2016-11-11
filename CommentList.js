@@ -185,6 +185,8 @@ var CommentList = React.createClass({
           push2FeedDetail={this.props.push2FeedDetail}
           showCommentBar={this.props.showCommentBar}
           hideCommentBar={this.props.hideCommentBar}
+          from={this.props.from}
+          reply={this.props.reply}
         />
     );
   },

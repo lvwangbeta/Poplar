@@ -23,14 +23,23 @@ var COMMENT_URL = 'http://localhost:8080/com.lvwang.osf/api/v1/comment/';
 
 var CommentCell = React.createClass({
 
+  onPress: function() {
+
+    if(this.props.from == 'FeedDetail') {
+      this.props.reply(this.props.comment);
+    } else {
+      this.props.push2FeedDetail();
+    }
+  },
+
   render: function(){
     return (
       <View>
-        <TouchableOpacity onPress={this.props.push2FeedDetail}>
+        <TouchableOpacity onPress={this.onPress}>
           <View style={styles.commentBox}>
             <Image style={styles.avatar} source={require('./imgs/avatar.png')} />
             <View>
-                <Text style={styles.username}>Kevin Rikina</Text>
+                <Text style={styles.username}>{this.props.comment.comment_author_name}</Text>
                 <Text style={styles.comment}>{this.props.comment.comment_content}</Text>
             </View>
           </View>

@@ -38,7 +38,7 @@ var CommentBar = React.createClass({
      comment_object_type: 2,
      comment_object_id: 77,
      comment_author: 23,
-     comment_author_name: 'demo1',
+     comment_author_name: 'lw',
      comment_author_avatar: '5245526e-9b78-4c69-9a99-4bd454f015a0.jpeg',
      comment_ts: 1465097153000,
      comment_content: '呵呵hhhhhh',
@@ -59,7 +59,7 @@ var CommentBar = React.createClass({
             <TextInput
               ref='commentBar'
               style={styles.input}
-              placeholder='reply kevin:'
+              placeholder={this.props.commentParent?'回复 '+this.props.commentParent.comment_author_name+' :':'回复:'}
               keyboardType='web-search'
               autoFocus={this.props.visible}
               onBlur={this.hide}
