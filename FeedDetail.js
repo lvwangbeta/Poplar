@@ -82,6 +82,7 @@ var FeedDetail = React.createClass({
 
   showCommentBar: function() {
     this.setState({
+      commentParent:null,
       commentBarVisible: true,
     });
   },
