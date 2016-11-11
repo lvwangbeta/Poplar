@@ -142,7 +142,7 @@ var styles = StyleSheet.create({
   },
 
   feedContent: {
-
+    flex: 1,
   },
   feedContentText: {
     flex: 1,
@@ -160,12 +160,12 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: -30,
     marginLeft: margin,
   },
   feedContentImage: {
     width: (windowWidth-margin*2-imgInterval*2) / 3,
     height:(windowWidth-margin*2-imgInterval*2) / 3,
+    marginBottom: imgInterval,
     marginRight: imgInterval,
   },
   feedActions:{

@@ -16,6 +16,8 @@ import {
 var store = require('./Store');
 var Form = t.form.Form;
 var FollowBtn = require('./component/actions/Follow');
+var FeedList = require('./FeedList');
+
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -149,7 +151,11 @@ var Mine = React.createClass({
             </View>
           </View>
           <View style={styles.myfeedsList}>
-
+            <FeedList
+              token={'6b6478dd-33ab-492e-b06d-05b7f1106c47'}
+              secret={'osf'}
+              navigator={this.props.navigator}
+            />
 
           </View>
         </ScrollView>
