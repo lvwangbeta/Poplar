@@ -7,6 +7,7 @@ import {
   Platform,
   StyleSheet,
   Text,
+  TouchableOpacity,
   TouchableHighlight,
   TouchableNativeFeedback,
   View,
@@ -77,7 +78,7 @@ var FeedCell = React.createClass({
   render: function(){
     return (
       <View>
-        <TouchableHighlight
+        <TouchableOpacity
           onPress={this.props.onSelect}>
           <View style={styles.container}>
               <View style={styles.feedHeader}>
@@ -94,7 +95,7 @@ var FeedCell = React.createClass({
 
           </View>
 
-        </TouchableHighlight>
+        </TouchableOpacity>
 
       </View>
     )

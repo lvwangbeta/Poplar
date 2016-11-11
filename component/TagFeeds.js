@@ -50,7 +50,6 @@ var TagFeeds = React.createClass({
       .then((responseData) => {
         console.log(responseData);
         this.setState({
-          //dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
           dataSource: this.state.dataSource.cloneWithRows(responseData.feeds),
           loaded: true,
         });
