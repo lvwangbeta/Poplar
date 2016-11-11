@@ -46,6 +46,9 @@ var CommentBar = React.createClass({
      comment_parent_author: 0,
      comment_parent_author_name: null };
 
+     if(this.props.commentParent) {
+       comment.comment_parent_author_name = this.props.commentParent.comment_author_name;
+     }
 
      this.props.pushNewComment2List(comment);
      console.log('call back');

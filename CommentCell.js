@@ -32,6 +32,20 @@ var CommentCell = React.createClass({
     }
   },
 
+  renderAuthorName: function(comment) {
+    if(comment.comment_parent_author_name != undefined && comment.comment_parent_author_name != null) {
+      return (<View style={{flex: 1, flexDirection: 'row'}}>
+                <Text style={styles.username}>{comment.comment_author_name}</Text>
+                <Text> 回复 </Text>
+                <Text style={styles.username}>{comment.comment_parent_author_name}</Text>
+              </View>
+            );
+    } else {
+      return (<Text style={styles.username}>{this.props.comment.comment_author_name}</Text>);
+    }
+
+  },
+
   render: function(){
     return (
       <View>
@@ -39,7 +53,7 @@ var CommentCell = React.createClass({
           <View style={styles.commentBox}>
             <Image style={styles.avatar} source={require('./imgs/avatar.png')} />
             <View>
-                <Text style={styles.username}>{this.props.comment.comment_author_name}</Text>
+                {this.renderAuthorName(this.props.comment)}
                 <Text style={styles.comment}>{this.props.comment.comment_content}</Text>
             </View>
           </View>
