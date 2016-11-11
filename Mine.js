@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 var store = require('./Store');
 var Form = t.form.Form;
-
+var FollowBtn = require('./component/actions/Follow');
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -132,6 +132,7 @@ var Mine = React.createClass({
               <View style={styles.desc}>
                 <Text style={styles.name}>断鸿</Text>
                 <Text style={styles.motto}>Time to do it</Text>
+                <FollowBtn/>
               </View>
               <View
                 style={{flex: 1,
@@ -184,6 +185,7 @@ var styles = StyleSheet.create({
   desc: {
     borderBottomWidth: 0.3,
     borderBottomColor: '#F3F3F3',
+    paddingBottom: 10,
   },
   motto:{
     marginTop: 10,
