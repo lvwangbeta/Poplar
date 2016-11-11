@@ -19,6 +19,7 @@ var LikeAction = require('./component/actions/Like');
 var CommentAction = require('./component/actions/Comment');
 var CommentBar = require('./component/CommentBar');
 var CommentList = require('./CommentList');
+var PhotoSwiper = require('./component/PhotoSwiper');
 
 var IMAGE_BASE_URL = 'http://7xkkim.com1.z0.glb.clouddn.com/';
 
@@ -31,6 +32,8 @@ var FeedDetail = React.createClass({
       commentBarVisible: false,
       commentCounter: this.props.feed.comment_count,
       commentParent:null,
+      showViewer: false,
+      showIndex: 0,
     });
   },
 
@@ -101,9 +104,27 @@ var FeedDetail = React.createClass({
     });
   },
 
+  viewerPressHandle: function() {
+    this.setState({
+      showViewer: false
+    })
+  },
+
+  thumbPressHandle: function(i) {
+    this.setState({
+      showViewer: true,
+      showIndex: i,
+    });
+  },
+
   render: function(){
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
+        {this.props.feed.content && <PhotoSwiper imgList={this.props.feed.content.split(':')}
+          showViewer={this.state.showViewer}
+          showIndex={this.state.showIndex}
+          viewerPressHandle={this.viewerPressHandle}/>
+        }
         <ScrollView>
           <View style={styles.container}>
               <View style={styles.feedHeader}>
@@ -115,7 +136,20 @@ var FeedDetail = React.createClass({
               </View>
               <View style={styles.feedContent}>
                   <Text style={styles.feedContentText}>{this.props.feed.summary}</Text>
-                  <View style={styles.feedContentImages}>{this.renderFeedImages(this.props.feed.content)}</View>
+
+                  {this.props.feed.content &&
+                  <View style={styles.feedContentImages}>
+                    {
+                      this.props.feed.content.split(':').map((item, i) =>
+                      <View style={{width:100, height:100, margin:1.5,}}>
+                        <TouchableOpacity key={i} onPress={e => this.thumbPressHandle(i)}>
+                          <Image source={{uri:IMAGE_BASE_URL + item}} style={styles.feedContentImage}/>
+                        </TouchableOpacity>
+                      </View>
+                      )
+                    }
+                  </View>
+                }
               </View>
           </View>
 
