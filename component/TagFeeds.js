@@ -50,7 +50,6 @@ var TagFeeds = React.createClass({
       .then((responseData) => {
         console.log(responseData);
         this.setState({
-          //dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
           dataSource: this.state.dataSource.cloneWithRows(responseData.feeds),
           loaded: true,
         });
@@ -98,7 +97,9 @@ var TagFeeds = React.createClass({
       <FeedCell
         onSelect={() => this.selectFeed(feed)}
         feed={feed}
-        navigator={this.props.navigator}
+        secret={this.props.secret}
+        token={this.props.token}
+        push2FeedDetail={() => this.selectFeed(feed)}
       />
     );
   }
