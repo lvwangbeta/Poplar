@@ -10,18 +10,10 @@
       "scale" : "3x"
     },
     {
-      "orientation" : "landscape",
-      "idiom" : "iphone",
-      "extent" : "full-screen",
-      "minimum-system-version" : "8.0",
-      "subtype" : "736h",
-      "scale" : "3x"
-    },
-    {
       "extent" : "full-screen",
       "idiom" : "iphone",
       "subtype" : "667h",
-      "filename" : "Poplar@2x.png",
+      "filename" : "750_1334.png",
       "minimum-system-version" : "8.0",
       "orientation" : "portrait",
       "scale" : "2x"
@@ -29,7 +21,6 @@
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
-      "filename" : "640_960.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
       "scale" : "2x"
@@ -52,6 +43,7 @@
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
+      "filename" : "640_960.png",
       "extent" : "full-screen",
       "scale" : "2x"
     },
