@@ -98,7 +98,9 @@ var TagFeeds = React.createClass({
       <FeedCell
         onSelect={() => this.selectFeed(feed)}
         feed={feed}
-        navigator={this.props.navigator}
+        secret={this.props.secret}
+        token={this.props.token}
+        push2FeedDetail={() => this.selectFeed(feed)}
       />
     );
   }
