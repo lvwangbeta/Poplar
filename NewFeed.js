@@ -83,16 +83,9 @@ var NewFeed = React.createClass({
     });
   },
 
-  callback: function() {
-    console.log('call back');
-    this.props.callbackParent(true);
-  },
-
   cancle: function() {
-    this.setState({modalVisible: false});
-    //this.callback();
+    this.props.hideNewFeedMode();
   },
-
 
   render: function() {
     var modalBackgroundStyle = {
@@ -102,11 +95,11 @@ var NewFeed = React.createClass({
       ? {backgroundColor: '#fff', padding: 20}
       : null;
     return (
-      <View style={styles.container}>
+      //<View style={styles.container}>
         <Modal
           animated={this.state.animated}
           transparent={this.state.transparent}
-          visible={this.state.modalVisible}>
+          visible={this.props.modalVisible}>
             <View style={{flex: 1, flexDirection: 'column'}}>
               <View style={styles.nav}>
                 <View style={styles.cancleBtn} >
@@ -129,7 +122,7 @@ var NewFeed = React.createClass({
             </View>
         </Modal>
 
-      </View>
+      //</View>
     );
   },
 });
