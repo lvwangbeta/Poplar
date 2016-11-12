@@ -12,7 +12,8 @@ import {
   TouchableNativeFeedback,
   View,
   Modal,
-  ScrollView
+  ScrollView,
+  Dimensions
 } from 'react-native';
 
 var LikeAction = require('./component/actions/Like');
@@ -21,7 +22,11 @@ var CommentBar = require('./component/CommentBar');
 var CommentList = require('./CommentList');
 var PhotoSwiper = require('./component/PhotoSwiper');
 
-var IMAGE_BASE_URL = 'http://7xkkim.com1.z0.glb.clouddn.com/';
+const windowWidth = Dimensions.get('window').width;
+const margin = 20;
+const imgInterval = 5;
+
+const IMAGE_BASE_URL = 'http://7xkkim.com1.z0.glb.clouddn.com/';
 
 var FeedDetail = React.createClass({
 
@@ -141,7 +146,7 @@ var FeedDetail = React.createClass({
                   <View style={styles.feedContentImages}>
                     {
                       this.props.feed.content.split(':').map((item, i) =>
-                      <View style={{width:100, height:100, margin:1.5,}}>
+                      <View style={styles.feedContentImage}>
                         <TouchableOpacity key={i} onPress={e => this.thumbPressHandle(i)}>
                           <Image source={{uri:IMAGE_BASE_URL + item}} style={styles.feedContentImage}/>
                         </TouchableOpacity>
@@ -250,9 +255,10 @@ var styles = StyleSheet.create({
     marginBottom: 10,
   },
   feedContentImage: {
-    width: 100,
-    height:100,
-    margin:1.5,
+    width: (windowWidth-margin*2-imgInterval*2) / 3,
+    height:(windowWidth-margin*2-imgInterval*2) / 3,
+    marginBottom: imgInterval,
+    marginRight: imgInterval,
   },
 
   thumbnail: {
