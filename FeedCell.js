@@ -75,6 +75,14 @@ var FeedCell = React.createClass({
     console.log(this.props.newComment);
   },
 
+  // pressAvatar: function(feed) {
+  //   this.props.navigator.push({
+  //     title: feed.user_name,
+  //     component: HomePage,
+  //     passProps: {feed:feed, secret:this.props.secret, token:this.props.token},
+  //   });
+  // },
+
   render: function(){
     return (
       <View>
@@ -82,7 +90,11 @@ var FeedCell = React.createClass({
           onPress={this.props.onSelect}>
           <View style={styles.container}>
               <View style={styles.feedHeader}>
-                  <Image source={{uri:IMAGE_BASE_URL + this.props.feed.user_avatar}} style={styles.avatar}/>
+                  <View>
+                    <TouchableOpacity onPress={this.props.pressAvatar}>
+                      <Image source={{uri:IMAGE_BASE_URL + this.props.feed.user_avatar}} style={styles.avatar}/>
+                    </TouchableOpacity>
+                  </View>
                   <View style={styles.feedUserInfo}>
                     <Text style={styles.feedUserName}>Kevin</Text>
                     <Text style={styles.feedTime}>2015-1-5</Text>

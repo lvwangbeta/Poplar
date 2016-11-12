@@ -17,6 +17,7 @@ import {
 var Md5 = require('./Md5');
 var FeedCell = require('./FeedCell');
 var FeedDetail = require('./FeedDetail');
+var HomePage = require('./component/HomePage');
 
 const windowWidth = Dimensions.get('window').width;
 var REQUEST_URL = 'http://localhost:8080/com.lvwang.osf/api/v1/timeline/';
@@ -90,10 +91,19 @@ var FeedList = React.createClass({
       this.props.navigator.push({
         title: '正文',
         component: FeedDetail,
-        passProps: {feed:feed, secret:this.props.secret, token:this.props.token},
+        passProps: {feed:feed, secret:this.props.secret, token:this.props.token, pressAvatar:()=>this.pressAvatar(feed)},
       });
     }
   },
+
+  pressAvatar: function(feed) {
+    this.props.navigator.push({
+      title: feed.user_name,
+      component: HomePage,
+      passProps: {feed:feed, secret:this.props.secret, token:this.props.token},
+    });
+  },
+
   pushComment2Feed: function(comment) {
     console.log('pushComment2Feed');
     this.setState({
@@ -107,10 +117,12 @@ var FeedList = React.createClass({
   renderFeed: function(feed) {
     return(
       <FeedCell
+        navigator={this.props.navigator}
         onSelect={() => this.selectFeed(feed)}
         feed={feed}
         token={this.props.token}
         secret={this.props.secret}
+        pressAvatar={() =>this.pressAvatar(feed)}
         push2FeedDetail={() => this.selectFeed(feed)}
       />
     );

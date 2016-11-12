@@ -133,7 +133,11 @@ var FeedDetail = React.createClass({
         <ScrollView>
           <View style={styles.container}>
               <View style={styles.feedHeader}>
-                  <Image source={{uri:IMAGE_BASE_URL + this.props.feed.user_avatar}} style={styles.avatar}/>
+                  <View>
+                    <TouchableOpacity onPress={this.props.pressAvatar}>
+                      <Image source={{uri:IMAGE_BASE_URL + this.props.feed.user_avatar}} style={styles.avatar}/>
+                    </TouchableOpacity>
+                  </View>
                   <View style={styles.feedUserInfo}>
                     <Text style={styles.feedUserName}>Kevin</Text>
                     <Text style={styles.feedTime}>2015-1-5</Text>

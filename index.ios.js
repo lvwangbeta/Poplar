@@ -64,7 +64,7 @@ var Poplar = React.createClass({
   getInitialState: function() {
     // store.clear();
     return {
-      selectedTab: 'iTab',
+      selectedTab: 'mainTab',
       notifCount: 0,
       presses: 0,
       isLoggedIn: false,
