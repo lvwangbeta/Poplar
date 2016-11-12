@@ -33,7 +33,7 @@ var TagDetail = React.createClass({
         <ScrollView style={{flex: 1, flexDirection: 'column'}}>
           <View style={styles.header}>
             <Image resizeMode='cover' style={styles.headerImg} source={require('../imgs/tag2.jpg')} />
-            <Text style={{position: 'absolute',left:10, bottom: 10, color: 'white', fontSize: 25, opacity: 0.9}}>#摄影</Text>
+            <Text style={{position: 'absolute',left:20, bottom: 10, color: 'white', backgroundColor: 'rgba(0,0,0,0)', fontSize: 25, opacity: 0.9}}>#摄影</Text>
           </View>
           <View style={styles.feedList}>
             <TagFeedList token={'6b6478dd-33ab-492e-b06d-05b7f1106c47'} secret={'osf'} navigator={this.props.navigator}/>
