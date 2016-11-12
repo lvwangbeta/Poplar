@@ -1,54 +1,34 @@
-'use strict';
-
 import React from 'react';
-var t = require('tcomb-form-native');
 var PoplarEnv = require('./PoplarEnv');
 import {
     StyleSheet,
     AsyncStorage,
     Text,
     View,
+    TouchableOpacity,
     TouchableHighlight,
     Image,
     Dimensions,
-    ScrollView
+    ScrollView,
+    Platform
 } from 'react-native';
 var store = require('./Store');
-var Form = t.form.Form;
 var FollowBtn = require('./component/actions/Follow');
 var FeedList = require('./FeedList');
+import {Auth,ImgOps,Conf,Rs,Rpc} from 'react-native-qiniu';
 
+import ImagePicker from 'react-native-image-picker';
 
 const windowWidth = Dimensions.get('window').width;
 
-var API_KEY = 'api_key';
-
-// here we are: define your domain model
-var Person = t.struct({
-  email: t.String,              // a required string
-  password: t.String,  // an optional string
-});
-
-var options = {
-  email: {
-    // you can use strings or JSX
-    error: 'Insert a valid email'
-  }
-
-}; // optional rendering options (see documentation)
-
-var value = {
-  email: 'osfdemo1@163.com',
-  password: 'demo123456',
-};
 
 var Mine = React.createClass({
 
   getInitialState: function(){
-
       return {
         login: false,
         api_key: null,
+        avatarSource: null,
       };
   },
 
@@ -84,33 +64,76 @@ var Mine = React.createClass({
   },
 */
 
-  onPress: function() {
-    this.setState({
-      login: true,
-      api_key: 'login',
+
+
+  upload: function() {
+
+    //set your key
+    //Conf.ACCESS_KEY = <AK>;
+    //Conf.SECRET_KEY = <SK>;
+
+    var putPolicy = new Auth.PutPolicy2(
+        {scope: "osfimgs2"}
+    );
+    var uptoken = putPolicy.token();
+
+    let formData = new FormData();
+    formData.append('file', {uri: this.state.avatarSource.uri, type: 'application/octet-stream', name: 'avatar_demo'});
+    formData.append('key', 'avatar_demo');
+    formData.append('token', uptoken);
+
+    Rpc.uploadFile(this.state.avatarSource.uri, uptoken, formData).then((response) => response.json()).then((responseData) => {
+      console.log(responseData.hash);
     });
-    store.setItem('api_key', 'login');
-    console.log(store.getItem('api_key'));
   },
 
-  checkLoginStatus: function(){
-    var api_key = this.state.api_key;
-    if(api_key !== null) {
-      console.log('api_key:'+api_key);
-      for(var key in api_key) {
-        console.log(key);
+
+  selectPhotoTapped: function() {
+    const options = {
+      quality: 1.0,
+      maxWidth: 500,
+      maxHeight: 500,
+      storageOptions: {
+        skipBackup: true
       }
-      return true;
-    } else {
-      return false;
-    }
+    };
+
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled photo picker');
+      }
+      else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      }
+      else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      }
+      else {
+        var source;
+
+        // You can display the image using either:
+        //source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
+
+        //Or:
+        if (Platform.OS === 'android') {
+          source = {uri: response.uri, isStatic: true};
+        } else {
+          source = {uri: response.uri.replace('file://', ''), isStatic: true};
+        }
+
+        this.setState({
+          avatarSource: source
+        }, () => this.upload());
+
+
+      }
+    });
   },
 
   render: function() {
 
-    if(this.checkLoginStatus()) {
-      return (<View><Text>ccc</Text></View>);
-    } else {
       return (
         <ScrollView style={styles.container}>
           {/* display */}
@@ -128,7 +151,11 @@ var Mine = React.createClass({
           <View style={styles.card}>
             <View>
               <Image resizeMode='cover' style={styles.background} source={require('./imgs/tag1.jpg')} />
-              <Image style={styles.avatar} source={require('./imgs/tag2.jpg')} />
+              <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+                {this.state.avatarSource === null ?
+                  <Image style={styles.avatar} source={require('./imgs/tag2.jpg')} />:
+                  <Image style={styles.avatar} source={this.state.avatarSource} />}
+              </TouchableOpacity>
             </View>
             <View style={styles.metas}>
               <View style={styles.desc}>
@@ -160,7 +187,6 @@ var Mine = React.createClass({
           </View>
         </ScrollView>
       );
-    }
 
 
   }

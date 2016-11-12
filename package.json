@@ -9,8 +9,10 @@
   "dependencies": {
     "react": "15.3.2",
     "react-native": "^0.36.1",
+    "react-native-image-picker": "^0.23.0",
     "react-native-keyboard-spacer": "^0.3.0",
     "react-native-photo-view": "^1.2.0",
+    "react-native-qiniu": "^0.2.2",
     "react-native-swiper": "^1.5.3"
   },
   "jest": {
@@ -24,6 +26,7 @@
     "babel-preset-react-native": "1.9.0",
     "jest": "16.0.2",
     "jest-react-native": "16.1.0",
-    "react-test-renderer": "15.3.2"
+    "react-test-renderer": "15.3.2",
+    "react-native-qiniu": "^0.2.2"
   }
 }
