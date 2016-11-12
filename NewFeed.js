@@ -6,62 +6,72 @@ import {
   Text,
   TextInput,
   Keyboard,
+  TouchableOpacity,
   TouchableHighlight,
   TouchableNativeFeedback,
   View,
   Modal,
   Navigator,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  NativeModules
 } from 'react-native';
 
 import {Auth,ImgOps,Conf,Rs,Rpc} from 'react-native-qiniu';
-import ImagePicker from 'react-native-image-picker';
+var ImagePicker = NativeModules.ImageCropPicker;
 
 const windowWidth = Dimensions.get('window').width;
+const margin = 20;
+const imgInterval = 5;
 
 var NewFeed = React.createClass({
 
   getInitialState() {
 
     return {
+      images: [],
       animated: true,
       modalVisible: true,
       transparent: false,
-      avatarSource: null,
-      videoSource: null
     };
   },
 
-  pickImage: function() {
-    ImagePickerManager.launchImageLibrary(options, (response)  => {
-      console.log('Response = ', response);
-
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      }
-      else if (response.error) {
-        console.log('ImagePickerManager Error: ', response.error);
-      }
-      else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      }
-      else {
-
-
-        // uri (on iOS)
-        const source = {uri: response.uri.replace('file://', ''), isStatic: true};
-
-
-        this.setState({
-          avatarSource: source
-        });
-      }
-    });
-  },
 
   cancle: function() {
     this.props.hideNewFeedMode();
+  },
+
+  pickMultiple: function() {
+    ImagePicker.openPicker({
+      multiple: true
+    }).then(images => {
+      this.setState({
+        image: null,
+        images: images.map((i, index) => {
+          console.log('received image', i);
+          return {uri: i.path, width: i.width, height: i.height, mime: i.mime, index: index};
+        })
+      });
+    }).catch(e => alert(e));
+
+  },
+
+  delImg: function(index) {
+    this.state.images.splice(index, 1);
+  },
+
+  renderImgsPicked: function() {
+    var imgViews = [];
+    if(this.state.images !== null && this.state.images.length != 0) {
+      for(let img of this.state.images) {
+        imgViews.push(<View style={styles.imgWrapper}>
+                        <Image style={styles.img} source={img} />
+                      </View>
+                    );
+      }
+    }
+
+    return imgViews || <View/>;
   },
 
   render: function() {
@@ -77,7 +87,7 @@ var NewFeed = React.createClass({
           animated={this.state.animated}
           transparent={this.state.transparent}
           visible={this.props.modalVisible}>
-            <View style={{flex: 1, flexDirection: 'column'}}>
+            <View style={{position: 'relative', flex: 1, flexDirection: 'column'}}>
               <View style={styles.nav}>
                 <View style={styles.cancleBtn} >
                   <Text onPress={this.cancle}>cancle</Text>
@@ -93,8 +103,13 @@ var NewFeed = React.createClass({
                   multiline={true}
                 />
               </View>
+              <View style={styles.imgContainer}>
+                  {this.renderImgsPicked()}
+              </View>
               <View style={styles.footer}>
-                <Text onPress={this.pickImage}>footer</Text>
+                <TouchableOpacity onPress={this.pickMultiple}>
+                  <Text>Muti</Text>
+                </TouchableOpacity>
               </View>
             </View>
         </Modal>
@@ -154,6 +169,35 @@ var styles = StyleSheet.create({
     height: 200,
     padding: 0,
   },
+
+  imgContainer: {
+    position: 'absolute',
+    top: 200,
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginLeft: margin,
+  },
+  imgWrapper: {
+    position: 'relative',
+    width: (windowWidth-margin*2-imgInterval*2) / 3,
+    height:(windowWidth-margin*2-imgInterval*2) / 3,
+    marginBottom: imgInterval,
+    marginRight: imgInterval,
+  },
+  img: {
+    width: (windowWidth-margin*2-imgInterval*2) / 3,
+    height:(windowWidth-margin*2-imgInterval*2) / 3,
+    marginBottom: imgInterval,
+    marginRight: imgInterval,
+    resizeMode: 'cover',
+  },
+  delIcon: {
+    position: 'absolute',
+    top:0,
+    right: 0,
+  }
+
 });
 
 
