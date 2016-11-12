@@ -90,6 +90,9 @@ var Mine = React.createClass({
 
   selectPhotoTapped: function() {
     const options = {
+      title: null,
+      takePhotoButtonTitle: null,
+      chooseFromLibraryButtonTitle: '从相册选择',
       quality: 1.0,
       maxWidth: 500,
       maxHeight: 500,
