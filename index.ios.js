@@ -27,7 +27,11 @@ var Poplar = React.createClass({
   getInitialState: function() {
     // store.clear();
     return {
+<<<<<<< HEAD
       selectedTab:'mainTab',
+=======
+      selectedTab: 'iTab',
+>>>>>>> img-picker
       notifCount: 0,
       presses: 0,
       isLoggedIn: false,
