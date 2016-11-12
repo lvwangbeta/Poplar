@@ -27,7 +27,7 @@ var Poplar = React.createClass({
   getInitialState: function() {
     // store.clear();
     return {
-      selectedTab: 'mainTab',
+      selectedTab:'mainTab',
       notifCount: 0,
       presses: 0,
       isLoggedIn: false,
@@ -91,8 +91,9 @@ var Poplar = React.createClass({
   },
 
   hideNewFeedMode: function() {
-    this.setState({newFeedModalVisible: false});
-
+    this.setState({
+      newFeedModalVisible: false,
+    });
   },
 
   renderNewFeedModal: function(){
@@ -134,6 +135,8 @@ var Poplar = React.createClass({
           systemIcon="history"
           selected={this.state.selectedTab === 'newFeedTab'}
           onPress={() => {
+            console.log('click new feed bar');
+            console.log('last selected tab: ' + this.state.lastSelectedTab);
             this.setState({
               selectedTab: 'newFeedTab',
               newFeedModalVisible: true,
@@ -162,7 +165,6 @@ var Poplar = React.createClass({
           onPress={() => {
             this.setState({
               selectedTab: 'iTab',
-              presses: this.state.presses + 1
             });
           }}>
           {this._renderContent('#414A8C', '我')}

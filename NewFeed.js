@@ -95,7 +95,7 @@ var NewFeed = React.createClass({
       ? {backgroundColor: '#fff', padding: 20}
       : null;
     return (
-      <View style={styles.container}>
+      //<View style={styles.container}>
         <Modal
           animated={this.state.animated}
           transparent={this.state.transparent}
@@ -122,7 +122,7 @@ var NewFeed = React.createClass({
             </View>
         </Modal>
 
-      </View>
+      //</View>
     );
   },
 });
