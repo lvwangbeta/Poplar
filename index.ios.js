@@ -25,7 +25,7 @@ var base64Icon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEsAAABLCAQAAACS
 var Poplar = React.createClass({
 
   getInitialState: function() {
-    // store.clear();
+    return {
       selectedTab:'mainTab',
       notifCount: 0,
       presses: 0,
