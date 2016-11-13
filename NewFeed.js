@@ -21,14 +21,17 @@ import {Auth,ImgOps,Conf,Rs,Rpc} from 'react-native-qiniu';
 var ImagePicker = NativeModules.ImageCropPicker;
 
 const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 const margin = 20;
 const imgInterval = 5;
+const textLengthLimit = 140;
 
 var NewFeed = React.createClass({
 
   getInitialState() {
 
     return {
+      text: '',
       images: [],
       animated: true,
       modalVisible: true,
@@ -92,13 +95,20 @@ var NewFeed = React.createClass({
     if(this.state.images !== null && this.state.images.length != 0) {
       for(let img of this.state.images) {
         imgViews.push(<View style={styles.imgWrapper}>
+                        {/* <Text style={styles.delIcon} onPress={this.delImg(img.index)}>x</Text> */}
                         <Image style={styles.img} source={img} />
                       </View>
                     );
       }
     }
 
-    this.upload();
+    imgViews.push(<View style={styles.imgWrapper}>
+                    {/* <Text style={styles.delIcon} onPress={this.delImg(img.index)}>x</Text> */}
+                    <TouchableOpacity onPress={this.pickMultiple}>
+                      <Image style={styles.img} source={require('./imgs/pickBtn.png')} />
+                    </TouchableOpacity>
+                  </View>);
+    //this.upload();
 
     return imgViews || <View/>;
   },
@@ -130,7 +140,11 @@ var NewFeed = React.createClass({
                   placeholder="说点什么吧..."
                   returnKeyType="next"
                   multiline={true}
+                  maxLength = {140}
+                  value={this.state.text}
+                  onChangeText={(text) => this.setState({text})}
                 />
+                <Text style={{position: 'absolute', bottom: 10, right: 20, color: '#9B9B9B'}}>{textLengthLimit-this.state.text.length}</Text>
               </View>
               <View style={styles.imgContainer}>
                   {this.renderImgsPicked()}
@@ -181,9 +195,12 @@ var styles = StyleSheet.create({
     paddingTop: 30,
     paddingLeft: 10,
     paddingRight: 10,
+    borderBottomWidth: 0.3,
+    borderBottomColor: '#F3F3F3',
   },
   input: {
-    flex:1,
+    //flex:1,
+    position: 'relative',
     //flexDirection:'column',
   },
   footer: {
@@ -194,17 +211,17 @@ var styles = StyleSheet.create({
     borderTopWidth: 0.5,
     borderTopColor: '#0f0f0f',
     flex: 1,
-    fontSize: 13,
-    height: 200,
-    padding: 0,
+    fontSize: 16,
+    height: 150,
+    padding: 20,
+    paddingBottom: 40,
   },
 
   imgContainer: {
-    position: 'absolute',
-    top: 200,
-    flex: 1,
+    height: windowHeight - 70 - 150 - 30,
     flexDirection: 'row',
     flexWrap: 'wrap',
+    paddingTop: 20,
     marginLeft: margin,
   },
   imgWrapper: {
@@ -225,6 +242,8 @@ var styles = StyleSheet.create({
     position: 'absolute',
     top:0,
     right: 0,
+    zIndex: 1,
+    backgroundColor: 'rgba(0,0,0,0)',
   }
 
 });
