@@ -56,6 +56,33 @@ var NewFeed = React.createClass({
 
   },
 
+  upload: function() {
+
+    //set your key
+    //Conf.ACCESS_KEY = <AK>;
+    //Conf.SECRET_KEY = <SK>;
+
+    var putPolicy = new Auth.PutPolicy2(
+        {scope: "osfimgs2"}
+    );
+    var uptoken = putPolicy.token();
+
+    if(this.state.images !== null && this.state.images.length != 0) {
+      let formData = new FormData();
+      for(let img of this.state.images) {
+
+        formData.append('file'+img.index, {uri: img.uri, type: 'application/octet-stream',name: img.index});
+        formData.append('token', uptoken);
+
+        Rpc.uploadFile(img.uri, uptoken, formData).then((response) => response.json()).then((responseData) => {
+         console.log(responseData);
+        });
+
+      }
+
+    }
+  },
+
   delImg: function(index) {
     this.state.images.splice(index, 1);
   },
@@ -70,6 +97,8 @@ var NewFeed = React.createClass({
                     );
       }
     }
+
+    this.upload();
 
     return imgViews || <View/>;
   },
