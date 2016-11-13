@@ -17,6 +17,7 @@ import {
   NativeModules
 } from 'react-native';
 
+import {newFeed} from './component/api/FeedAPI';
 import {Auth,ImgOps,Conf,Rs,Rpc} from 'react-native-qiniu';
 var ImagePicker = NativeModules.ImageCropPicker;
 
@@ -34,6 +35,8 @@ var NewFeed = React.createClass({
     return {
       text: '',
       images: [],
+      imagesID: [], //上传图片返回的 hash id
+      uploadAlready: false,
       animated: true,
       modalVisible: true,
       transparent: false,
@@ -82,6 +85,10 @@ var NewFeed = React.createClass({
 
         Rpc.uploadFile(img.uri, uptoken, formData).then((response) => response.json()).then((responseData) => {
          console.log(responseData);
+         this.state.imagesID.push({key:responseData.hash });
+         if(this.state.imagesID.length == this.state.images.length) {
+           newFeed(this.state.text, this.state.imagesID, '');
+         }
         });
 
       }
@@ -120,6 +127,10 @@ var NewFeed = React.createClass({
     return imgViews || <View/>;
   },
 
+  send: function() {
+    this.upload();
+  },
+
   render: function() {
     var modalBackgroundStyle = {
       backgroundColor: this.state.transparent ? 'rgba(0, 0, 0, 0.5)' : '#f5fcff',
@@ -140,7 +151,7 @@ var NewFeed = React.createClass({
                 </View>
                 <View style={styles.title}><Text style={{textAlign: 'center', fontWeight: 'bold'}}>发状态</Text></View>
                 <View style={styles.sendBtn}>
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={this.send}>
                     <Text style={{textAlign: 'right', color: '#00B5AD'}}>发送</Text>
                   </TouchableOpacity>
                 </View>
