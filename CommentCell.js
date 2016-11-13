@@ -19,7 +19,7 @@ var Md5 = require('./Md5');
 var ReplyModal = require('./NewFeed');
 
 var COMMENT_URL = 'http://localhost:8080/com.lvwang.osf/api/v1/comment/';
-
+const avatar_thumbnail = '?imageView2/1/w/100/h/100';
 
 var CommentCell = React.createClass({
 
