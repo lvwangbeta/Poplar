@@ -24,6 +24,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const margin = 20;
 const imgInterval = 5;
+const imgCountLimit = 9;
 const textLengthLimit = 140;
 
 var NewFeed = React.createClass({
@@ -46,14 +47,16 @@ var NewFeed = React.createClass({
 
   pickMultiple: function() {
     ImagePicker.openPicker({
-      multiple: true
+      multiple: true,
+      maxFiles: imgCountLimit - this.state.images.length,
     }).then(images => {
+      var newImages = this.state.images;
+      images.map((i, index) => {
+        console.log('received image', i);
+        newImages.push({uri: i.path, width: i.width, height: i.height, mime: i.mime, index: index});
+      });
       this.setState({
-        image: null,
-        images: images.map((i, index) => {
-          console.log('received image', i);
-          return {uri: i.path, width: i.width, height: i.height, mime: i.mime, index: index};
-        })
+        images: newImages,
       });
     }).catch(e => alert(e));
 
@@ -91,6 +94,8 @@ var NewFeed = React.createClass({
   },
 
   renderImgsPicked: function() {
+
+
     var imgViews = [];
     if(this.state.images !== null && this.state.images.length != 0) {
       for(let img of this.state.images) {
@@ -102,12 +107,14 @@ var NewFeed = React.createClass({
       }
     }
 
-    imgViews.push(<View style={styles.imgWrapper}>
-                    {/* <Text style={styles.delIcon} onPress={this.delImg(img.index)}>x</Text> */}
-                    <TouchableOpacity onPress={this.pickMultiple}>
-                      <Image style={styles.img} source={require('./imgs/pickBtn.png')} />
-                    </TouchableOpacity>
-                  </View>);
+    if(this.state.images.length < imgCountLimit) {
+      imgViews.push(<View style={styles.imgWrapper}>
+                      {/* <Text style={styles.delIcon} onPress={this.delImg(img.index)}>x</Text> */}
+                      <TouchableOpacity onPress={this.pickMultiple}>
+                        <Image style={styles.img} source={require('./imgs/pickBtn.png')} />
+                      </TouchableOpacity>
+                    </View>);
+    }
     //this.upload();
 
     return imgViews || <View/>;
@@ -139,7 +146,9 @@ var NewFeed = React.createClass({
                   style={styles.multiline}
                   placeholder="说点什么吧..."
                   returnKeyType="next"
+                  autoFocus={true}
                   multiline={true}
+                  keyboardType='twitter'
                   maxLength = {140}
                   value={this.state.text}
                   onChangeText={(text) => this.setState({text})}
