@@ -135,11 +135,15 @@ var NewFeed = React.createClass({
           visible={this.props.modalVisible}>
             <View style={{position: 'relative', flex: 1, flexDirection: 'column'}}>
               <View style={styles.nav}>
-                <View style={styles.cancleBtn} >
-                  <Text onPress={this.cancle}>cancle</Text>
+                <View style={styles.cancleBtn}>
+                  <Text onPress={this.cancle}>取消</Text>
                 </View>
-                <View style={styles.title}><Text style={{textAlign: 'center'}}>newFeed</Text></View>
-                <View style={styles.sendBtn}><Text style={{textAlign: 'right'}}>send</Text></View>
+                <View style={styles.title}><Text style={{textAlign: 'center', fontWeight: 'bold'}}>发状态</Text></View>
+                <View style={styles.sendBtn}>
+                  <TouchableOpacity>
+                    <Text style={{textAlign: 'right', color: '#00B5AD'}}>发送</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
               <View style={styles.input}>
                 <TextInput
@@ -153,15 +157,10 @@ var NewFeed = React.createClass({
                   value={this.state.text}
                   onChangeText={(text) => this.setState({text})}
                 />
-                <Text style={{position: 'absolute', bottom: 10, right: 20, color: '#9B9B9B'}}>{textLengthLimit-this.state.text.length}</Text>
+                <Text style={{position: 'absolute', bottom: -10, right: 20, color: '#9B9B9B'}}>{textLengthLimit-this.state.text.length}</Text>
               </View>
               <View style={styles.imgContainer}>
                   {this.renderImgsPicked()}
-              </View>
-              <View style={styles.footer}>
-                <TouchableOpacity onPress={this.pickMultiple}>
-                  <Text>Muti</Text>
-                </TouchableOpacity>
               </View>
             </View>
         </Modal>
@@ -201,11 +200,11 @@ var styles = StyleSheet.create({
     //flex: 1,
     flexDirection: 'row',
     height: 70,
-    paddingTop: 30,
+    paddingTop: 35,
     paddingLeft: 10,
     paddingRight: 10,
     borderBottomWidth: 0.3,
-    borderBottomColor: '#F3F3F3',
+    borderBottomColor: '#9B9B9B',
   },
   input: {
     //flex:1,
@@ -217,8 +216,8 @@ var styles = StyleSheet.create({
     backgroundColor:'#ff99ff',
   },
   multiline: {
-    borderTopWidth: 0.5,
-    borderTopColor: '#0f0f0f',
+    //borderTopWidth: 0.5,
+    //borderTopColor: '#0f0f0f',
     flex: 1,
     fontSize: 16,
     height: 150,
