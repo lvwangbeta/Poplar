@@ -20,7 +20,7 @@ import {Auth,ImgOps,Conf,Rs,Rpc} from 'react-native-qiniu';
 import ImagePicker from 'react-native-image-picker';
 
 const windowWidth = Dimensions.get('window').width;
-
+const avatar_thumbnail = '?imageView2/1/w/100/h/100';
 
 var Mine = React.createClass({
 

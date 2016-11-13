@@ -21,7 +21,9 @@ const windowWidth = Dimensions.get('window').width;
 const margin = 20;
 const imgInterval = 5;
 
-var IMAGE_BASE_URL = 'http://7xkkim.com1.z0.glb.clouddn.com/';
+const IMAGE_BASE_URL = 'http://ogj1ador4.bkt.clouddn.com/';
+const img_thumbnail = '?imageView2/1/w/200/h/200';
+const avatar_thumbnail = '?imageView2/1/w/100/h/100';
 
 var FeedCell = React.createClass({
 
@@ -30,7 +32,7 @@ var FeedCell = React.createClass({
     var images = content.split(":");
     var imagesView = [];
     for(var i=0; i<images.length-1; i++) {
-        imagesView.push(<Image source={{uri:IMAGE_BASE_URL + images[i]}} style={styles.feedContentImage}/>);
+        imagesView.push(<Image source={{uri:IMAGE_BASE_URL + images[i] + img_thumbnail}} style={styles.feedContentImage}/>);
     }
     return imagesView;
   },
@@ -92,7 +94,7 @@ var FeedCell = React.createClass({
               <View style={styles.feedHeader}>
                   <View>
                     <TouchableOpacity onPress={this.props.pressAvatar}>
-                      <Image source={{uri:IMAGE_BASE_URL + this.props.feed.user_avatar}} style={styles.avatar}/>
+                      <Image source={{uri:IMAGE_BASE_URL + this.props.feed.user_avatar + avatar_thumbnail}} style={styles.avatar}/>
                     </TouchableOpacity>
                   </View>
                   <View style={styles.feedUserInfo}>

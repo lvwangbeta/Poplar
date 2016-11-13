@@ -14,13 +14,12 @@ import {
   TouchableNativeFeedback,
 } from 'react-native';
 
-var Md5 = require('./Md5');
 var FeedCell = require('./FeedCell');
 var FeedDetail = require('./FeedDetail');
 var HomePage = require('./component/HomePage');
+import {getMyFeeds} from './component/api/FeedAPI';
 
 const windowWidth = Dimensions.get('window').width;
-var REQUEST_URL = 'http://localhost:8080/com.lvwang.osf/api/v1/timeline/';
 
 var FeedList = React.createClass({
 
@@ -37,26 +36,7 @@ var FeedList = React.createClass({
   },
 
   fetchData: function() {
-    var sign = Md5.hex_md5('/com.lvwang.osf/api/v1/timeline/?ts=123456&'+this.props.secret);
-    console.log('sign:' + sign);
-    var url = REQUEST_URL+'?ts=123456&sign=' + sign;
-    var headers = {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-Auth-Token':this.props.token,
-    }};
-
-    fetch(url, headers)
-      .then((response) => response.json())
-      .then((responseData) => {
-        console.log(responseData);
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(responseData.feeds),
-          loaded: true,
-        });
-      })
-      .done();
+    getMyFeeds(this);
   },
 
   render: function() {

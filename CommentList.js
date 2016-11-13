@@ -12,11 +12,12 @@ import {
   TouchableHighlight,
   TouchableNativeFeedback,
 } from 'react-native';
-var Md5 = require('./Md5');
+
 var PoplarEnv = require('./PoplarEnv');
 var CommentCell = require('./CommentCell');
 var NewComment = require('./component/NewComment');
 var FeedActions = require('./component/actions/FeedActions');
+import {getCommentsOfObject} from './component/api/CommentAPI';
 
 var COMMENT_URL = 'http://localhost:8080/com.lvwang.osf/api/v1/comment/';
 
@@ -72,28 +73,7 @@ var CommentList = React.createClass({
 
   fetchData: function() {
     var type_str = this.getCommentObjType(this.props.object_type);
-    var sign = Md5.hex_md5('/com.lvwang.osf/api/v1/comment/'+type_str+'/'+this.props.object_id+'?ts=123456&'+this.props.secret);
-    console.log('sign:' + sign);
-    var url = COMMENT_URL+type_str+'/'+this.props.object_id+'?ts=123456&sign=' + sign;
-    console.log('get comment url : ' + url);
-    var headers = {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-Auth-Token':this.props.token,
-    }};
-
-    fetch(url, headers)
-      .then((response) => response.json())
-      .then((responseData) => {
-        console.log(responseData);
-        this.setState({
-          commentsArray: responseData.comments.slice(0, this.state.limit),
-          dataSource: this.state.dataSource.cloneWithRows(responseData.comments.slice(0, this.state.limit)),
-          loaded: true,
-        });
-      })
-      .done();
+    getCommentsOfObject(type_str, this.props.object_id,this.state.limit, this);
   },
   renderLoadingView: function() {
     return (
