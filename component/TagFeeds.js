@@ -13,6 +13,7 @@ import {
   TouchableNativeFeedback,
 } from 'react-native';
 
+import {getTagFeedsOfPage} from './api/TagAPI';
 var Md5 = require('../Md5');
 var FeedCell = require('../FeedCell');
 var FeedDetail = require('../FeedDetail');
@@ -31,7 +32,8 @@ var TagFeeds = React.createClass({
     };
   },
   componentDidMount: function() {
-    this.fetchData();
+    getTagFeedsOfPage(29, 1, this);
+    //this.fetchData();
   },
 
   fetchData: function() {
