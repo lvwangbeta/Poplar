@@ -15,11 +15,12 @@ import {
 
 import Swiper from 'react-native-swiper';
 import PhotoView from 'react-native-photo-view';
+import URLConf from './api/URLConf';
 
 const { width, height } = Dimensions.get('window');
-const IMAGE_BASE_URL = 'http://ogj1ador4.bkt.clouddn.com/';
+const IMAGE_BASE_URL = URLConf.IMG_BASE_URL;
 const img_thumbnail = '?imageView2/1/w/200/h/200';
-const img_slide_thumbnail = '?imageView2/1/w/' + width;
+const img_slide_thumbnail = '?imageView2/1/w/200';
 
 const renderPagination = (index, total, context) => {
   return (
@@ -65,7 +66,8 @@ var PhotoSwiper = React.createClass({
   renderPhotoView: function() {
 
     var imagesView = [];
-    for(var i=0; i<this.state.imgList.length-1; i++) {
+    for(var i=0; i<this.state.imgList.length; i++) {
+        console.log(IMAGE_BASE_URL + this.state.imgList[i]);
         imagesView.push(<View style={styles.slide}>
                         <TouchableOpacity onPress={this.viewerPressHandle}>
                           <PhotoView
