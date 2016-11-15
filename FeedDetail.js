@@ -16,6 +16,7 @@ import {
   Dimensions
 } from 'react-native';
 
+import URLConf from './component/api/URLConf';
 var LikeAction = require('./component/actions/Like');
 var CommentAction = require('./component/actions/Comment');
 var CommentBar = require('./component/CommentBar');
@@ -26,7 +27,7 @@ const windowWidth = Dimensions.get('window').width;
 const margin = 20;
 const imgInterval = 5;
 
-const IMAGE_BASE_URL = 'http://ogj1ador4.bkt.clouddn.com/';
+const IMAGE_BASE_URL = URLConf.IMG_BASE_URL;
 const img_thumbnail = '?imageView2/1/w/200/h/200';
 const avatar_thumbnail = '?imageView2/1/w/100/h/100'
 
