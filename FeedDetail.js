@@ -127,12 +127,12 @@ var FeedDetail = React.createClass({
   render: function(){
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
-        {this.props.feed.content && <PhotoSwiper imgList={this.props.feed.content.split(':')}
-          showViewer={this.state.showViewer}
-          showIndex={this.state.showIndex}
-          viewerPressHandle={this.viewerPressHandle}/>
-        }
         <ScrollView>
+          {this.props.feed.content && <PhotoSwiper imgList={this.props.feed.content.slice(0,-1).split(':')}
+            showViewer={this.state.showViewer}
+            showIndex={this.state.showIndex}
+            viewerPressHandle={this.viewerPressHandle}/>
+          }
           <View style={styles.container}>
               <View style={styles.feedHeader}>
                   <View>
