@@ -39,10 +39,10 @@ var FeedCell = React.createClass({
     return imagesView;
   },
 
-  nav2TagDetail: function(id, tag) {
-    console.log(tag+ ':' +id);
+  nav2TagDetail: function(tag) {
+    console.log(tag.tag);
     this.props.navigator.push({
-      title: tag,
+      title: tag.tag,
       component: TagDetail,
     });
   },
@@ -55,9 +55,10 @@ var FeedCell = React.createClass({
             {this.props.feed.tags && <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.tagsContainer}>
               {
                 this.props.feed.tags.map(tag => <TouchableOpacity
-                                                  onPress={(tag)=>this.nav2TagDetail(tag.id, tag.tag)}>
+                                                  onPress={() => this.nav2TagDetail(tag)}>
                                                   <Text style={{color: '#9B9B9B', marginRight: 5}}>{tag.tag}</Text>
                                                 </TouchableOpacity>)
+
               }
               </ScrollView>
             }

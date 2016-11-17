@@ -22,6 +22,7 @@ var CommentAction = require('./component/actions/Comment');
 var CommentBar = require('./component/CommentBar');
 var CommentList = require('./CommentList');
 var PhotoSwiper = require('./component/PhotoSwiper');
+var TagDetail = require('./component/TagDetail');
 
 const windowWidth = Dimensions.get('window').width;
 const margin = 20;
@@ -46,13 +47,13 @@ var FeedDetail = React.createClass({
   },
 
   renderFeedImages: function(content) {
-    if(content == null) return [];
-    var images = content.split(":");
-    var imagesView = [];
-    for(var i=0; i<images.length-1; i++) {
-        imagesView.push(<Image source={{uri:IMAGE_BASE_URL + images[i] + img_thumbnail}} style={styles.feedContentImage}/>);
-    }
-    return imagesView;
+    return this.props.feed.content.slice(0,-1).split(':').map((item, i) =>
+            <View style={styles.feedContentImage}>
+              <TouchableOpacity key={i} onPress={e => this.thumbPressHandle(i)}>
+                <Image source={{uri:IMAGE_BASE_URL + item + img_thumbnail}} style={styles.feedContentImage}/>
+              </TouchableOpacity>
+            </View>
+          );
   },
 
   back: function(){
@@ -125,6 +126,22 @@ var FeedDetail = React.createClass({
     });
   },
 
+  renderFeedContent: function(feed) {
+    if(this.props.feed.summary == null || this.props.feed.summary.length == 0) {
+      return (
+        <View style={styles.feedContentImages}>{this.renderFeedImages(this.props.feed.content)}</View>
+      );
+    }
+    return (
+      <View>
+        <Text style={styles.feedContentText}>{this.props.feed.summary}</Text>
+        <View style={styles.feedContentImages}>{this.renderFeedImages(this.props.feed.content)}</View>
+      </View>
+    );
+  },
+
+
+
   render: function(){
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
@@ -146,34 +163,31 @@ var FeedDetail = React.createClass({
                     <Text style={styles.feedTime}>2015-1-5</Text>
                   </View>
               </View>
-              <View style={styles.feedContent}>
-                  <Text style={styles.feedContentText}>{this.props.feed.summary}</Text>
-
-                  {this.props.feed.content &&
-                  <View style={styles.feedContentImages}>
-                    {
-                      this.props.feed.content.split(':').map((item, i) =>
-                      <View style={styles.feedContentImage}>
-                        <TouchableOpacity key={i} onPress={e => this.thumbPressHandle(i)}>
-                          <Image source={{uri:IMAGE_BASE_URL + item + img_thumbnail}} style={styles.feedContentImage}/>
-                        </TouchableOpacity>
-                      </View>
-                      )
-                    }
-                  </View>
-                }
-              </View>
+              {this.renderFeedContent()}
           </View>
 
-          <View style={styles.feedActions}>
-              <View style={{flex:1}}></View>
-              <View style={styles.feedActionComment}>
-                <CommentAction counter={this.state.commentCounter} showCommentBar={this.showCommentBar}/>
-                {this.renderCommentTip(this.state.commentCounter)}
-              </View>
-              <View style={styles.feedActionLike}>
-                <LikeAction counter={this.props.feed.like_count} />
-              </View>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              {this.props.feed.tags && <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.tagsContainer}>
+                {
+                  this.props.feed.tags.map(tag => <TouchableOpacity
+                                                    onPress={() => this.props.nav2TagDetail(tag)}>
+                                                    <Text style={{color: '#9B9B9B', marginRight: 5}}>{tag.tag}</Text>
+                                                  </TouchableOpacity>)
+                }
+                </ScrollView>
+              }
+            </View>
+            <View style={styles.feedActions}>
+                <View style={{flex:1}}></View>
+                <View style={styles.feedActionComment}>
+                  <CommentAction counter={this.state.commentCounter} showCommentBar={this.showCommentBar}/>
+                  {this.renderCommentTip(this.state.commentCounter)}
+                </View>
+                <View style={styles.feedActionLike}>
+                  <LikeAction counter={this.props.feed.like_count} />
+                </View>
+            </View>
           </View>
 
           <CommentList
@@ -200,24 +214,16 @@ var FeedDetail = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // flexDirection: 'row',
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    flex: 1,
+    flexDirection: 'column',
+    marginBottom: 10,
+    paddingBottom: 10,
     backgroundColor: 'white',
-    padding: 10,
-    //margin: 10,
-    //borderRadius: 2,
-    borderWidth: 1,
-    borderColor: '#EEEEEE',
-    borderLeftWidth:0,
-    borderRightWidth: 0,
-    borderBottomWidth:0,
   },
   feedHeader: {
     flex: 1,
     flexDirection: 'row',
-    padding: 10,
+    margin: margin,
   },
   avatar: {
     width: 40,
@@ -229,6 +235,7 @@ var styles = StyleSheet.create({
   },
 
   feedUserName: {
+    marginTop: 3,
     fontSize: 17,
     color: '#00B5AD',
     lineHeight: 18,
@@ -241,14 +248,14 @@ var styles = StyleSheet.create({
   },
 
   feedContent: {
-
   },
   feedContentText: {
-    margin: 10,
+    flex: 1,
+    margin: margin,
+    marginTop: -10,
     fontSize: 15,
     color: '#333333',
     lineHeight: 19,
-    flex: 1,
   },
   feedContentSingleImage: {
     flex: 1,
@@ -258,8 +265,7 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginLeft: 10,
-    marginBottom: 10,
+    marginLeft: margin,
   },
   feedContentImage: {
     width: (windowWidth-margin*2-imgInterval*2) / 3,
@@ -267,60 +273,13 @@ var styles = StyleSheet.create({
     marginBottom: imgInterval,
     marginRight: imgInterval,
   },
-
-  thumbnail: {
-    flex: 1,
-    height: 81,
-  },
-  rightContainer: {
-    flex: 1,
-  },
-  listView: {
-    paddingTop: 70,
-    backgroundColor: 'white',
-  },
-  nav: {
-    //flex: 1,
-    flexDirection: 'row',
-    height: 70,
-    paddingTop: 30,
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-  cancleBtn: {
-    width: 50,
-  },
-  sendBtn: {
-    width: 50,
-  },
-  title: {
-    flex: 1,
-  },
-  navContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    height:50,
-    backgroundColor: '#00B5AD',
-  },
-  navBack: {
-    marginLeft:10,
-    marginTop:23,
-  },
-  navTitle: {
-    alignSelf:'center',
-    marginTop: 10,
-  },
-  navRight: {
-    marginRight:10,
-    marginTop:23,
-  },
   feedActions:{
     //borderWidth: 1,
     //borderTopColor: '#EEEEEE',
     flex :1,
     flexDirection: 'row',
     padding: 20,
+    paddingTop: 5,
     paddingBottom: 5,
   },
   feedActionComment: {
@@ -332,6 +291,19 @@ var styles = StyleSheet.create({
     width: 40,
     padding: 5,
   },
+  thumbnail: {
+    flex: 1,
+    height: 81,
+  },
+  rightContainer: {
+    flex: 1,
+  },
+  tagsContainer: {
+    flex: 3,
+    marginLeft: 20,
+    marginTop: 10,
+
+  }
 });
 
 module.exports = FeedDetail;
