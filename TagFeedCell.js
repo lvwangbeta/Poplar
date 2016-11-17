@@ -27,7 +27,7 @@ const IMAGE_BASE_URL = 'http://ogj1ador4.bkt.clouddn.com/';
 const img_thumbnail = '?imageView2/1/w/200/h/200';
 const avatar_thumbnail = '?imageView2/1/w/100/h/100';
 
-var FeedCell = React.createClass({
+var TagFeedCell = React.createClass({
 
   renderFeedImages: function(content) {
     if(content == null) return [];
@@ -40,13 +40,11 @@ var FeedCell = React.createClass({
   },
 
   nav2TagDetail: function(id, tag) {
-    console.log(tag+ ':' +id);
     this.props.navigator.push({
       title: tag,
       component: TagDetail,
     });
   },
-
 
   renderCommentList: function(){
       return(
@@ -54,10 +52,11 @@ var FeedCell = React.createClass({
           <View style={{flex: 1, flexDirection: 'row'}}>
             {this.props.feed.tags && <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.tagsContainer}>
               {
-                this.props.feed.tags.map(tag => <TouchableOpacity
-                                                  onPress={(tag)=>this.nav2TagDetail(tag.id, tag.tag)}>
-                                                  <Text style={{color: '#9B9B9B', marginRight: 5}}>{tag.tag}</Text>
-                                                </TouchableOpacity>)
+                this.props.feed.tags.map(tag =>
+                  <TouchableOpacity onPres={()=>this.nav2TagDetail(tag.id, tag.tag)}>
+                    <Text style={{color: '#9B9B9B', marginRight: 5}}>{tag.tag}</Text>
+                  </TouchableOpacity>
+                )
               }
               </ScrollView>
             }
@@ -234,4 +233,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = FeedCell;
+module.exports = TagFeedCell;

@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 
 import {getTagFeedsOfPage} from './api/TagAPI';
-var FeedCell = require('../FeedCell');
+var TagFeedCell = require('../TagFeedCell');
 var FeedDetail = require('../FeedDetail');
 
 
@@ -70,7 +70,7 @@ var TagFeeds = React.createClass({
   },
   renderFeed: function(feed) {
     return(
-      <FeedCell
+      <TagFeedCell
         onSelect={() => this.selectFeed(feed)}
         feed={feed}
         secret={this.props.secret}
