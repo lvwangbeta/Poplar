@@ -54,6 +54,7 @@ var FeedList = React.createClass({
         />
       </View>
     );
+
   },
 
   renderLoadingView: function() {
