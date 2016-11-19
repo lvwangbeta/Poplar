@@ -22,6 +22,7 @@ var MainPage = React.createClass({
         initialRoute={{
           title: '首页',
           component: FeedList,
+          passProps: {hideTabBar: this.props.hideTabBar, showTabBar: this.props.showTabBar}
         }}
         />
     );

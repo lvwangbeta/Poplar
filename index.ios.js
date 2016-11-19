@@ -28,6 +28,7 @@ var Poplar = React.createClass({
       selectedTab:'exploreTab',
       notifCount: 0,
       newFeedModalVisible: false,
+      showTabBar: true,
     };
   },
 
@@ -38,7 +39,7 @@ var Poplar = React.createClass({
     console.log('selected tab: '+ this.state.selectedTab);
 
     if(this.state.selectedTab == 'mainTab') {
-      return <MainPage />;
+      return <MainPage hideTabBar={this.hideTabBar} showTabBar={this.showTabBar}/>;
     } else if(this.state.selectedTab == 'iTab') {
       return <MinePage />;
     } else if(this.state.selectedTab == 'exploreTab') {
@@ -52,6 +53,18 @@ var Poplar = React.createClass({
     });
   },
 
+  hideTabBar: function() {
+    this.setState({
+      showTabBar: false,
+    });
+  },
+
+  showTabBar: function() {
+    this.setState({
+      showTabBar: true,
+    });
+  },
+
   render: function() {
     return (
       <View style={{flex:1, flexDirection: 'column'}}>
@@ -61,6 +74,8 @@ var Poplar = React.createClass({
         <View style={styles.main}>
           {this.renderContent()}
         </View>
+
+        {this.state.showTabBar &&
         <View style={styles.tabBar}>
           <View style={styles.tabBarItem}>
             <TouchableOpacity onPress={()=>{this.setState({selectedTab:'mainTab'})}}>
@@ -104,6 +119,7 @@ var Poplar = React.createClass({
             </TouchableOpacity>
           </View>
         </View>
+        }
 
       </View>
     );

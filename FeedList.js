@@ -76,7 +76,8 @@ var FeedList = React.createClass({
     });
   },
 
-  selectFeed: function(feed: Object) {
+  selectFeed: function(feed) {
+    //this.props.hideTabBar();
     if (Platform.OS === 'ios') {
       this.props.navigator.push({
         title: '正文',
