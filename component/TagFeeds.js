@@ -11,11 +11,19 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   TouchableNativeFeedback,
+  Dimensions
 } from 'react-native';
 
+import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {getTagFeedsOfPage} from './api/TagAPI';
 var TagFeedCell = require('../TagFeedCell');
 var FeedDetail = require('../FeedDetail');
+var TagFollow = require('./actions/TagFollow');
+
+const windowWidth = Dimensions.get('window').width;
+
+const PARALLAX_HEADER_HEIGHT = 220;
+const STICKY_HEADER_HEIGHT = 70;
 
 var TagFeeds = React.createClass({
 
@@ -33,15 +41,69 @@ var TagFeeds = React.createClass({
 
 
   render: function() {
+    const { onScroll = () => {} } = this.props;
     if(!this.state.loaded) {
       return this.renderLoadingView();
     }
     return (
         <View style={{flex: 1}}>
           <ListView
+            ref="ListView"
             dataSource={this.state.dataSource}
             renderRow={this.renderFeed}
             style={styles.listView}
+            renderScrollComponent=
+            {
+              props => (
+                        <ParallaxScrollView
+                          onScroll={onScroll}
+                          backgroundColor="rgba(255,255,255,1)"
+                          headerBackgroundColor="#333"
+                          stickyHeaderHeight={ STICKY_HEADER_HEIGHT }
+                          parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }
+                          backgroundSpeed={10}
+
+                          renderBackground={() => (
+                            <View key="background">
+                              <Image resizeMode='cover' style={styles.headerImg} source={require('../imgs/tag2.jpg')} />
+                              <View style={{position: 'absolute',
+                                            top: 0,
+                                            width: windowWidth,
+                                            backgroundColor: 'rgba(0,0,0,.4)',
+                                            height: PARALLAX_HEADER_HEIGHT}}/>
+                            </View>
+                          )}
+
+                          renderForeground={() => (
+                            <View key="parallax-header" style={ styles.parallaxHeader }>
+                              <View style={{flex: 1, flexDirection: 'row',justifyContent: 'center',alignItems: 'center', position: 'absolute',left:20, bottom: 40, backgroundColor: 'rgba(0,0,0,0)',}}>
+                                <Text style={{color: 'white', fontSize: 24, opacity: 0.9, marginRight: 10}}>#摄影</Text>
+                              </View>
+                            </View>
+                          )}
+
+                          renderStickyHeader={() => (
+                            <View key="sticky-header" style={styles.stickySection}>
+                              <Text style={styles.stickySectionText}>摄影</Text>
+                            </View>
+                          )}
+
+                          renderFixedHeader={() => (
+                            <View key="fixed-header" style={styles.fixedSection}>
+                              <View style={{left: -(windowWidth-112), bottom: -5,}}>
+                                <TouchableOpacity onPress={()=>this.props.navigator.pop()}>
+                                  <Image style={{width: 16, height: 16}} source={require('../imgs/back.png')} />
+                                </TouchableOpacity>
+
+                              </View>
+                              <TagFollow />
+                            </View>
+                          )}
+
+
+                          />
+                        )
+            }
           />
         </View>
     );
@@ -63,11 +125,18 @@ var TagFeeds = React.createClass({
       this.props.navigator.push({
         type: 'feed',
         component: FeedDetail,
-        passProps: {feed:feed, secret:this.props.secret, token:this.props.token, nav2TagDetail: this.props.nav2TagDetail},
+        passProps: {feed:feed, nav2TagDetail: this.props.nav2TagDetail},
       });
     }
   },
 
+  pressAvatar: function(feed) {
+    this.props.navigator.push({
+      title: feed.user_name,
+      component: HomePage,
+      passProps: {feed:feed, nav2TagDetail: this.props.nav2TagDetail},
+    });
+  },
 
   renderFeed: function(feed) {
     return(
@@ -78,6 +147,7 @@ var TagFeeds = React.createClass({
         token={this.props.token}
         push2FeedDetail={() => this.selectFeed(feed)}
         navigator={this.props.navigator}
+        pressAvatar={() =>this.pressAvatar(feed)}
         nav2TagDetail={this.props.nav2TagDetail}
       />
     );
@@ -131,6 +201,38 @@ var styles = StyleSheet.create({
     marginRight:10,
     marginTop:23,
   },
+  parallaxHeader: {
+    alignItems: 'flex-end',
+    flex: 1,
+    flexDirection: 'row',
+    paddingLeft: 20,
+    paddingBottom: 20,
+  },
+
+  headerImg: {
+    height: PARALLAX_HEADER_HEIGHT,
+  },
+
+  stickySection: {
+    height: STICKY_HEADER_HEIGHT,
+    width: windowWidth,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 13,
+  },
+  stickySectionText: {
+    color: 'black',
+    fontSize: 18,
+  },
+  fixedSection: {
+    flex: 1,
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 10,
+    right: 20
+  },
+
+
 });
 
 module.exports = TagFeeds;
