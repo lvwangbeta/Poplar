@@ -17,7 +17,6 @@ import {
   TouchableNativeFeedback,
 } from 'react-native';
 
-var TagFollow = require('./actions/TagFollow');
 var TagFeedList = require('./TagFeeds');
 
 const windowWidth = Dimensions.get('window').width;
@@ -39,19 +38,7 @@ var TagDetail = React.createClass({
   render: function(){
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
-        <ScrollView style={{flex: 1, flexDirection: 'column'}}>
-          <View style={styles.header}>
-            <Image resizeMode='cover' style={styles.headerImg} source={require('../imgs/tag2.jpg')} />
-            <View style={{flex: 1, flexDirection: 'row',justifyContent: 'center',alignItems: 'center', position: 'absolute',left:20, bottom: 10, backgroundColor: 'rgba(0,0,0,0)'}}>
-              <Text style={{color: 'white', fontSize: 24, opacity: 0.9, marginRight: 10}}>#摄影</Text>
-              <TagFollow />
-            </View>
-          </View>
-          <View style={styles.feedList}>
-            <TagFeedList token={'6b6478dd-33ab-492e-b06d-05b7f1106c47'} secret={'osf'} navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail}/>
-          </View>
-
-        </ScrollView>
+        <TagFeedList navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail}/>
       </View>
     );
   },
