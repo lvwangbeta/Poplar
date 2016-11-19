@@ -141,7 +141,6 @@ var FeedDetail = React.createClass({
   },
 
 
-
   render: function(){
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>

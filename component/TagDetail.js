@@ -28,6 +28,14 @@ var TagDetail = React.createClass({
     this.props.navigator.pop();
   },
 
+  nav2TagDetail: function(tag) {
+    console.log(tag.tag);
+    this.props.navigator.push({
+      title: tag.tag,
+      component: TagDetail,
+    });
+  },
+
   render: function(){
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
@@ -40,7 +48,7 @@ var TagDetail = React.createClass({
             </View>
           </View>
           <View style={styles.feedList}>
-            <TagFeedList token={'6b6478dd-33ab-492e-b06d-05b7f1106c47'} secret={'osf'} navigator={this.props.navigator}/>
+            <TagFeedList token={'6b6478dd-33ab-492e-b06d-05b7f1106c47'} secret={'osf'} navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail}/>
           </View>
 
         </ScrollView>

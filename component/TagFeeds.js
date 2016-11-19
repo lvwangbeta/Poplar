@@ -17,7 +17,6 @@ import {getTagFeedsOfPage} from './api/TagAPI';
 var TagFeedCell = require('../TagFeedCell');
 var FeedDetail = require('../FeedDetail');
 
-
 var TagFeeds = React.createClass({
 
   getInitialState: function() {
@@ -68,6 +67,8 @@ var TagFeeds = React.createClass({
       });
     }
   },
+
+
   renderFeed: function(feed) {
     return(
       <TagFeedCell
@@ -76,6 +77,8 @@ var TagFeeds = React.createClass({
         secret={this.props.secret}
         token={this.props.token}
         push2FeedDetail={() => this.selectFeed(feed)}
+        navigator={this.props.navigator}
+        nav2TagDetail={this.props.nav2TagDetail}
       />
     );
   }

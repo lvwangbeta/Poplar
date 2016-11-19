@@ -17,7 +17,6 @@ import {
 
 var CommentList = require('./CommentList');
 var FeedActions = require('./component/actions/FeedActions');
-var TagDetail = require('./component/TagDetail');
 
 const windowWidth = Dimensions.get('window').width;
 const margin = 20;
@@ -39,12 +38,6 @@ var TagFeedCell = React.createClass({
     return imagesView;
   },
 
-  nav2TagDetail: function(id, tag) {
-    this.props.navigator.push({
-      title: tag,
-      component: TagDetail,
-    });
-  },
 
   renderCommentList: function(){
       return(
@@ -52,11 +45,10 @@ var TagFeedCell = React.createClass({
           <View style={{flex: 1, flexDirection: 'row'}}>
             {this.props.feed.tags && <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.tagsContainer}>
               {
-                this.props.feed.tags.map(tag =>
-                  <TouchableOpacity onPres={()=>this.nav2TagDetail(tag.id, tag.tag)}>
-                    <Text style={{color: '#9B9B9B', marginRight: 5}}>{tag.tag}</Text>
-                  </TouchableOpacity>
-                )
+                this.props.feed.tags.map(tag => <TouchableOpacity
+                                                  onPress={()=>this.props.nav2TagDetail(tag)}>
+                                                  <Text style={{color: '#9B9B9B', marginRight: 5}}>{tag.tag}</Text>
+                                                </TouchableOpacity>)
               }
               </ScrollView>
             }
