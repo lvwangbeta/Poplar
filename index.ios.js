@@ -27,10 +27,6 @@ var Poplar = React.createClass({
     return {
       selectedTab:'exploreTab',
       notifCount: 0,
-      presses: 0,
-      isLoggedIn: false,
-      token: '6b6478dd-33ab-492e-b06d-05b7f1106c47',
-      secret: 'osf',
       newFeedModalVisible: false,
     };
   },
