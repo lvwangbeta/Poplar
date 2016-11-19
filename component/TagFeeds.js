@@ -14,13 +14,11 @@ import {
   Dimensions
 } from 'react-native';
 
-import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {getTagFeedsOfPage} from './api/TagAPI';
 var TagFeedCell = require('../TagFeedCell');
 var FeedDetail = require('../FeedDetail');
 
 const windowWidth = Dimensions.get('window').width;
-
 
 var TagFeeds = React.createClass({
 

@@ -20,6 +20,7 @@ import {
 var TagFollow = require('./actions/TagFollow');
 var TagFeedList = require('./TagFeeds');
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
+import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 
 const windowWidth = Dimensions.get('window').width;
 const window = Dimensions.get('window');
@@ -89,7 +90,18 @@ var TagDetail = React.createClass({
             <TagFollow />
           </View>
           )}>
-          <TagFeedList navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail}/>
+
+          <ScrollableTabView
+                style={{marginTop: 10, }}
+                tabBarUnderlineStyle={{backgroundColor: '#00B5AD', height: 2,}}
+                tabBarActiveTextColor={'rgb(0,0,0)'}
+                initialPage={0}
+                renderTabBar={() => <ScrollableTabBar />}
+              >
+                <ScrollView tabLabel='热门' style={{borderBottomColor: '#00B5AD'}}><TagFeedList navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail}/></ScrollView>
+                <ScrollView tabLabel='最新'><TagFeedList navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail}/></ScrollView>
+              </ScrollableTabView>
+
         </ParallaxScrollView>
 
       </View>
