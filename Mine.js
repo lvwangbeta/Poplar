@@ -182,8 +182,6 @@ var Mine = React.createClass({
           </View>
           <View style={styles.myfeedsList}>
             <FeedList
-              token={'6b6478dd-33ab-492e-b06d-05b7f1106c47'}
-              secret={'osf'}
               navigator={this.props.navigator}
             />
 
@@ -237,7 +235,7 @@ var styles = StyleSheet.create({
     lineHeight: 18,
   },
   myfeedsList: {
-
+    marginTop: -65,
   },
   title: {
     fontSize: 30,
