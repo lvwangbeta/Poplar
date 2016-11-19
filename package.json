@@ -15,6 +15,7 @@
     "react-native-parallax-scroll-view": "^0.19.0",
     "react-native-photo-view": "^1.2.0",
     "react-native-qiniu": "^0.2.2",
+    "react-native-scrollable-tab-view": "^0.6.0",
     "react-native-swiper": "^1.5.3"
   },
   "jest": {
