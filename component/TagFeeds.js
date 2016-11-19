@@ -125,11 +125,18 @@ var TagFeeds = React.createClass({
       this.props.navigator.push({
         type: 'feed',
         component: FeedDetail,
-        passProps: {feed:feed, secret:this.props.secret, token:this.props.token, nav2TagDetail: this.props.nav2TagDetail},
+        passProps: {feed:feed, nav2TagDetail: this.props.nav2TagDetail},
       });
     }
   },
 
+  pressAvatar: function(feed) {
+    this.props.navigator.push({
+      title: feed.user_name,
+      component: HomePage,
+      passProps: {feed:feed, nav2TagDetail: this.props.nav2TagDetail},
+    });
+  },
 
   renderFeed: function(feed) {
     return(
@@ -140,6 +147,7 @@ var TagFeeds = React.createClass({
         token={this.props.token}
         push2FeedDetail={() => this.selectFeed(feed)}
         navigator={this.props.navigator}
+        pressAvatar={() =>this.pressAvatar(feed)}
         nav2TagDetail={this.props.nav2TagDetail}
       />
     );

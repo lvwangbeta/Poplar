@@ -90,7 +90,7 @@ var FeedList = React.createClass({
     this.props.navigator.push({
       title: feed.user_name,
       component: HomePage,
-      passProps: {feed:feed, secret:this.props.secret, token:this.props.token},
+      passProps: {feed:feed, nav2TagDetail:this.nav2TagDetail},
     });
   },
 

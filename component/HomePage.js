@@ -14,14 +14,12 @@ import {
     ListView,
 } from 'react-native';
 
-var Md5 = require('../Md5');
-var PoplarEnv = require('../PoplarEnv');
 var FollowBtn = require('./actions/Follow');
 var FeedDetail = require('../FeedDetail');
 var FeedCell = require('../FeedCell');
+import {getMyFeeds} from './api/FeedAPI';
 
 const windowWidth = Dimensions.get('window').width;
-const REQUEST_URL = 'http://localhost:8080/com.lvwang.osf/api/v1/timeline/';
 
 var HomePage = React.createClass({
 
@@ -38,26 +36,7 @@ var HomePage = React.createClass({
   },
 
   fetchData: function() {
-    var sign = Md5.hex_md5('/com.lvwang.osf/api/v1/timeline/?ts=123456&'+this.props.secret);
-    console.log('sign:' + sign);
-    var url = REQUEST_URL+'?ts=123456&sign=' + sign;
-    var headers = {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-Auth-Token':this.props.token,
-    }};
-
-    fetch(url, headers)
-      .then((response) => response.json())
-      .then((responseData) => {
-        console.log(responseData);
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(responseData.feeds),
-          loaded: true,
-        });
-      })
-      .done();
+    getMyFeeds(this);
   },
 
   renderLoadingView: function() {
@@ -72,11 +51,11 @@ var HomePage = React.createClass({
     );
   },
 
-  selectFeed: function(feed: Object) {
+  selectFeed: function(feed) {
     this.props.navigator.push({
       title: '正文',
       component: FeedDetail,
-      passProps: {feed:feed, secret:this.props.secret, token:this.props.token},
+      passProps: {feed:feed, nav2TagDetail:this.props.nav2TagDetail},
     });
   },
 
@@ -89,6 +68,7 @@ var HomePage = React.createClass({
         token={this.props.token}
         secret={this.props.secret}
         push2FeedDetail={() => this.selectFeed(feed)}
+        nav2TagDetail={this.props.nav2TagDetail}
       />
     );
   },
