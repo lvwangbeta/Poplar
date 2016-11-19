@@ -16,6 +16,7 @@ import {
 
 var FeedCell = require('./FeedCell');
 var FeedDetail = require('./FeedDetail');
+var TagDetail = require('./component/TagDetail');
 var HomePage = require('./component/HomePage');
 import {getMyFeeds} from './component/api/FeedAPI';
 
@@ -66,12 +67,20 @@ var FeedList = React.createClass({
 
     );
   },
+
+  nav2TagDetail: function(tag) {
+    this.props.navigator.push({
+        title: tag.tag,
+        component: TagDetail,
+    });
+  },
+
   selectFeed: function(feed: Object) {
     if (Platform.OS === 'ios') {
       this.props.navigator.push({
         title: '正文',
         component: FeedDetail,
-        passProps: {feed:feed, secret:this.props.secret, token:this.props.token, pressAvatar:()=>this.pressAvatar(feed)},
+        passProps: {feed:feed, pressAvatar:()=>this.pressAvatar(feed), nav2TagDetail:this.nav2TagDetail},
       });
     }
   },

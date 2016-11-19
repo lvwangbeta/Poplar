@@ -77,6 +77,7 @@ var styles = StyleSheet.create({
     flex :1,
     flexDirection: 'row',
     padding: 20,
+    paddingTop: 5,
     paddingBottom: 5,
   },
   feedActionComment: {

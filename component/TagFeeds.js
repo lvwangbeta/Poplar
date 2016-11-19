@@ -13,12 +13,9 @@ import {
   TouchableNativeFeedback,
 } from 'react-native';
 
-var Md5 = require('../Md5');
-var FeedCell = require('../FeedCell');
+import {getTagFeedsOfPage} from './api/TagAPI';
+var TagFeedCell = require('../TagFeedCell');
 var FeedDetail = require('../FeedDetail');
-
-//var REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
-var REQUEST_URL = 'http://localhost:8080/com.lvwang.osf/api/v1/timeline/';
 
 var TagFeeds = React.createClass({
 
@@ -31,31 +28,9 @@ var TagFeeds = React.createClass({
     };
   },
   componentDidMount: function() {
-    this.fetchData();
+    getTagFeedsOfPage(29, 1, this);
   },
 
-  fetchData: function() {
-    var sign = Md5.hex_md5('/com.lvwang.osf/api/v1/timeline/?ts=123456&'+this.props.secret);
-    console.log('sign:' + sign);
-    var url = REQUEST_URL+'?ts=123456&sign=' + sign;
-    var headers = {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-Auth-Token':this.props.token,
-    }};
-
-    fetch(url, headers)
-      .then((response) => response.json())
-      .then((responseData) => {
-        console.log(responseData);
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(responseData.feeds),
-          loaded: true,
-        });
-      })
-      .done();
-  },
 
   render: function() {
     if(!this.state.loaded) {
@@ -88,18 +63,22 @@ var TagFeeds = React.createClass({
       this.props.navigator.push({
         type: 'feed',
         component: FeedDetail,
-        passProps: {feed:feed, secret:this.props.secret, token:this.props.token},
+        passProps: {feed:feed, secret:this.props.secret, token:this.props.token, nav2TagDetail: this.props.nav2TagDetail},
       });
     }
   },
+
+
   renderFeed: function(feed) {
     return(
-      <FeedCell
+      <TagFeedCell
         onSelect={() => this.selectFeed(feed)}
         feed={feed}
         secret={this.props.secret}
         token={this.props.token}
         push2FeedDetail={() => this.selectFeed(feed)}
+        navigator={this.props.navigator}
+        nav2TagDetail={this.props.nav2TagDetail}
       />
     );
   }

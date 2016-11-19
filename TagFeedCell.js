@@ -17,7 +17,6 @@ import {
 
 var CommentList = require('./CommentList');
 var FeedActions = require('./component/actions/FeedActions');
-var TagDetail = require('./component/TagDetail');
 
 const windowWidth = Dimensions.get('window').width;
 const margin = 20;
@@ -27,7 +26,7 @@ const IMAGE_BASE_URL = 'http://ogj1ador4.bkt.clouddn.com/';
 const img_thumbnail = '?imageView2/1/w/200/h/200';
 const avatar_thumbnail = '?imageView2/1/w/100/h/100';
 
-var FeedCell = React.createClass({
+var TagFeedCell = React.createClass({
 
   renderFeedImages: function(content) {
     if(content == null) return [];
@@ -39,14 +38,6 @@ var FeedCell = React.createClass({
     return imagesView;
   },
 
-  nav2TagDetail: function(tag) {
-    console.log(tag.tag);
-    this.props.navigator.push({
-      title: tag.tag,
-      component: TagDetail,
-    });
-  },
-
 
   renderCommentList: function(){
       return(
@@ -55,10 +46,9 @@ var FeedCell = React.createClass({
             {this.props.feed.tags && <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.tagsContainer}>
               {
                 this.props.feed.tags.map(tag => <TouchableOpacity
-                                                  onPress={() => this.nav2TagDetail(tag)}>
+                                                  onPress={()=>this.props.nav2TagDetail(tag)}>
                                                   <Text style={{color: '#9B9B9B', marginRight: 5}}>{tag.tag}</Text>
                                                 </TouchableOpacity>)
-
               }
               </ScrollView>
             }
@@ -235,4 +225,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = FeedCell;
+module.exports = TagFeedCell;

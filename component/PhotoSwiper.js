@@ -15,9 +15,12 @@ import {
 
 import Swiper from 'react-native-swiper';
 import PhotoView from 'react-native-photo-view';
+import URLConf from './api/URLConf';
 
 const { width, height } = Dimensions.get('window');
-const IMAGE_BASE_URL = 'http://7xkkim.com1.z0.glb.clouddn.com/';
+const IMAGE_BASE_URL = URLConf.IMG_BASE_URL;
+const img_thumbnail = '?imageView2/1/w/200/h/200';
+const img_slide_thumbnail = '?imageView2/1/w/200';
 
 const renderPagination = (index, total, context) => {
   return (
@@ -44,22 +47,6 @@ const renderPagination = (index, total, context) => {
   )
 };
 
-const Viewer = props => <Swiper index={props.index} style={styles.wrapper} renderPagination={renderPagination}>
-  {
-    props.imgList.map((item, i) => <View key={i} style={styles.slide}>
-      <TouchableWithoutFeedback onPress={e => props.pressHandle()}>
-        <PhotoView
-          source={{uri: IMAGE_BASE_URL + item}}
-          resizeMode='contain'
-          minimumZoomScale={0.5}
-          maximumZoomScale={3}
-          androidScaleType='center'
-          style={styles.photo} />
-      </TouchableWithoutFeedback>
-    </View>)
-  }
-</Swiper>
-
 
 var PhotoSwiper = React.createClass({
 
@@ -77,12 +64,14 @@ var PhotoSwiper = React.createClass({
   },
 
   renderPhotoView: function() {
+
     var imagesView = [];
-    for(var i=0; i<this.state.imgList.length-1; i++) {
+    for(var i=0; i<this.state.imgList.length; i++) {
+        console.log(IMAGE_BASE_URL + this.state.imgList[i]);
         imagesView.push(<View style={styles.slide}>
                         <TouchableOpacity onPress={this.viewerPressHandle}>
                           <PhotoView
-                            source={{uri: IMAGE_BASE_URL + this.state.imgList[i]}}
+                            source={{uri: IMAGE_BASE_URL + this.state.imgList[i] + img_slide_thumbnail}}
                             resizeMode='contain'
                             minimumZoomScale={0.5}
                             maximumZoomScale={3}
@@ -96,16 +85,18 @@ var PhotoSwiper = React.createClass({
 
   render: function() {
     return (
-      <View>
+      <View style={{position: 'relative'}}>
         {this.props.showViewer &&
-          <Swiper index={this.props.showIndex} style={styles.wrapper} renderPagination={renderPagination}>
-            {this.renderPhotoView()}
+          <Swiper index={this.props.showIndex}
+                  style={styles.wrapper}
+                  viewerPressHandle={this.viewerPressHandle}
+                  renderPagination={renderPagination}
+                  >
+                  {this.renderPhotoView()}
           </Swiper>
         }
       </View>);
   },
-
-
 });
 
 
@@ -138,7 +129,8 @@ var styles = StyleSheet.create({
   photo: {
     width,
     height: 300,
-    flex: 1
+    flex: 1,
+    marginTop: -100,
   },
   text: {
     color: '#fff',
