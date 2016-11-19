@@ -154,7 +154,7 @@ var Mine = React.createClass({
           <View style={styles.card}>
             <View>
               <Image resizeMode='cover' style={styles.background} source={require('./imgs/tag1.jpg')} />
-              <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+              <TouchableOpacity onPress={this.selectPhotoTapped}>
                 {this.state.avatarSource === null ?
                   <Image style={styles.avatar} source={require('./imgs/tag2.jpg')} />:
                   <Image style={styles.avatar} source={this.state.avatarSource} />}
