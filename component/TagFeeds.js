@@ -90,6 +90,12 @@ var TagFeeds = React.createClass({
 
                           renderFixedHeader={() => (
                             <View key="fixed-header" style={styles.fixedSection}>
+                              <View style={{left: -(windowWidth-112), bottom: -5,}}>
+                                <TouchableOpacity onPress={()=>this.props.navigator.pop()}>
+                                  <Image style={{width: 16, height: 16}} source={require('../imgs/back.png')} />
+                                </TouchableOpacity>
+
+                              </View>
                               <TagFollow />
                             </View>
                           )}
@@ -204,16 +210,18 @@ var styles = StyleSheet.create({
     width: windowWidth,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 15,
+    marginTop: 13,
   },
   stickySectionText: {
     color: 'black',
     fontSize: 18,
   },
   fixedSection: {
+    flex: 1,
+    flexDirection: 'row',
     position: 'absolute',
     bottom: 10,
-    right: 10
+    right: 20
   },
 
 
