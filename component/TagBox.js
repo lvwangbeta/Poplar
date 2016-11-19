@@ -26,9 +26,9 @@ var TagBox = React.createClass({
     this.props.navigator.push({
       title: '正文',
       component: TagDetail,
-      passProps: {secret:this.props.secret, token:this.props.token},
+      passProps: {secret:this.props.secret, token:this.props.token },
+      navigationBarHidden: true
     });
-    //this.props.navigator.push({type:"tagDetail"});
   },
 
   render: function() {
