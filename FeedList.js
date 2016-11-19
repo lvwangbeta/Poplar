@@ -72,6 +72,7 @@ var FeedList = React.createClass({
     this.props.navigator.push({
         title: tag.tag,
         component: TagDetail,
+        navigationBarHidden: true
     });
   },
 
