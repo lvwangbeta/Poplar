@@ -63,7 +63,7 @@ var TagFeeds = React.createClass({
       this.props.navigator.push({
         type: 'feed',
         component: FeedDetail,
-        passProps: {feed:feed, secret:this.props.secret, token:this.props.token},
+        passProps: {feed:feed, secret:this.props.secret, token:this.props.token, nav2TagDetail: this.props.nav2TagDetail},
       });
     }
   },
