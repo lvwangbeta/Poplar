@@ -144,7 +144,7 @@ var styles = StyleSheet.create({
     flex: 1,
   },
   listView: {
-    //paddingTop: 70,
+    marginTop: 65,
     backgroundColor: 'white',
   },
 });

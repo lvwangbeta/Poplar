@@ -154,7 +154,7 @@ var Mine = React.createClass({
           <View style={styles.card}>
             <View>
               <Image resizeMode='cover' style={styles.background} source={require('./imgs/tag1.jpg')} />
-              <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+              <TouchableOpacity onPress={this.selectPhotoTapped}>
                 {this.state.avatarSource === null ?
                   <Image style={styles.avatar} source={require('./imgs/tag2.jpg')} />:
                   <Image style={styles.avatar} source={this.state.avatarSource} />}
@@ -182,8 +182,6 @@ var Mine = React.createClass({
           </View>
           <View style={styles.myfeedsList}>
             <FeedList
-              token={'6b6478dd-33ab-492e-b06d-05b7f1106c47'}
-              secret={'osf'}
               navigator={this.props.navigator}
             />
 
@@ -237,7 +235,7 @@ var styles = StyleSheet.create({
     lineHeight: 18,
   },
   myfeedsList: {
-
+    marginTop: -65,
   },
   title: {
     fontSize: 30,

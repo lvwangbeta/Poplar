@@ -110,7 +110,6 @@ var styles = StyleSheet.create({
     flex: 1,
   },
   listView: {
-    paddingTop: 70,
     backgroundColor: 'white',
   },
   navContainer: {
