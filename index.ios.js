@@ -3,173 +3,28 @@
 import React from 'react';
 import {
   AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Dimensions,
-  TouchableOpacity
+  Navigator
 } from 'react-native';
 
-var NewFeed = require('./NewFeed');
-var ExplorePage = require('./ExplorePage');
-var MainPage = require('./MainPage');
-var MinePage = require('./MinePage');
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-const tabBarHeight = 50;
+var App = require('./App');
 
 
 var Poplar = React.createClass({
 
-  getInitialState: function() {
-    return {
-      selectedTab:'exploreTab',
-      notifCount: 0,
-      newFeedModalVisible: false,
-      showTabBar: true,
-    };
-  },
+  render: function(){
 
-
-
-  renderContent: function(num?: number) {
-
-    console.log('selected tab: '+ this.state.selectedTab);
-
-    if(this.state.selectedTab == 'mainTab') {
-      return <MainPage hideTabBar={this.hideTabBar} showTabBar={this.showTabBar}/>;
-    } else if(this.state.selectedTab == 'iTab') {
-      return <MinePage />;
-    } else if(this.state.selectedTab == 'exploreTab') {
-      return <ExplorePage />;
-    }
-  },
-
-  hideNewFeedMode: function() {
-    this.setState({
-      newFeedModalVisible: false,
-    });
-  },
-
-  hideTabBar: function() {
-    this.setState({
-      showTabBar: false,
-    });
-  },
-
-  showTabBar: function() {
-    this.setState({
-      showTabBar: true,
-    });
-  },
-
-  render: function() {
     return (
-      <View style={{flex:1, flexDirection: 'column'}}>
-        {
-          this.state.newFeedModalVisible && <NewFeed modalVisible={this.state.newFeedModalVisible} hideNewFeedMode={this.hideNewFeedMode}/>
-        }
-        <View style={styles.main}>
-          {this.renderContent()}
-        </View>
-
-        {this.state.showTabBar &&
-        <View style={styles.tabBar}>
-          <View style={styles.tabBarItem}>
-            <TouchableOpacity onPress={()=>{this.setState({selectedTab:'mainTab'})}}>
-              {
-                this.state.selectedTab == 'mainTab' ?
-                <Image style={styles.icon} source={require('./imgs/home_selected.png')} /> :
-                <Image style={styles.icon} source={require('./imgs/home.png')} />
-              }
-            </TouchableOpacity>
-          </View>
-          <View style={styles.tabBarItem}>
-            <TouchableOpacity onPress={()=>{this.setState({selectedTab:'exploreTab'})}}>
-            {
-              this.state.selectedTab == 'exploreTab' ?
-              <Image style={styles.icon} source={require('./imgs/search_selected.png')} /> :
-              <Image style={styles.icon} source={require('./imgs/search.png')} />
-            }
-            </TouchableOpacity>
-          </View>
-          <View style={styles.tabBarItem}>
-            <TouchableOpacity onPress={() => {this.setState({newFeedModalVisible: true})}}>
-              <Image style={styles.icon} source={require('./imgs/add.png')} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.tabBarItem}>
-            <TouchableOpacity>
-            {
-              this.state.selectedTab == 'alarmTab' ?
-              <Image style={styles.icon} source={require('./imgs/alarm_selected.png')} /> :
-              <Image style={styles.icon} source={require('./imgs/alarm.png')} />
-            }
-            </TouchableOpacity>
-          </View>
-          <View style={styles.tabBarItem}>
-            <TouchableOpacity onPress={()=>{this.setState({selectedTab:'iTab'})}}>
-            {
-              this.state.selectedTab == 'iTab' ?
-              <Image style={styles.icon} source={require('./imgs/user_selected.png')} /> :
-              <Image style={styles.icon} source={require('./imgs/user.png')} />
-            }
-            </TouchableOpacity>
-          </View>
-        </View>
-        }
-
-      </View>
+      <Navigator
+          initialRoute={{ component: App }}
+          configureScene={(route) => {
+              return Navigator.SceneConfigs.FloatFromRight;
+          }}
+          renderScene={(route, navigator) => {
+            let Component = route.component;
+              return <Component {...route.params} navigator={navigator} />
+          }} />
     );
-  },
-
+  }
 });
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5FCFF',
-  },
-  main: {
-    height: windowHeight - tabBarHeight,
-    width: windowWidth,
-  },
-  tabBar: {
-    flex:1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: windowWidth,
-    height: tabBarHeight,
-    backgroundColor: 'rgba(255,255,255,0.8)',
-    borderTopWidth: 1,
-    borderTopColor: '#F3F3F3',
-  },
-
-  tabBarItem: {
-    flex:1,
-    width: windowWidth / 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  icon: {
-    height: 32,
-    width: 32,
-  },
-
-
-  tabContent: {
-    // flex: 1,
-    alignItems: 'center',
-  },
-  tabText: {
-    color: 'white',
-    margin: 50,
-  },
-});
-
 
 AppRegistry.registerComponent('Poplar', () => Poplar);

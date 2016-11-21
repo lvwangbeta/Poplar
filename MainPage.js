@@ -6,35 +6,27 @@ import {
   Text,
   Image,
   View,
-  NavigatorIOS,
-  Navigator,
 } from 'react-native';
 
+var NavigationBar = require('react-native-navbar');
 var FeedList = require('./FeedList');
-
 
 var MainPage = React.createClass({
   render: function(){
-
     return (
-      <NavigatorIOS
-        style={{flex: 1}}
-        initialRoute={{
-          title: '首页',
-          component: FeedList,
-          passProps: {hideTabBar: this.props.hideTabBar, showTabBar: this.props.showTabBar}
-        }}
-        />
+      <View style={styles.container}>
+        <NavigationBar
+        title={{title: '首页'}}
+          />
+        <FeedList {...this.props}/>
+      </View>
     );
   },
 });
 
-
 var styles = StyleSheet.create({
   container: {
     flex:1,
-    //backgroundColor: 'white',
-    //marginTop: -20,
   },
 });
 

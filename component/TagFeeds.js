@@ -62,21 +62,18 @@ var TagFeeds = React.createClass({
 
     );
   },
-  selectFeed: function(feed: Object) {
-    if (Platform.OS === 'ios') {
-      this.props.navigator.push({
-        type: 'feed',
-        component: FeedDetail,
-        passProps: {feed:feed, nav2TagDetail: this.props.nav2TagDetail},
-      });
-    }
+  selectFeed: function(feed) {
+    this.props.navigator.push({
+      component: FeedDetail,
+      params: {feed:feed, nav2TagDetail: this.props.nav2TagDetail},
+    });
   },
 
   pressAvatar: function(feed) {
     this.props.navigator.push({
       title: feed.user_name,
       component: HomePage,
-      passProps: {feed:feed, nav2TagDetail: this.props.nav2TagDetail},
+      params: {feed:feed, nav2TagDetail: this.props.nav2TagDetail},
     });
   },
 

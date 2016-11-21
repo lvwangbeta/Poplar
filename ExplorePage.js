@@ -15,6 +15,7 @@ import {
   Navigator,
 } from 'react-native';
 
+var NavigationBar = require('react-native-navbar');
 var ExploreContainer = require('./ExploreContainer');
 
 var ExplorePage = React.createClass({
@@ -37,14 +38,12 @@ var ExplorePage = React.createClass({
       return this.renderLoadingView();
     }
     return (
-      <NavigatorIOS
-        style={{flex: 1}}
-        initialRoute={{
-          title: '探索',
-          component: ExploreContainer,
-          passProps: { token: '6b6478dd-33ab-492e-b06d-05b7f1106c47', secret:'osf' },
-        }}
-        />
+      <View style={styles.container}>
+        <NavigationBar
+        title={{title: '探索'}}
+          />
+        <ExploreContainer {...this.props}/>
+      </View>
     );
   },
 
@@ -63,8 +62,6 @@ var ExplorePage = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex:1,
-    //backgroundColor: 'white',
-    marginTop: -20,
   },
 });
 
