@@ -6,10 +6,6 @@ import {
   Text,
   Image,
   View,
-  NavigatorIOS,
-  Navigator,
-  Dimensions,
-  TouchableOpacity
 } from 'react-native';
 
 import TabNavigator from 'react-native-tab-navigator';
@@ -17,41 +13,13 @@ var NewFeed = require('./NewFeed');
 var ExplorePage = require('./ExplorePage');
 var MainPage = require('./MainPage');
 var MinePage = require('./MinePage');
-var FeedList = require('./FeedList');
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-const tabBarHeight = 50;
 
 var App = React.createClass({
   getInitialState: function() {
     return {
       selectedTab:'mainTab',
       notifCount: 0,
-      newFeedModalVisible: false,
-      showTabBar: true,
     };
-  },
-
-
-  hideNewFeedMode: function() {
-    console.log('call back');
-    this.setState({
-      newFeedModalVisible: false,
-      selectedTab: 'mainTab',
-    });
-  },
-
-  hideTabBar: function() {
-    this.setState({
-      showTabBar: false,
-    });
-  },
-
-  showTabBar: function() {
-    this.setState({
-      showTabBar: true,
-    });
   },
 
   render: function() {
@@ -76,7 +44,7 @@ var App = React.createClass({
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/add.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/add.png')} />}
           onPress={()=>{this.props.navigator.push({
-            title: '正文',
+            title: '发状态',
             component: NewFeed,
             params: {pop: ()=>this.props.navigator.pop()}
           })}}
@@ -108,29 +76,6 @@ var styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F5FCFF',
   },
-  main: {
-    height: windowHeight - tabBarHeight,
-    width: windowWidth,
-  },
-  tabBar: {
-    flex:1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: windowWidth,
-    height: tabBarHeight,
-    backgroundColor: 'rgba(255,255,255,0.8)',
-    borderTopWidth: 1,
-    borderTopColor: '#F3F3F3',
-  },
-
-  tabBarItem: {
-    flex:1,
-    width: windowWidth / 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
   icon: {
     height: 28,
     width: 28,
