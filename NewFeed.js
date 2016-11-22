@@ -45,7 +45,10 @@ var NewFeed = React.createClass({
 
 
   cancle: function() {
-    this.props.hideNewFeedMode();
+    this.setState({
+      modalVisible: false,
+    });
+    this.props.pop();
   },
 
   pickMultiple: function() {
@@ -143,7 +146,7 @@ var NewFeed = React.createClass({
         <Modal
           animated={this.state.animated}
           transparent={this.state.transparent}
-          visible={this.props.modalVisible}>
+          visible={this.state.modalVisible}>
             <View style={{position: 'relative', flex: 1, flexDirection: 'column'}}>
               <View style={styles.nav}>
                 <View style={styles.cancleBtn}>

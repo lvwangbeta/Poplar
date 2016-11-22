@@ -62,7 +62,6 @@ var App = React.createClass({
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/home.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/home_selected.png')} />}
           onPress={() => this.setState({ selectedTab: 'mainTab' })}>
-          {/* <FeedList navigator={this.props.navigator}/> */}
           <MainPage {...this.props}/>
         </TabNavigator.Item>
         <TabNavigator.Item
@@ -76,8 +75,13 @@ var App = React.createClass({
           selected={this.state.selectedTab === 'addTab'}
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/add.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/add.png')} />}
-          onPress={() => this.setState({ selectedTab: 'addTab' })}>
-          <ExplorePage />
+          onPress={()=>{this.props.navigator.push({
+            title: '正文',
+            component: NewFeed,
+            params: {pop: ()=>this.props.navigator.pop()}
+          })}}
+          >
+          <View />
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'alarmTab'}
