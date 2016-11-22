@@ -167,9 +167,16 @@ var FeedDetail = React.createClass({
           <View style={styles.container}>
               <View style={styles.feedHeader}>
                   <View>
+                  {
+                    this.props.avatarCanClick ?
                     <TouchableOpacity onPress={() => this.pressAvatar()}>
                       <Image source={{uri:IMAGE_BASE_URL + this.props.feed.user_avatar + avatar_thumbnail}} style={styles.avatar}/>
+                    </TouchableOpacity> :
+                    <TouchableOpacity>
+                      <Image source={{uri:IMAGE_BASE_URL + this.props.feed.user_avatar + avatar_thumbnail}} style={styles.avatar}/>
                     </TouchableOpacity>
+                  }
+
                   </View>
                   <View style={styles.feedUserInfo}>
                     <Text style={styles.feedUserName}>Kevin</Text>

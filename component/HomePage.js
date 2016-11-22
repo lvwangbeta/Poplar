@@ -51,23 +51,12 @@ var HomePage = React.createClass({
     );
   },
 
-  selectFeed: function(feed) {
-    this.props.navigator.push({
-      title: '正文',
-      component: FeedDetail,
-      passProps: {feed:feed, nav2TagDetail:this.props.nav2TagDetail},
-    });
-  },
-
   renderFeed: function(feed) {
     return(
       <FeedCell
-        navigator={this.props.navigator}
-        onSelect={() => this.selectFeed(feed)}
+        onSelect={() => this.props.selectFeed(feed, false)}
         feed={feed}
-        token={this.props.token}
-        secret={this.props.secret}
-        push2FeedDetail={() => this.selectFeed(feed)}
+        push2FeedDetail={() => this.props.selectFeed(feed, false)}
         nav2TagDetail={this.props.nav2TagDetail}
       />
     );
