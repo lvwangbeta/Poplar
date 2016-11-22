@@ -63,7 +63,7 @@ var App = React.createClass({
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/user.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/user_selected.png')} />}
           onPress={() => this.setState({ selectedTab: 'iTab' })}>
-          <MinePage />
+          <MinePage {...this.props}/>
         </TabNavigator.Item>
       </TabNavigator>
     );

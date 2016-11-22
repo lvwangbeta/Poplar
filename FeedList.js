@@ -73,7 +73,6 @@ var FeedList = React.createClass({
     this.props.navigator.push({
         title: tag.tag,
         component: TagDetail,
-        navigationBarHidden: true
     });
   },
 
@@ -92,7 +91,7 @@ var FeedList = React.createClass({
     this.props.navigator.push({
       title: feed.user_name,
       component: HomePage,
-      params: {feed,navigator, selectFeed: this.selectFeed},
+      params: {feed,navigator, selectFeed: this.selectFeed, nav2TagDetail:this.nav2TagDetail},
     });
   },
 
@@ -114,6 +113,7 @@ var FeedList = React.createClass({
         feed={feed}
         pressAvatar={() =>this.pressAvatar(feed)}
         push2FeedDetail={() => this.selectFeed(feed)}
+        nav2TagDetail={this.nav2TagDetail}
       />
     );
   }

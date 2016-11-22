@@ -33,7 +33,7 @@ var TagsSection = React.createClass({
         </View>
         <View style={styles.main}>
 
-        <TagBox navigator={this.props.navigator} />
+        <TagBox {...this.props}/>
         <TagBox navigator={this.props.navigator} />
         <TagBox navigator={this.props.navigator} />
 

@@ -15,8 +15,9 @@ import {
   Dimensions
 } from 'react-native';
 
-var CommentList = require('./CommentList');
-var FeedActions = require('./component/actions/FeedActions');
+var CommentList = require('../CommentList');
+var FeedActions = require('./actions/FeedActions');
+var TagDetail = require('./TagDetail');
 
 const windowWidth = Dimensions.get('window').width;
 const margin = 20;
@@ -37,7 +38,6 @@ var TagFeedCell = React.createClass({
     }
     return imagesView;
   },
-
 
   renderCommentList: function(){
       return(

@@ -56,6 +56,7 @@ var HomePage = React.createClass({
       <FeedCell
         onSelect={() => this.props.selectFeed(feed, false)}
         feed={feed}
+        navigator={this.props.navigator}
         push2FeedDetail={() => this.props.selectFeed(feed, false)}
         nav2TagDetail={this.props.nav2TagDetail}
       />
