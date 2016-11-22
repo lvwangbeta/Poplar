@@ -17,6 +17,7 @@ import {
 } from 'react-native';
 
 import URLConf from './component/api/URLConf';
+import BackBtn from './component/navbar/BackBtn';
 var NavigationBar = require('react-native-navbar');
 var LikeAction = require('./component/actions/Like');
 var CommentAction = require('./component/actions/Comment');
@@ -154,7 +155,9 @@ var FeedDetail = React.createClass({
   render: function(){
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
-        <NavigationBar title={{title: '正文'}} leftButton={{title:'back', handler: ()=>{this.props.navigator.pop()}}}/>
+        <NavigationBar style={{borderBottomWidth: 0.5, borderBottomColor: '#F3F3F3'}}
+                       title={{title: '正文'}}
+                       leftButton={<BackBtn onPress={()=>this.props.navigator.pop()}/>}/>
         <ScrollView>
           {this.props.feed.content && <PhotoSwiper imgList={this.props.feed.content.slice(0,-1).split(':')}
             showViewer={this.state.showViewer}

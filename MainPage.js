@@ -16,8 +16,8 @@ var MainPage = React.createClass({
     return (
       <View style={styles.container}>
         <NavigationBar
-        title={{title: '首页'}}
-          />
+        style={{borderBottomWidth: 0.5, borderBottomColor: '#F3F3F3'}}
+        title={{title: '首页'}}/>
         <FeedList {...this.props}/>
       </View>
     );

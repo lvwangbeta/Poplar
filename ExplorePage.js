@@ -40,8 +40,8 @@ var ExplorePage = React.createClass({
     return (
       <View style={styles.container}>
         <NavigationBar
-        title={{title: '探索'}}
-          />
+        style={{borderBottomWidth: 0.5, borderBottomColor: '#F3F3F3'}}
+        title={{title: '探索'}}/>
         <ExploreContainer {...this.props}/>
       </View>
     );
