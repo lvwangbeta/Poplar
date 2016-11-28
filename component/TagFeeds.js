@@ -15,8 +15,9 @@ import {
 } from 'react-native';
 
 import {getTagFeedsOfPage} from './api/TagAPI';
-var TagFeedCell = require('../TagFeedCell');
+var TagFeedCell = require('./TagFeedCell');
 var FeedDetail = require('../FeedDetail');
+var HomePage = require('./HomePage');
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -62,35 +63,35 @@ var TagFeeds = React.createClass({
 
     );
   },
-  selectFeed: function(feed: Object) {
-    if (Platform.OS === 'ios') {
-      this.props.navigator.push({
-        type: 'feed',
-        component: FeedDetail,
-        passProps: {feed:feed, nav2TagDetail: this.props.nav2TagDetail},
-      });
-    }
+
+  selectFeed: function(feed, avatarCanClick=true) {
+    let navigator = this.props.navigator;
+    this.props.navigator.push({
+      title: '正文',
+      component: FeedDetail,
+      params: {navigator, feed, nav2TagDetail:this.props.nav2TagDetail, avatarCanClick:avatarCanClick}
+    });
   },
 
   pressAvatar: function(feed) {
+    let navigator = this.props.navigator;
     this.props.navigator.push({
       title: feed.user_name,
       component: HomePage,
-      passProps: {feed:feed, nav2TagDetail: this.props.nav2TagDetail},
+      params: {feed,navigator, selectFeed: this.selectFeed, nav2TagDetail:this.props.nav2TagDetail},
     });
   },
+
 
   renderFeed: function(feed) {
     return(
       <TagFeedCell
+        navigator={this.props.navigator}
         onSelect={() => this.selectFeed(feed)}
         feed={feed}
-        secret={this.props.secret}
-        token={this.props.token}
-        push2FeedDetail={() => this.selectFeed(feed)}
-        navigator={this.props.navigator}
-        pressAvatar={() =>this.pressAvatar(feed)}
         nav2TagDetail={this.props.nav2TagDetail}
+        pressAvatar={() =>this.pressAvatar(feed)}
+        push2FeedDetail={() => this.selectFeed(feed)}
       />
     );
   }

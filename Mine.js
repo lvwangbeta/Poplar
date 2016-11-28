@@ -182,7 +182,7 @@ var Mine = React.createClass({
           </View>
           <View style={styles.myfeedsList}>
             <FeedList
-              navigator={this.props.navigator}
+              {...this.props}
             />
 
           </View>

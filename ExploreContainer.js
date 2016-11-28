@@ -18,14 +18,22 @@ import {
 var TopGallery = require('./component/TopGallery');
 var TagsSection = require('./component/TagsSection');
 var UsersSection = require('./component/UsersSection');
+var TagDetail = require('./component/TagDetail');
 
 var ExploreContainer = React.createClass({
+
+  nav2TagDetail: function(tag) {
+    this.props.navigator.push({
+        title: tag.tag,
+        component: TagDetail,
+    });
+  },
 
   render: function(){
     return (
       <ScrollView style={styles.container}>
           <TopGallery />
-          <TagsSection navigator={this.props.navigator}/>
+          <TagsSection navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail}/>
           <UsersSection />
       </ScrollView>
     );

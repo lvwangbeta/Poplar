@@ -73,26 +73,25 @@ var FeedList = React.createClass({
     this.props.navigator.push({
         title: tag.tag,
         component: TagDetail,
-        navigationBarHidden: true
     });
   },
 
-  selectFeed: function(feed) {
+  selectFeed: function(feed, avatarCanClick=true) {
     //this.props.hideTabBar();
-    if (Platform.OS === 'ios') {
-      this.props.navigator.push({
-        title: '正文',
-        component: FeedDetail,
-        passProps: {feed:feed, pressAvatar:()=>this.pressAvatar(feed), nav2TagDetail:this.nav2TagDetail},
-      });
-    }
+    let navigator = this.props.navigator;
+    this.props.navigator.push({
+      title: '正文',
+      component: FeedDetail,
+      params: {navigator, feed, nav2TagDetail:this.nav2TagDetail, avatarCanClick:avatarCanClick}
+    });
   },
 
   pressAvatar: function(feed) {
+    let navigator = this.props.navigator;
     this.props.navigator.push({
       title: feed.user_name,
       component: HomePage,
-      passProps: {feed:feed, nav2TagDetail:this.nav2TagDetail},
+      params: {feed,navigator, selectFeed: this.selectFeed, nav2TagDetail:this.nav2TagDetail},
     });
   },
 
@@ -112,10 +111,9 @@ var FeedList = React.createClass({
         navigator={this.props.navigator}
         onSelect={() => this.selectFeed(feed)}
         feed={feed}
-        token={this.props.token}
-        secret={this.props.secret}
         pressAvatar={() =>this.pressAvatar(feed)}
         push2FeedDetail={() => this.selectFeed(feed)}
+        nav2TagDetail={this.nav2TagDetail}
       />
     );
   }
@@ -147,7 +145,7 @@ var styles = StyleSheet.create({
     flex: 1,
   },
   listView: {
-    marginTop: 65,
+    //marginTop: 65,
     backgroundColor: 'white',
   },
 });

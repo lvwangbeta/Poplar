@@ -11,18 +11,18 @@ import {
 } from 'react-native';
 
 var Mine = require('./Mine');
+var NavigationBar = require('react-native-navbar');
 
 var MinePage = React.createClass({
   render: function(){
 
     return (
-      <NavigatorIOS
-        style={{flex: 1}}
-        initialRoute={{
-          title: '首页',
-          component: Mine,
-        }}
-        />
+      <View style={styles.container}>
+        <NavigationBar
+        style={{borderBottomWidth: 0.5, borderBottomColor: '#F3F3F3'}}
+        title={{title: '我'}}/>
+        <Mine {...this.props}/>
+      </View>
     );
   },
 });
@@ -31,8 +31,6 @@ var MinePage = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex:1,
-    //backgroundColor: 'white',
-    marginTop: -20,
   },
 });
 

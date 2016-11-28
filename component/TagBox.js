@@ -26,22 +26,17 @@ var TagBox = React.createClass({
     this.props.navigator.push({
       title: '正文',
       component: TagDetail,
-      passProps: {secret:this.props.secret, token:this.props.token },
-      navigationBarHidden: true
     });
   },
 
   render: function() {
     return(
-
       <TouchableOpacity onPress={this.showTagDetail} style={styles.tagBox}>
         <View style={styles.tagTitle}><Text style={{color: 'white', fontSize: 13,textAlign: 'center'}}>摄影</Text></View>
         <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag1.jpg')} />
       </TouchableOpacity>
-
     );
   },
-
 });
 
 

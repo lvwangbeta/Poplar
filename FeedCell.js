@@ -44,7 +44,6 @@ var FeedCell = React.createClass({
     this.props.navigator.push({
       title: tag.tag,
       component: TagDetail,
-      navigationBarHidden: true
     });
   },
 
@@ -56,7 +55,7 @@ var FeedCell = React.createClass({
             {this.props.feed.tags && <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.tagsContainer}>
               {
                 this.props.feed.tags.map(tag => <TouchableOpacity
-                                                  onPress={() => this.nav2TagDetail(tag)}>
+                                                  onPress={() => this.props.nav2TagDetail(tag)}>
                                                   <Text style={{color: '#9B9B9B', marginRight: 5}}>{tag.tag}</Text>
                                                 </TouchableOpacity>)
 

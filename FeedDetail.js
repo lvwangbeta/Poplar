@@ -17,12 +17,15 @@ import {
 } from 'react-native';
 
 import URLConf from './component/api/URLConf';
+import BackBtn from './component/navbar/BackBtn';
+var NavigationBar = require('react-native-navbar');
 var LikeAction = require('./component/actions/Like');
 var CommentAction = require('./component/actions/Comment');
 var CommentBar = require('./component/CommentBar');
 var CommentList = require('./CommentList');
 var PhotoSwiper = require('./component/PhotoSwiper');
 var TagDetail = require('./component/TagDetail');
+var HomePage = require('./component/HomePage');
 
 const windowWidth = Dimensions.get('window').width;
 const margin = 20;
@@ -140,10 +143,21 @@ var FeedDetail = React.createClass({
     );
   },
 
+  pressAvatar: function() {
+    let {navigator,feed} = this.props;
+    this.props.navigator.push({
+      title: feed.user_name,
+      component: HomePage,
+      //passProps: {feed:feed, nav2TagDetail:this.nav2TagDetail},
+    });
+  },
 
   render: function(){
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
+        <NavigationBar style={{borderBottomWidth: 0.5, borderBottomColor: '#F3F3F3'}}
+                       title={{title: '正文'}}
+                       leftButton={<BackBtn onPress={()=>this.props.navigator.pop()}/>}/>
         <ScrollView>
           {this.props.feed.content && <PhotoSwiper imgList={this.props.feed.content.slice(0,-1).split(':')}
             showViewer={this.state.showViewer}
@@ -153,9 +167,16 @@ var FeedDetail = React.createClass({
           <View style={styles.container}>
               <View style={styles.feedHeader}>
                   <View>
-                    <TouchableOpacity onPress={this.props.pressAvatar}>
+                  {
+                    this.props.avatarCanClick ?
+                    <TouchableOpacity onPress={() => this.pressAvatar()}>
+                      <Image source={{uri:IMAGE_BASE_URL + this.props.feed.user_avatar + avatar_thumbnail}} style={styles.avatar}/>
+                    </TouchableOpacity> :
+                    <TouchableOpacity>
                       <Image source={{uri:IMAGE_BASE_URL + this.props.feed.user_avatar + avatar_thumbnail}} style={styles.avatar}/>
                     </TouchableOpacity>
+                  }
+
                   </View>
                   <View style={styles.feedUserInfo}>
                     <Text style={styles.feedUserName}>Kevin</Text>

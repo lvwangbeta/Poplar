@@ -39,7 +39,6 @@ var TagDetail = React.createClass({
     this.props.navigator.push({
       title: tag.tag,
       component: TagDetail,
-      navigationBarHidden: true,
     });
   },
 
@@ -83,7 +82,7 @@ var TagDetail = React.createClass({
           <View key="fixed-header" style={styles.fixedSection}>
             <View style={{left: -(windowWidth-112), bottom: -5,}}>
               <TouchableOpacity onPress={()=>this.props.navigator.pop()}>
-                <Image style={{width: 16, height: 16}} source={require('../imgs/back.png')} />
+                <Image style={{width: 18, height: 18}} source={require('../imgs/back.png')} />
               </TouchableOpacity>
 
             </View>

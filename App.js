@@ -1,0 +1,85 @@
+'use strict';
+
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  Image,
+  View,
+} from 'react-native';
+
+import TabNavigator from 'react-native-tab-navigator';
+var NewFeed = require('./NewFeed');
+var ExplorePage = require('./ExplorePage');
+var MainPage = require('./MainPage');
+var MinePage = require('./MinePage');
+
+var App = React.createClass({
+  getInitialState: function() {
+    return {
+      selectedTab:'mainTab',
+      notifCount: 0,
+    };
+  },
+
+  render: function() {
+    return (
+      <TabNavigator>
+        <TabNavigator.Item
+          selected={this.state.selectedTab === 'mainTab'}
+          renderIcon={() => <Image style={styles.icon} source={require('./imgs/home.png')} />}
+          renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/home_selected.png')} />}
+          onPress={() => this.setState({ selectedTab: 'mainTab' })}>
+          <MainPage {...this.props}/>
+        </TabNavigator.Item>
+        <TabNavigator.Item
+          selected={this.state.selectedTab === 'exploreTab'}
+          renderIcon={() => <Image style={styles.icon} source={require('./imgs/search.png')} />}
+          renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/search_selected.png')} />}
+          onPress={() => this.setState({ selectedTab: 'exploreTab' })}>
+          <ExplorePage {...this.props}/>
+        </TabNavigator.Item>
+        <TabNavigator.Item
+          selected={this.state.selectedTab === 'addTab'}
+          renderIcon={() => <Image style={styles.icon} source={require('./imgs/add.png')} />}
+          renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/add.png')} />}
+          onPress={()=>{this.props.navigator.push({
+            title: '发状态',
+            component: NewFeed,
+            params: {pop: ()=>this.props.navigator.pop()}
+          })}}
+          >
+          <View />
+        </TabNavigator.Item>
+        <TabNavigator.Item
+          selected={this.state.selectedTab === 'alarmTab'}
+          renderIcon={() => <Image style={styles.icon} source={require('./imgs/alarm.png')} />}
+          renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/alarm_selected.png')} />}
+          onPress={() => this.setState({ selectedTab: 'addTab' })}>
+
+        </TabNavigator.Item>
+        <TabNavigator.Item
+          selected={this.state.selectedTab === 'iTab'}
+          renderIcon={() => <Image style={styles.icon} source={require('./imgs/user.png')} />}
+          renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/user_selected.png')} />}
+          onPress={() => this.setState({ selectedTab: 'iTab' })}>
+          <MinePage {...this.props}/>
+        </TabNavigator.Item>
+      </TabNavigator>
+    );
+  },
+});
+
+
+var styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F5FCFF',
+  },
+  icon: {
+    height: 28,
+    width: 28,
+  },
+});
+
+module.exports = App;
