@@ -13,6 +13,7 @@ var NewFeed = require('./NewFeed');
 var ExplorePage = require('./ExplorePage');
 var MainPage = require('./MainPage');
 var MinePage = require('./MinePage');
+var LoginRegPage = require('./LoginRegPage');
 
 var App = React.createClass({
   getInitialState: function() {
@@ -55,8 +56,8 @@ var App = React.createClass({
           selected={this.state.selectedTab === 'alarmTab'}
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/alarm.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/alarm_selected.png')} />}
-          onPress={() => this.setState({ selectedTab: 'addTab' })}>
-
+          onPress={() => this.setState({ selectedTab: 'alarmTab' })}>
+          <LoginRegPage/>
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'iTab'}
