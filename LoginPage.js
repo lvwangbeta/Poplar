@@ -63,9 +63,8 @@ var LoginPage = React.createClass({
         console.log(PoplarEnv.dic.SUCCESS_ACCOUNT_LOGIN);
         if(retCode == PoplarEnv.dic.SUCCESS_ACCOUNT_LOGIN) {
           AsyncStorage.setItem('user', responseData.token, ()=> {
-            AsyncStorage.getItem('user', (err, result)=>{
-              console.log('new token: ' + result);
-            })
+            this.props.hideLoginPage();
+            this.props.refresh(true, responseData.token);
           });
         }
       }).done();

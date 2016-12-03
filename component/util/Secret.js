@@ -60,8 +60,13 @@ export function login(user_email, user_pwd) {
 
 }
 
-export function logout() {
-  AsyncStorage.removeItem('user');
+export function logout(that) {
+  AsyncStorage.removeItem('user', (err)=>{
+    that.setState({
+      token: '',
+      isLogin: false,
+    })
+  });
 }
 
 export function register() {

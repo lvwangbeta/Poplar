@@ -48,7 +48,7 @@ var LoginRegPage = React.createClass({
       return(
         <View style={{flex:1}}>
           {
-            this.state.loginPageVisible && <LoginPage visible={true} hideLoginPage={this.hideLoginPage}/>
+            this.state.loginPageVisible && <LoginPage visible={true} hideLoginPage={this.hideLoginPage} refresh={this.props.refresh}/>
           }
           {
             this.state.regPageVisible && <RegisterPage visible={true} hideRegPage={this.hideRegPage}/>

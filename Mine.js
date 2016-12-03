@@ -182,7 +182,7 @@ var Mine = React.createClass({
           </View>
           <View style={styles.myfeedsList}>
             <FeedList
-              token={this.props.token} {...this.props}
+              {...this.props}
             />
 
           </View>
@@ -235,7 +235,7 @@ var styles = StyleSheet.create({
     lineHeight: 18,
   },
   myfeedsList: {
-    marginTop: -65,
+
   },
   title: {
     fontSize: 30,
