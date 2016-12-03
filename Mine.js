@@ -235,7 +235,7 @@ var styles = StyleSheet.create({
     lineHeight: 18,
   },
   myfeedsList: {
-    marginTop: -65,
+
   },
   title: {
     fontSize: 30,

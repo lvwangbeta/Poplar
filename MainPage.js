@@ -13,12 +13,13 @@ var FeedList = require('./FeedList');
 
 var MainPage = React.createClass({
   render: function(){
+    console.log('token in MainPage : ' + this.props.token);
     return (
       <View style={styles.container}>
         <NavigationBar
         style={{borderBottomWidth: 0.5, borderBottomColor: '#F3F3F3'}}
         title={{title: '首页'}}/>
-        <FeedList {...this.props}/>
+        <FeedList token={this.props.token} {...this.props}/>
       </View>
     );
   },

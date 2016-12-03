@@ -14,7 +14,7 @@ export function getMyFeeds(that) {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'X-Auth-Token':Secret.token,
+      'X-Auth-Token':that.props.token,
   }};
 
   fetch(url, headers)
@@ -30,7 +30,7 @@ export function getMyFeeds(that) {
 }
 
 
-export function newFeed(text, photos, tags) {
+export function newFeed(text, photos, tags, token) {
   var sign = Md5.hex_md5(NEW_FEED_URL.replace(URLConf.APP_SERVER_HOST, '') + '?ts=123456&'+Secret.secret);
   console.log('sign:' + sign);
   var url = NEW_FEED_URL+'?ts=123456&sign=' + sign;
@@ -39,7 +39,7 @@ export function newFeed(text, photos, tags) {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'X-Auth-Token':Secret.token,
+      'X-Auth-Token':token,
     },
     body: JSON.stringify({album_desc: text, photos: photos, tags: tags})
   };

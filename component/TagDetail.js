@@ -39,6 +39,7 @@ var TagDetail = React.createClass({
     this.props.navigator.push({
       title: tag.tag,
       component: TagDetail,
+      params: {token: this.props.token}
     });
   },
 
@@ -97,8 +98,8 @@ var TagDetail = React.createClass({
                 initialPage={0}
                 renderTabBar={() => <ScrollableTabBar />}
               >
-                <ScrollView tabLabel='热门' style={{borderBottomColor: '#00B5AD'}}><TagFeedList navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail}/></ScrollView>
-                <ScrollView tabLabel='最新'><TagFeedList navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail}/></ScrollView>
+                <ScrollView tabLabel='热门' style={{borderBottomColor: '#00B5AD'}}><TagFeedList token={this.props.token} navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail}/></ScrollView>
+                <ScrollView tabLabel='最新'><TagFeedList token={this.props.token} navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail}/></ScrollView>
               </ScrollableTabView>
 
         </ParallaxScrollView>
