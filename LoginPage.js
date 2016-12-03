@@ -16,7 +16,6 @@ import {
 
 import PoplarEnv from './PoplarEnv';
 import URLConf from './component/api/URLConf';
-import {isLogin, logout} from './component/util/Secret';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -60,7 +59,6 @@ var LoginPage = React.createClass({
       .then((responseData) => {
         var retCode = responseData.status;
         console.log(responseData);
-        console.log(PoplarEnv.dic.SUCCESS_ACCOUNT_LOGIN);
         if(retCode == PoplarEnv.dic.SUCCESS_ACCOUNT_LOGIN) {
           AsyncStorage.setItem('user', responseData.token, ()=> {
             this.props.hideLoginPage();

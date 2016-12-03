@@ -51,7 +51,7 @@ var LoginRegPage = React.createClass({
             this.state.loginPageVisible && <LoginPage visible={true} hideLoginPage={this.hideLoginPage} refresh={this.props.refresh}/>
           }
           {
-            this.state.regPageVisible && <RegisterPage visible={true} hideRegPage={this.hideRegPage}/>
+            this.state.regPageVisible && <RegisterPage visible={true} hideRegPage={this.hideRegPage} refresh={this.props.refresh}/>
           }
           <View style={{flex:2, justifyContent: 'center',alignItems: 'center',}}>
             <Image source={require('./imgs/default-avatar.jpg')}/>

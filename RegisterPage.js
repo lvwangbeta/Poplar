@@ -14,9 +14,14 @@ import {
   AsyncStorage
 } from 'react-native';
 
+import PoplarEnv from './PoplarEnv';
+import URLConf from './component/api/URLConf';
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const margin = 20;
+
+const REGISTER_URL = URLConf.API_HOST + '/account/register';
 
 var RegisterPage = React.createClass({
 
@@ -25,6 +30,7 @@ var RegisterPage = React.createClass({
     return {
       email: '',
       password: '',
+      cfmPassword: '',
       animated: true,
       transparent: false,
       inTheReg: false,
@@ -40,11 +46,28 @@ var RegisterPage = React.createClass({
     this.setState({
       inTheReg: true,
     });
-    //AsyncStorage.setItem('user', 'kevin ', () => {
-      AsyncStorage.getItem('user', (err, result) => {
-        console.log(result);
-      });
-    //})
+
+    var url = REGISTER_URL;
+    var options = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({user_email: this.state.email, user_pwd: this.state.password, user_cfm_pwd: this.state.cfmPassword})
+    };
+    fetch(url, options).then((response) => response.json())
+      .then((responseData) => {
+        var retCode = responseData.status;
+        console.log(responseData);
+        if(retCode == PoplarEnv.dic.SUCCESS_ACCOUNT_REG) {
+          AsyncStorage.setItem('user', responseData.token, ()=> {
+            this.props.hideRegPage();
+            this.props.refresh(true, responseData.token);
+          });
+        }
+      }).done();
+
   },
 
   render: function() {
