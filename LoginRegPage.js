@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 var LoginPage = require('./LoginPage');
+var RegisterPage = require('./RegisterPage');
 
 var LoginRegPage = React.createClass({
 
@@ -31,11 +32,26 @@ var LoginRegPage = React.createClass({
     });
   },
 
+  showRegPage: function() {
+    this.setState({
+      regPageVisible: true,
+    });
+  },
+
+  hideRegPage: function() {
+    this.setState({
+      regPageVisible: false,
+    });
+  },
+
   render: function() {
       return(
         <View style={{flex:1}}>
           {
             this.state.loginPageVisible && <LoginPage visible={true} hideLoginPage={this.hideLoginPage}/>
+          }
+          {
+            this.state.regPageVisible && <RegisterPage visible={true} hideRegPage={this.hideRegPage}/>
           }
           <View style={{flex:2, justifyContent: 'center',alignItems: 'center',}}>
             <Image source={require('./imgs/default-avatar.jpg')}/>
@@ -48,7 +64,7 @@ var LoginRegPage = React.createClass({
               </TouchableOpacity>
             </View>
             <View style={styles.regBtn}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.showRegPage}>
                 <Text style={{color: '#9B9B9B',fontSize: 16}}>注册</Text>
               </TouchableOpacity>
             </View>

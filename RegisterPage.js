@@ -18,7 +18,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const margin = 20;
 
-var LoginPage = React.createClass({
+var RegisterPage = React.createClass({
 
 
   getInitialState() {
@@ -27,18 +27,18 @@ var LoginPage = React.createClass({
       password: '',
       animated: true,
       transparent: false,
-      inTheLog: false,
+      inTheReg: false,
 
     };
   },
 
   cancle: function() {
-    this.props.hideLoginPage();
+    this.props.hideRegPage();
   },
 
-  login: function() {
+  register: function() {
     this.setState({
-      inTheLog: true,
+      inTheReg: true,
     });
     //AsyncStorage.setItem('user', 'kevin ', () => {
       AsyncStorage.getItem('user', (err, result) => {
@@ -82,7 +82,7 @@ var LoginPage = React.createClass({
                                     borderRadius: 3,
                                     color: '#9B9B9B'}}
                             placeholder="邮箱"
-                            editable={this.state.inTheLog ? false: true}
+                            editable={this.state.inTheReg ? false: true}
                             onChangeText={(email) => this.setState({email})}
                           />
                   <TextInput
@@ -96,17 +96,32 @@ var LoginPage = React.createClass({
                                     color: '#9B9B9B'}}
                             placeholder="密码"
                             secureTextEntry={true}
-                            editable={this.state.inTheLog ? false: true}
+                            editable={this.state.inTheReg ? false: true}
                             onChangeText={(password) => this.setState({password})}
                           />
+                  <TextInput
+                            style={{height: 40,
+                                    width: windowWidth-margin*2,
+                                    padding: 10,
+                                    borderColor: '#9B9B9B',
+                                    borderWidth: 0.2,
+                                    marginTop: 10,
+                                    borderRadius: 3,
+                                    color: '#9B9B9B'}}
+                            placeholder="确认密码"
+                            secureTextEntry={true}
+                            editable={this.state.inTheReg ? false: true}
+                            onChangeText={(cfmPassword) => this.setState({cfmPassword})}
+                          />
+
                   <View>
                     {
-                      this.state.inTheLog ?
-                      <View style={[styles.loginBtn, {backgroundColor: '#00ccc3'}]}>
-                        <Text style={{color: 'white', fontSize: 16}}>登录中</Text>
+                      this.state.inTheReg ?
+                      <View style={[styles.regBtn, {backgroundColor: '#00ccc3'}]}>
+                        <Text style={{color: 'white', fontSize: 16}}>注册中</Text>
                       </View> :
-                      <TouchableOpacity onPress={this.login} style={styles.loginBtn}>
-                        <Text style={{color: 'white', fontSize: 16}}>登录</Text>
+                      <TouchableOpacity onPress={this.register} style={styles.regBtn}>
+                        <Text style={{color: 'white', fontSize: 16}}>注册</Text>
                       </TouchableOpacity>
                     }
 
@@ -140,7 +155,7 @@ var styles = StyleSheet.create({
   inputs: {
     marginTop: 30,
   },
-  loginBtn: {
+  regBtn: {
     width: windowWidth-margin*2,
     height: 40,
     marginTop: 10,
@@ -152,4 +167,4 @@ var styles = StyleSheet.create({
 
 });
 
-module.exports = LoginPage;
+module.exports = RegisterPage;
