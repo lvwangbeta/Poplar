@@ -182,7 +182,7 @@ var Mine = React.createClass({
           </View>
           <View style={styles.myfeedsList}>
             <FeedList
-              {...this.props}
+              token={this.props.token} {...this.props}
             />
 
           </View>

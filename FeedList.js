@@ -73,6 +73,7 @@ var FeedList = React.createClass({
     this.props.navigator.push({
         title: tag.tag,
         component: TagDetail,
+        params: {token: this.props.token}
     });
   },
 
@@ -82,7 +83,7 @@ var FeedList = React.createClass({
     this.props.navigator.push({
       title: '正文',
       component: FeedDetail,
-      params: {navigator, feed, nav2TagDetail:this.nav2TagDetail, avatarCanClick:avatarCanClick}
+      params: {token:this.props.token, navigator, feed, nav2TagDetail:this.nav2TagDetail, avatarCanClick:avatarCanClick}
     });
   },
 
@@ -91,7 +92,7 @@ var FeedList = React.createClass({
     this.props.navigator.push({
       title: feed.user_name,
       component: HomePage,
-      params: {feed,navigator, selectFeed: this.selectFeed, nav2TagDetail:this.nav2TagDetail},
+      params: {token:this.props.token, feed,navigator, selectFeed: this.selectFeed, nav2TagDetail:this.nav2TagDetail},
     });
   },
 
@@ -111,6 +112,7 @@ var FeedList = React.createClass({
         navigator={this.props.navigator}
         onSelect={() => this.selectFeed(feed)}
         feed={feed}
+        token={this.props.token}
         pressAvatar={() =>this.pressAvatar(feed)}
         push2FeedDetail={() => this.selectFeed(feed)}
         nav2TagDetail={this.nav2TagDetail}

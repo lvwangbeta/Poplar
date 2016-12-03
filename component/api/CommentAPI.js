@@ -15,7 +15,7 @@ export function getCommentsOfObject(objectType, objectID, limit, that) {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'X-Auth-Token': Secret.token,
+      'X-Auth-Token': that.props.token,
   }};
 
   fetch(url, headers)
@@ -40,7 +40,7 @@ export function reply(objectType, objectID, content, commentParent, that) {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'X-Auth-Token':Secret.token,
+      'X-Auth-Token':that.props.token,
     },
     body: JSON.stringify({
       comment_object_type: objectType,

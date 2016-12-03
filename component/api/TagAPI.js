@@ -13,7 +13,7 @@ export function getTagFeedsOfPage(id, page, that) {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'X-Auth-Token': Secret.token,
+      'X-Auth-Token': that.props.token,
   }};
 
   fetch(url, headers)

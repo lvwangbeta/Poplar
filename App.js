@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import TabNavigator from 'react-native-tab-navigator';
+import {isLogin} from './component/util/Secret';
 var NewFeed = require('./NewFeed');
 var ExplorePage = require('./ExplorePage');
 var MainPage = require('./MainPage');
@@ -20,7 +21,13 @@ var App = React.createClass({
     return {
       selectedTab:'mainTab',
       notifCount: 0,
+      isLogin: false,
+      token: '',
     };
+  },
+
+  componentWillMount: function() {
+    isLogin(this);
   },
 
   render: function() {
@@ -31,26 +38,26 @@ var App = React.createClass({
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/home.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/home_selected.png')} />}
           onPress={() => this.setState({ selectedTab: 'mainTab' })}>
-          <MainPage {...this.props}/>
+          {this.state.isLogin ? <MainPage token={this.state.token} {...this.props}/> : <LoginRegPage />}
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'exploreTab'}
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/search.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/search_selected.png')} />}
           onPress={() => this.setState({ selectedTab: 'exploreTab' })}>
-          <ExplorePage {...this.props}/>
+          <ExplorePage token={this.state.token} {...this.props}/>
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'addTab'}
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/add.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/add.png')} />}
-          onPress={()=>{this.props.navigator.push({
+          onPress={this.state.isLogin ? ()=>{this.props.navigator.push({
             title: '发状态',
             component: NewFeed,
-            params: {pop: ()=>this.props.navigator.pop()}
-          })}}
+            params: {token:this.state.token ,pop: ()=>this.props.navigator.pop()}
+          })} : ()=>this.setState({ selectedTab: 'addTab' })}
           >
-          <View />
+          {this.state.isLogin ? <View/> : <LoginRegPage />}
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'alarmTab'}
@@ -64,7 +71,7 @@ var App = React.createClass({
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/user.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/user_selected.png')} />}
           onPress={() => this.setState({ selectedTab: 'iTab' })}>
-          <MinePage {...this.props}/>
+          {this.state.isLogin ? <MinePage token={this.state.token} {...this.props}/> : <LoginRegPage />}
         </TabNavigator.Item>
       </TabNavigator>
     );

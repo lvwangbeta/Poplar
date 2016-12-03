@@ -69,7 +69,7 @@ var TagFeeds = React.createClass({
     this.props.navigator.push({
       title: '正文',
       component: FeedDetail,
-      params: {navigator, feed, nav2TagDetail:this.props.nav2TagDetail, avatarCanClick:avatarCanClick}
+      params: {token:this.props.token, navigator, feed, nav2TagDetail:this.props.nav2TagDetail, avatarCanClick:avatarCanClick}
     });
   },
 
@@ -78,7 +78,7 @@ var TagFeeds = React.createClass({
     this.props.navigator.push({
       title: feed.user_name,
       component: HomePage,
-      params: {feed,navigator, selectFeed: this.selectFeed, nav2TagDetail:this.props.nav2TagDetail},
+      params: {token:this.props.token,feed,navigator, selectFeed: this.selectFeed, nav2TagDetail:this.props.nav2TagDetail},
     });
   },
 
@@ -88,6 +88,7 @@ var TagFeeds = React.createClass({
       <TagFeedCell
         navigator={this.props.navigator}
         onSelect={() => this.selectFeed(feed)}
+        token={this.props.token}
         feed={feed}
         nav2TagDetail={this.props.nav2TagDetail}
         pressAvatar={() =>this.pressAvatar(feed)}

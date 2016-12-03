@@ -14,9 +14,15 @@ import {
   AsyncStorage
 } from 'react-native';
 
+import PoplarEnv from './PoplarEnv';
+import URLConf from './component/api/URLConf';
+import {isLogin, logout} from './component/util/Secret';
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const margin = 20;
+
+const LOGIN_URL = URLConf.API_HOST + '/account/login';
 
 var LoginPage = React.createClass({
 
@@ -37,14 +43,33 @@ var LoginPage = React.createClass({
   },
 
   login: function() {
+
     this.setState({
       inTheLog: true,
     });
-    //AsyncStorage.setItem('user', 'kevin ', () => {
-      AsyncStorage.getItem('user', (err, result) => {
-        console.log(result);
-      });
-    //})
+    var url = LOGIN_URL;
+    var options = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({user_email: this.state.email, user_pwd: this.state.password})
+    };
+    fetch(url, options).then((response) => response.json())
+      .then((responseData) => {
+        var retCode = responseData.status;
+        console.log(responseData);
+        console.log(PoplarEnv.dic.SUCCESS_ACCOUNT_LOGIN);
+        if(retCode == PoplarEnv.dic.SUCCESS_ACCOUNT_LOGIN) {
+          AsyncStorage.setItem('user', responseData.token, ()=> {
+            AsyncStorage.getItem('user', (err, result)=>{
+              console.log('new token: ' + result);
+            })
+          });
+        }
+      }).done();
+
   },
 
   render: function() {
