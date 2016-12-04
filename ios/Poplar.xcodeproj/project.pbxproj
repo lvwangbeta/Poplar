@@ -803,6 +803,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lvwangbeta.Poplar;
 				PRODUCT_NAME = Poplar;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -828,6 +829,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lvwangbeta.Poplar;
 				PRODUCT_NAME = Poplar;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
