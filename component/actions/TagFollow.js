@@ -9,8 +9,6 @@ import {
   StyleSheet
 } from 'react-native';
 
-
-
 var TagFollow = React.createClass({
 
   getInitialState: function() {
@@ -21,17 +19,24 @@ var TagFollow = React.createClass({
   },
 
   onPress: function() {
+    if(!this.props.token) {
+      this.props.showLoginRegPage();
+      return;
+    }
     this.setState({
       isFollowed: !this.state.isFollowed,
       isClicked: !this.state.isClicked,
     });
   },
 
+
   render: function() {
     return(
-      <TouchableOpacity ref={'btn'} style={[styles.btn, {backgroundColor: this.state.isFollowed?'#FBBD08':'rgba(0,0,0,0.0)'}]} onPress={this.onPress} >
-        <Text style={{color: this.state.isFollowed?'#F3F3F3':'#FBBD08'}}>{this.state.isFollowed?'已关注':'+ 关注'}</Text>
-      </TouchableOpacity>
+      <View>
+        <TouchableOpacity ref={'btn'} style={[styles.btn, {backgroundColor: this.state.isFollowed?'#FBBD08':'rgba(0,0,0,0.0)'}]} onPress={this.onPress} >
+          <Text style={{color: this.state.isFollowed?'#F3F3F3':'#FBBD08'}}>{this.state.isFollowed?'已关注':'+ 关注'}</Text>
+        </TouchableOpacity>
+      </View>
     );
   }
 

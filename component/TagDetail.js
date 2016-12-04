@@ -19,6 +19,7 @@ import {
 
 var TagFollow = require('./actions/TagFollow');
 var TagFeedList = require('./TagFeeds');
+var PopupLoginRegPage = require('../PopupLoginRegPage');
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 
@@ -29,6 +30,12 @@ const PARALLAX_HEADER_HEIGHT = 220;
 const STICKY_HEADER_HEIGHT = 70;
 
 var TagDetail = React.createClass({
+
+  getInitialState: function() {
+    return ({
+      loginRegPageVisible: false,
+    });
+  },
 
   back: function(){
     this.props.navigator.pop();
@@ -43,9 +50,22 @@ var TagDetail = React.createClass({
     });
   },
 
+  showLoginRegPage: function() {
+    this.setState({
+      loginRegPageVisible: true,
+    })
+  },
+
+  hideLoginRegPage: function() {
+    this.setState({
+      loginRegPageVisible: false,
+    })
+  },
+
   render: function(){
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
+      {this.state.loginRegPageVisible && <PopupLoginRegPage hideLoginRegPage={this.hideLoginRegPage}/>}
       <ParallaxScrollView
         backgroundColor="rgba(255,255,255,1)"
         headerBackgroundColor="#333"
@@ -87,11 +107,11 @@ var TagDetail = React.createClass({
               </TouchableOpacity>
 
             </View>
-            <TagFollow />
+            <TagFollow token={this.props.token} showLoginRegPage={this.showLoginRegPage}/>
           </View>
           )}>
 
-          <ScrollableTabView
+          {/* <ScrollableTabView
                 style={{marginTop: 10, }}
                 tabBarUnderlineStyle={{backgroundColor: '#00B5AD', height: 2,}}
                 tabBarActiveTextColor={'rgb(0,0,0)'}
@@ -100,7 +120,7 @@ var TagDetail = React.createClass({
               >
                 <ScrollView tabLabel='热门' style={{borderBottomColor: '#00B5AD'}}><TagFeedList token={this.props.token} navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail}/></ScrollView>
                 <ScrollView tabLabel='最新'><TagFeedList token={this.props.token} navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail}/></ScrollView>
-              </ScrollableTabView>
+              </ScrollableTabView> */}
 
         </ParallaxScrollView>
 
