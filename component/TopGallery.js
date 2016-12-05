@@ -90,10 +90,10 @@ var TopGallary = React.createClass({
         <View style={styles.slide} title={<Text numberOfLines={1} style={styles.title}>This is frist slide</Text>}>
           <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag1.jpg')} />
         </View>
-        <View style={styles.slide} title={<Text numberOfLines={1} style={styles.title}>Big lie behind Nine’s new show</Text>}>
+        <View style={styles.slide} title={<Text numberOfLines={1} style={styles.title}>This is second slide</Text>}>
           <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag2.jpg')} />
         </View>
-        <View style={styles.slide} title={<Text numberOfLines={1} style={styles.title}>Why Stone split from Garfield</Text>}>
+        <View style={styles.slide} title={<Text numberOfLines={1} style={styles.title}>This is third slide</Text>}>
           <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag3.jpg')} />
         </View>
         <View style={styles.slide} title={<Text numberOfLines={1} style={styles.title}>Learn from Kim K to land that job</Text>}>
