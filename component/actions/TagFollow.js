@@ -9,18 +9,25 @@ import {
   StyleSheet
 } from 'react-native';
 
+import {getToken} from '../util/Secret';
+var PopupLoginRegPage = require('../../PopupLoginRegPage');
+
 var TagFollow = React.createClass({
 
   getInitialState: function() {
     return ({
       isFollowed: false,
       isClicked: false,
+      loginRegPageVisible: false,
     });
   },
 
   onPress: function() {
     if(!this.props.token) {
-      this.props.showLoginRegPage();
+      //this.props.showLoginRegPage();
+      this.setState({
+        loginRegPageVisible: true,
+      });
       return;
     }
     this.setState({
@@ -29,10 +36,31 @@ var TagFollow = React.createClass({
     });
   },
 
+  showLoginRegPage: function() {
+    this.setState({
+      loginRegPageVisible: true,
+    })
+  },
+
+  updateFollowBtnStatus: function(token) {
+    if(token) {
+      this.setState({
+        isFollowed: true,
+      });
+    }
+  },
+
+  hideLoginRegPage: function() {
+    this.setState({
+      loginRegPageVisible: false,
+    });
+    getToken(this.updateFollowBtnStatus);
+  },
 
   render: function() {
     return(
       <View>
+        {this.state.loginRegPageVisible && <PopupLoginRegPage hideLoginRegPage={this.hideLoginRegPage} refresh={this.props.refresh}/>}
         <TouchableOpacity ref={'btn'} style={[styles.btn, {backgroundColor: this.state.isFollowed?'#FBBD08':'rgba(0,0,0,0.0)'}]} onPress={this.onPress} >
           <Text style={{color: this.state.isFollowed?'#F3F3F3':'#FBBD08'}}>{this.state.isFollowed?'已关注':'+ 关注'}</Text>
         </TouchableOpacity>

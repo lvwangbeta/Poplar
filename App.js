@@ -56,7 +56,7 @@ var App = React.createClass({
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/search.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/search_selected.png')} />}
           onPress={() => this.setState({ selectedTab: 'exploreTab' })}>
-          <ExplorePage token={this.state.token} {...this.props}/>
+          <ExplorePage token={this.state.token} refresh={this.refresh} {...this.props}/>
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'addTab'}

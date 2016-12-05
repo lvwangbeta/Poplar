@@ -26,7 +26,7 @@ var TagBox = React.createClass({
     this.props.navigator.push({
       title: '正文',
       component: TagDetail,
-      params: {token: this.props.token}
+      params: {token: this.props.token, refresh:this.props.refresh}
     });
   },
 

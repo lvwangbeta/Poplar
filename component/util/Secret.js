@@ -29,10 +29,10 @@ export function isLogin(that) {
   });
 }
 
-export function getToken() {
+export function getToken(callback) {
   AsyncStorage.getItem('user', (err, result) => {
     console.log(result);
-    return result;
+    callback(result);
   });
 }
 

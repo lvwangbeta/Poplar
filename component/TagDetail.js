@@ -19,7 +19,6 @@ import {
 
 var TagFollow = require('./actions/TagFollow');
 var TagFeedList = require('./TagFeeds');
-var PopupLoginRegPage = require('../PopupLoginRegPage');
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 
@@ -31,11 +30,6 @@ const STICKY_HEADER_HEIGHT = 70;
 
 var TagDetail = React.createClass({
 
-  getInitialState: function() {
-    return ({
-      loginRegPageVisible: false,
-    });
-  },
 
   back: function(){
     this.props.navigator.pop();
@@ -50,22 +44,10 @@ var TagDetail = React.createClass({
     });
   },
 
-  showLoginRegPage: function() {
-    this.setState({
-      loginRegPageVisible: true,
-    })
-  },
-
-  hideLoginRegPage: function() {
-    this.setState({
-      loginRegPageVisible: false,
-    })
-  },
 
   render: function(){
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
-      {this.state.loginRegPageVisible && <PopupLoginRegPage hideLoginRegPage={this.hideLoginRegPage}/>}
       <ParallaxScrollView
         backgroundColor="rgba(255,255,255,1)"
         headerBackgroundColor="#333"
@@ -105,9 +87,8 @@ var TagDetail = React.createClass({
               <TouchableOpacity onPress={()=>this.props.navigator.pop()}>
                 <Image style={{width: 18, height: 18}} source={require('../imgs/back.png')} />
               </TouchableOpacity>
-
             </View>
-            <TagFollow token={this.props.token} showLoginRegPage={this.showLoginRegPage}/>
+            <TagFollow token={this.props.token} refresh={this.props.refresh} />
           </View>
           )}>
 

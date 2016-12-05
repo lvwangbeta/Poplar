@@ -34,6 +34,7 @@ var PopupLoginRegPage = React.createClass({
     this.setState({
       loginPageVisible: false,
     });
+    this.props.hideLoginRegPage();
   },
 
   showRegPage: function() {
