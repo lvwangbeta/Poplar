@@ -10,10 +10,10 @@ var SettingsBtn = React.createClass({
 
   render:function() {
     return (
-      <TouchableOpacity onPress={this.props.onPress}>
+      <TouchableOpacity onPress={this.props.onPress} style={styles.container}>
         <Image
-          source={require('../../imgs/back.png')}
-          style={[{ width: 18, height: 18, marginLeft: 18, marginTop: 15},]}/>
+          source={require('../../imgs/settings.png')}
+          style={[{ width: 18, height: 18, marginRight: 18, marginTop: 15},]}/>
       </TouchableOpacity>
     );
 
@@ -23,7 +23,7 @@ var SettingsBtn = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
-    flex:1,
+
   },
 });
 

@@ -33,7 +33,10 @@ var ExploreContainer = React.createClass({
     return (
       <ScrollView style={styles.container}>
           <TopGallery />
-          <TagsSection token={this.props.token} navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail}/>
+          <TagsSection token={this.props.token}
+                       navigator={this.props.navigator}
+                       nav2TagDetail={this.nav2TagDetail}
+                       refresh={this.props.refresh}/>
           <UsersSection />
       </ScrollView>
     );

@@ -30,6 +30,7 @@ const STICKY_HEADER_HEIGHT = 70;
 
 var TagDetail = React.createClass({
 
+
   back: function(){
     this.props.navigator.pop();
   },
@@ -42,6 +43,7 @@ var TagDetail = React.createClass({
       params: {token: this.props.token}
     });
   },
+
 
   render: function(){
     return (
@@ -85,13 +87,12 @@ var TagDetail = React.createClass({
               <TouchableOpacity onPress={()=>this.props.navigator.pop()}>
                 <Image style={{width: 18, height: 18}} source={require('../imgs/back.png')} />
               </TouchableOpacity>
-
             </View>
-            <TagFollow />
+            <TagFollow token={this.props.token} refresh={this.props.refresh} />
           </View>
           )}>
 
-          <ScrollableTabView
+          {/* <ScrollableTabView
                 style={{marginTop: 10, }}
                 tabBarUnderlineStyle={{backgroundColor: '#00B5AD', height: 2,}}
                 tabBarActiveTextColor={'rgb(0,0,0)'}
@@ -100,7 +101,7 @@ var TagDetail = React.createClass({
               >
                 <ScrollView tabLabel='热门' style={{borderBottomColor: '#00B5AD'}}><TagFeedList token={this.props.token} navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail}/></ScrollView>
                 <ScrollView tabLabel='最新'><TagFeedList token={this.props.token} navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail}/></ScrollView>
-              </ScrollableTabView>
+              </ScrollableTabView> */}
 
         </ParallaxScrollView>
 
