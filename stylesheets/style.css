@@ -1,0 +1,62 @@
+.main-content {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  background-color: #159957;
+  background-image: linear-gradient(120deg, #155799, #159957);
+}
+
+.exhi-content {
+  float: left;
+  width: 50%;
+  text-align: center;
+}
+
+.exhi-content img{
+  width: 70%;
+  margin-top: 15%;
+}
+
+.desc-content {
+  float: left;
+  width: 50%;
+  text-align: center;
+  align-items: center;
+}
+
+.desc-content img {
+  width: 25%;
+  margin-top: 25%;
+
+}
+
+.name {
+  font-size: 52px;
+}
+.slogan {
+  font-weight: lighter;
+  margin-bottom: 60px;
+  margin-top: -20px;
+}
+
+.btn {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 15px 25px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 20px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.6);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0.3rem;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+  text-decoration: none;
+}
+
+.btn:hover {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3); }
