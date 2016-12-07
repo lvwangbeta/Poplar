@@ -7,7 +7,6 @@ import {
   Text,
   Image,
   View,
-  NavigatorIOS,
   ScrollView,
   TouchableOpacity,
   TouchableHighlight,

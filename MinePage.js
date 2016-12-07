@@ -6,7 +6,6 @@ import {
   Text,
   Image,
   View,
-  NavigatorIOS,
   Navigator,
 } from 'react-native';
 
