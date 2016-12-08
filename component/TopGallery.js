@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width: windowWidth,
-    height: HEIGHT
+    height: HEIGHT,
+    flex: 1
   },
   wrapper: {
   },
@@ -49,10 +50,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
 
-  image: {
-    width: windowWidth,
-    flex: 1
-  },
 });
 
 

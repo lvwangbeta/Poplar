@@ -134,9 +134,6 @@ var styles = StyleSheet.create({
     height: 180,
     position: 'relative',
   },
-  headerImg: {
-    height: 180,
-  },
   feedList: {
 
   },
