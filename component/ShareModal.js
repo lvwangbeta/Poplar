@@ -34,7 +34,7 @@ var ShareModal = React.createClass({
           <View style={styles.innerContainer}>
             <View style={styles.logos}>
               <TouchableOpacity onPress={this.shareToTimeline}><Image style={{width: 48, height: 48}} source={require('../imgs/icon64_wx_logo.png')}/></TouchableOpacity>
-              <Image style={{width: 48, height: 48}} source={require('../imgs/icon_wx_moments.png')}/>
+              <TouchableOpacity onPress={this.shareToTimeline}><Image style={{width: 48, height: 48}} source={require('../imgs/icon_wx_moments.png')}/></TouchableOpacity>
             </View>
             <View style={styles.cancle}><TouchableOpacity onPress={()=>{this.props.hideShareModal()}}><Text>取消</Text></TouchableOpacity></View>
           </View>
@@ -67,13 +67,17 @@ var styles = StyleSheet.create({
   logos: {
     flex:1,
     height: 100,
+    width: windowWidth,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#F3F3F3',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
   cancle: {
     alignItems: 'center',
-    marginBottom: 10,
+    justifyContent: 'center',
+    height: 50,
   }
 });
 
