@@ -18,6 +18,8 @@ import {
 
 import URLConf from './component/api/URLConf';
 import BackBtn from './component/navbar/BackBtn';
+import ShareBtn from './component/navbar/ShareBtn';
+import ShareModal from './component/ShareModal';
 var NavigationBar = require('react-native-navbar');
 var LikeAction = require('./component/actions/Like');
 var CommentAction = require('./component/actions/Comment');
@@ -28,6 +30,7 @@ var TagDetail = require('./component/TagDetail');
 var HomePage = require('./component/HomePage');
 
 const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 const margin = 20;
 const imgInterval = 5;
 
@@ -46,6 +49,7 @@ var FeedDetail = React.createClass({
       commentParent:null,
       showViewer: false,
       showIndex: 0,
+      shareModalVisible:false,
     });
   },
 
@@ -153,12 +157,20 @@ var FeedDetail = React.createClass({
     });
   },
 
+  hideShareModal: function() {
+    this.setState({
+      shareModalVisible: false,
+    });
+  },
+
   render: function(){
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
+        {this.state.shareModalVisible && <ShareModal hideShareModal={this.hideShareModal}/>}
         <NavigationBar style={{borderBottomWidth: 0.5, borderBottomColor: '#F3F3F3'}}
                        title={{title: '正文'}}
-                       leftButton={<BackBtn onPress={()=>this.props.navigator.pop()}/>}/>
+                       leftButton={<BackBtn onPress={()=>this.props.navigator.pop()}/>}
+                       rightButton={<ShareBtn onPress={()=>{this.setState({shareModalVisible: true})}}/>}/>
         <ScrollView>
           {this.props.feed.content && <PhotoSwiper imgList={this.props.feed.content.slice(0,-1).split(':')}
             showViewer={this.state.showViewer}
@@ -227,6 +239,7 @@ var FeedDetail = React.createClass({
 
         </ScrollView>
         {this.renderCommentBar()}
+
       </View>
     )
   },
@@ -241,6 +254,7 @@ var styles = StyleSheet.create({
     paddingBottom: 10,
     backgroundColor: 'white',
   },
+
   feedHeader: {
     flex: 1,
     flexDirection: 'row',
@@ -323,7 +337,6 @@ var styles = StyleSheet.create({
     flex: 3,
     marginLeft: 20,
     marginTop: 10,
-
   }
 });
 
