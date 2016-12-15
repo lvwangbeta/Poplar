@@ -1,4 +1,4 @@
-const APP_SERVER_HOST = 'http://192.168.99.102:8080';
+const APP_SERVER_HOST = 'http://192.168.99.101:8080';
 const API_BASE = APP_SERVER_HOST + '/com.lvwang.osf/api';
 const API_VERSION = '/v1';
 const API_HOST = API_BASE + API_VERSION;
