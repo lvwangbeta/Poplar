@@ -1,0 +1,10 @@
+*.class
+
+# Package Files #
+*.war
+*.ear
+*.log
+*.DS_Store
+
+/target
+/.settings/

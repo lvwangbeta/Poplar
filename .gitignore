@@ -32,3 +32,18 @@ local.properties
 #
 node_modules/
 npm-debug.log
+
+
+# Java
+*.class
+
+# Package Files #
+*.war
+*.ear
+*.log
+
+/target
+/.settings/
+.metadata/
+Servers/*
+RemoteSystemsTempFiles/*
