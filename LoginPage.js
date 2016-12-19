@@ -81,9 +81,10 @@ var LoginPage = React.createClass({
         <Modal
           animationType={"slide"}
           transparent={this.state.transparent}
-          visible={this.props.modalVisible}>
+          visible={this.props.modalVisible}
+          onRequestClose={this.cancle}>
 
-            <View>
+            <View style={{flex:1}}>
               <View style={styles.cancleBtn}>
                 <TouchableOpacity onPress={this.cancle}>
                   <Image style={{width: 16, height: 16}} source={require('./imgs/multiply.png')}/>

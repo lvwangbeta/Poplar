@@ -1,4 +1,4 @@
-package com.poplar;
+package com.lvwangbeta.poplar;
 
 import com.facebook.react.ReactActivity;
 import com.reactnative.photoview.PhotoViewPackage;

@@ -18,7 +18,8 @@
     "react-native-qiniu": "^0.2.2",
     "react-native-scrollable-tab-view": "^0.6.0",
     "react-native-swiper": "^1.5.3",
-    "react-native-tab-navigator": "^0.3.3"
+    "react-native-tab-navigator": "^0.3.3",
+    "react-native-wechat": "^1.8.0"
   },
   "jest": {
     "preset": "jest-react-native"

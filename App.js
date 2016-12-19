@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 
+// import * as WeChat from 'react-native-wechat';
 import TabNavigator from 'react-native-tab-navigator';
 import {isLogin, logout} from './component/util/Secret';
 var NewFeed = require('./NewFeed');
