@@ -1,0 +1,120 @@
+ /*
+ * # Semantic UI
+ * https://github.com/Semantic-Org/Semantic-UI
+ * http://www.semantic-ui.com/
+ *
+ * Copyright 2014 Contributors
+ * Released under the MIT license
+ * http://opensource.org/licenses/MIT
+ *
+ */
+
+
+
+/*******************************
+            Divider
+*******************************/
+
+.ui.divider {
+  margin: 1rem 0rem;
+  line-height: 1;
+  height: 0em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(0, 0, 0, 0.85);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/*--------------
+      Basic
+---------------*/
+
+.ui.divider:not(.vertical):not(.horizontal) {
+/*  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);*/
+  border-top: 1px solid rgba(0, 0, 0, 0.05);  
+}
+
+/*--------------
+    Coupling
+---------------*/
+
+.ui.grid > .ui.divider {
+  font-size: 1rem;
+}
+
+/*--------------
+   Horizontal
+---------------*/
+
+.ui.horizontal.divider {
+  position: relative;
+  height: auto;
+  margin: '';
+  overflow: hidden;
+  line-height: 1;
+  text-align: center;
+}
+.ui.horizontal.divider:before,
+.ui.horizontal.divider:after {
+  position: absolute;
+  content: '';
+  z-index: 3;
+  width: 50%;
+  top: 50%;
+  height: 0px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+.ui.horizontal.divider:before {
+  margin-left: -webkit-calc(-50% -  1em );
+  margin-left: calc(-50% -  1em );
+}
+.ui.horizontal.divider:after {
+  margin-left: 1em;
+}
+
+/*--------------
+    Vertical
+---------------*/
+
+.ui.vertical.divider {
+  position: absolute;
+  z-index: 2;
+  top: 40%;
+  left: 100%;
+  margin: 0rem;
+  padding: 0em;
+  width: auto;
+  height: 50%;
+  line-height: 0em;
+  text-align: center;
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+.ui.vertical.divider:before,
+.ui.vertical.divider:after {
+  position: absolute;
+  left: 50%;
+  content: '';
+  z-index: 3;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  width: 0%;
+  height: -webkit-calc(100% -  1rem );
+  height: calc(100% -  1rem );
+}
+.ui.vertical.divider:before {
+  top: -100%;
+}
+.ui.vertical.divider:after {
+  top: auto;
+  bottom: 0px;
+}
+

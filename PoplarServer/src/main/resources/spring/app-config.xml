@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <!-- Uncomment and add your base-package here:
+         <context:component-scan
+            base-package="org.springframework.samples.service"/>  -->
+
+	<context:component-scan base-package="com.lvwang.osf.model" />
+	<context:component-scan base-package="com.lvwang.osf.dao.impl" />
+	<context:component-scan base-package="com.lvwang.osf.service" />
+	<context:component-scan base-package="com.lvwang.osf.util" />
+	<context:component-scan base-package="com.lvwang.osf.search" />
+	
+	<context:property-placeholder location="classpath:spring/property.properties"/>
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" >
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="initialSize" value="10" />
+		<property name="maxActive" value="50" />
+	
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>	
+	
+	<bean id="namedParaJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSource"/>
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="typeAliasesPackage" value="com.lvwang.osf.model"></property>
+
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+	</bean>
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	     <constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	  <property name="basePackage" value="com.lvwang.osf.mappers" />
+	</bean>
+	
+	<bean id="jedisConnFactory" 
+	    class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" 
+	    p:use-pool="true"
+	    p:hostName="${redis.host}"
+	    p:port="${redis.port}"
+	    p:password="${redis.password}"/>
+	
+	<!-- redis template definition -->
+	<bean id="redisTemplate" 
+	    class="org.springframework.data.redis.core.RedisTemplate" 
+	    p:connection-factory-ref="jedisConnFactory">
+	    <property name="keySerializer">  
+           <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />  
+        </property>  
+        <property name="hashKeySerializer">  
+           <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />  
+        </property>  
+	</bean>	
+	 
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" 
+		p:dataSource-ref="dataSource"/>    
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.aliyun.com" />
+		<property name="username" value="${mail.from}" />
+		<property name="password" value="${mail.password}" />
+		<property name="javaMailProperties">
+	        <!-- additional properties specific to JavaMail -->
+			<props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.timeout">25000</prop>
+            </props>
+
+	    </property>
+	</bean>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" p:maxUploadSize="500000" />
+</beans>
