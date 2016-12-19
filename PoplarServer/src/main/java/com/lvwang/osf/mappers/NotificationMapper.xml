@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+   <!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lvwang.osf.mappers.NotificationMapper">
+	<insert id="save" parameterType="com.lvwang.osf.model.Notification" useGeneratedKeys="true" keyProperty="id">
+		 insert into osf_notifications (notify_type,notify_id, object_type, object_id, notified_user, notifier) 
+		 values(#{notify_type},#{notify_id}, #{object_type}, #{object_id}, #{notified_user}, #{notifier})
+	</insert>
+	<select id="getNotificationsOfType" resultType="com.lvwang.osf.model.Notification">
+		 select * from osf_notifications where notified_user=#{param1} and notify_type=#{param2} order by ts desc";
+	</select>
+	<select id="getNotificationsOfTypes" resultType="com.lvwang.osf.model.Notification">
+		 select * from osf_notifications where notified_user= #{param1} 
+		 and notify_type in 
+		 <foreach item="notify_type" collection="notify_types" open="(" separator="," close=")">
+		 	#{notify_type}
+		 </foreach>
+		 order by ts desc
+	</select>
+	
+	<select id="getNotificationsCount" resultType="map" parameterType="int">
+		 select notify_type,count(*) count from  
+		 osf_notifications where notified_user=#{user_id} group by notify_type
+	</select>
+</mapper>
