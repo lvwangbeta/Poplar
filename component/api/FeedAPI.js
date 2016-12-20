@@ -41,7 +41,7 @@ export function newFeed(text, photos, tags, token) {
       'Content-Type': 'application/json',
       'X-Auth-Token':token,
     },
-    body: JSON.stringify({album_desc: text, photos: photos, tags: tags})
+    body: encodeURI(JSON.stringify({album_desc: text, photos: photos, tags: tags}), 'utf-8')
   };
   fetch(url, options).then((response) => response.json())
     .then((responseData) => {
