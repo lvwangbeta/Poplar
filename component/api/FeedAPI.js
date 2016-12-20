@@ -29,6 +29,34 @@ export function getMyFeeds(that) {
     .done();
 }
 
+/**
+* id 上送的当前第一个feed id作为上次刷新位置
+*/
+export function refresh(id, that) {
+  FEED_URL = FEED_URL+id;
+  var sign = Md5.hex_md5(FEED_URL.replace(URLConf.APP_SERVER_HOST, '') + '?ts=123456&'+Secret.secret);
+  console.log('sign:' + sign);
+  var url = FEED_URL+'?ts=123456&sign=' + sign;
+  var headers = {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'X-Auth-Token':that.props.token,
+  }};
+
+  fetch(url, headers)
+    .then((response) => response.json())
+    .then((responseData) => {
+      console.log(responseData);
+      that.setState({
+        dataSource: that.state.dataSource.cloneWithRows(responseData.feeds),
+        isRefreshing: false,
+        loaded: true,
+      });
+    })
+    .done();
+}
+
 
 export function newFeed(text, photos, tags, token) {
   var sign = Md5.hex_md5(NEW_FEED_URL.replace(URLConf.APP_SERVER_HOST, '') + '?ts=123456&'+Secret.secret);

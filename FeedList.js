@@ -12,13 +12,14 @@ import {
   TextInput,
   TouchableHighlight,
   TouchableNativeFeedback,
+  RefreshControl
 } from 'react-native';
 
 var FeedCell = require('./FeedCell');
 var FeedDetail = require('./FeedDetail');
 var TagDetail = require('./component/TagDetail');
 var HomePage = require('./component/HomePage');
-import {getMyFeeds} from './component/api/FeedAPI';
+import {getMyFeeds, refresh} from './component/api/FeedAPI';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -30,6 +31,7 @@ var FeedList = React.createClass({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       loaded: false,
+      isRefreshing: false,
     };
   },
   componentDidMount: function() {
@@ -38,6 +40,11 @@ var FeedList = React.createClass({
 
   fetchData: function() {
     getMyFeeds(this);
+  },
+
+  onRefresh: function() {
+    this.setState({isRefreshing: true});
+    refresh('', this);
   },
 
   render: function() {
@@ -51,6 +58,17 @@ var FeedList = React.createClass({
           dataSource={this.state.dataSource}
           renderRow={this.renderFeed}
           style={styles.listView}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.isRefreshing}
+              onRefresh={this.onRefresh}
+              tintColor="#F3F3F3"
+              title="刷新中..."
+              titleColor="#9B9B9B"
+              colors={['#F3F3F3', '#F3F3F3', '#F3F3F3']}
+              progressBackgroundColor="#F3F3F3"
+            />
+          }
         />
       </View>
     );
