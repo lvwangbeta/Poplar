@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 
-// import * as WeChat from 'react-native-wechat';
+var WeChat = require('react-native-wechat');
 import TabNavigator from 'react-native-tab-navigator';
 import {isLogin, logout} from './component/util/Secret';
 var NewFeed = require('./NewFeed');
@@ -40,6 +40,10 @@ var App = React.createClass({
       isLogin: isLogin,
       token: token,
     });
+  },
+
+  componentDidMount: function(){
+    WeChat.registerApp('wx66aba204d5331fcc');
   },
 
   render: function() {

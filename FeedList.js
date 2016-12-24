@@ -12,14 +12,15 @@ import {
   TextInput,
   TouchableHighlight,
   TouchableNativeFeedback,
-  RefreshControl
+  RefreshControl,
+  Alert
 } from 'react-native';
 
 var FeedCell = require('./FeedCell');
 var FeedDetail = require('./FeedDetail');
 var TagDetail = require('./component/TagDetail');
 var HomePage = require('./component/HomePage');
-import {getMyFeeds, refresh} from './component/api/FeedAPI';
+import {getMyFeeds, refresh, load} from './component/api/FeedAPI';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -30,8 +31,13 @@ var FeedList = React.createClass({
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
+      page: 1,
+      feedId: 0,
+      feeds:[],
+      noMore: false,
       loaded: false,
       isRefreshing: false,
+      isLoadingMore: false,
     };
   },
   componentDidMount: function() {
@@ -57,6 +63,9 @@ var FeedList = React.createClass({
           isComment={this.state.isComment}
           dataSource={this.state.dataSource}
           renderRow={this.renderFeed}
+          renderFooter={this.renderFooter}
+          onEndReached={this.onEndReached}
+          onEndReachedThreshold={0}
           style={styles.listView}
           refreshControl={
             <RefreshControl
@@ -73,6 +82,23 @@ var FeedList = React.createClass({
       </View>
     );
 
+  },
+  onEndReached: function() {
+    if(this.state.noMore || this.state.isLoadingMore) return;
+    var page = this.state.page+1;
+    this.setState({isLoadingMore: true, page: this.state.page+1}, load(this.state.feedId, page, this));
+  },
+  renderFooter: function() {
+    if(this.state.isLoadingMore) {
+      return (
+        <View style={styles.footer}>
+          <Text>正在加载...</Text>
+        </View>
+
+      );
+    } else {
+      return(<View/>);
+    }
   },
 
   renderLoadingView: function() {
@@ -130,6 +156,7 @@ var FeedList = React.createClass({
         navigator={this.props.navigator}
         onSelect={() => this.selectFeed(feed)}
         feed={feed}
+        page={this.state.page}
         token={this.props.token}
         pressAvatar={() =>this.pressAvatar(feed)}
         push2FeedDetail={() => this.selectFeed(feed)}
@@ -168,6 +195,12 @@ var styles = StyleSheet.create({
     //marginTop: 65,
     backgroundColor: 'white',
   },
+  footer: {
+    width:windowWidth,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
 
 module.exports = FeedList;

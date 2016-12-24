@@ -11,6 +11,8 @@ import {
   Dimensions
 } from 'react-native';
 
+var WeChat = require('react-native-wechat');
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const shareBarHeight = 150;
@@ -21,9 +23,21 @@ var ShareModal = React.createClass({
       modalVisible: true,
     };
   },
-  shareToTimeline: function() {
-
+  componentDidMount: function() {
+    WeChat.registerApp('wx66aba204d5331fcc');
   },
+  shareToTimeline: function() {
+    try {
+
+      let result = WeChat.shareToTimeline({type: 'text',
+                                          description: 'hi, WeChat, test message from Poplar'
+                                        });
+      console.log('share text message to time line successful:', result);
+    } catch (e) {
+      console.error('share text message to time line failed with:', e);
+    }
+  },
+
   render: function() {
     return (
       <Modal
