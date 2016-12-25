@@ -105,7 +105,7 @@ var TagFeedCell = React.createClass({
                     </TouchableOpacity>
                   </View>
                   <View style={styles.feedUserInfo}>
-                    <Text style={styles.feedUserName}>Kevin</Text>
+                    <Text style={styles.feedUserName}>{this.props.feed.user_name}</Text>
                     <Text style={styles.feedTime}>2015-1-5</Text>
                   </View>
               </View>
@@ -169,9 +169,9 @@ var styles = StyleSheet.create({
     flex: 1,
     margin: margin,
     marginTop: -10,
-    fontSize: 15,
+    fontSize: 16,
     color: '#333333',
-    lineHeight: 19,
+    lineHeight: 22,
   },
   feedContentSingleImage: {
     flex: 1,

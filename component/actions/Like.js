@@ -51,12 +51,12 @@ var Like = React.createClass({
 
   render: function(){
     return (
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row', }}>
         {this.state.loginRegPageVisible && <PopupLoginRegPage hideLoginRegPage={this.hideLoginRegPage} refresh={this.refresh}/>}
         <TouchableOpacity onPress={this.pressLike}>
-          <Image style={{marginRight: 5}} source={require('../../imgs/ios7-heart-outline.png')} />
+          <Image style={{width:22, height:22, marginRight: 5}} source={require('../../imgs/like_empty.png')} />
         </TouchableOpacity>
-        <Text>{this.state.counter}</Text>
+        {/* <Text>{this.state.counter}</Text> */}
       </View>
     );
   }

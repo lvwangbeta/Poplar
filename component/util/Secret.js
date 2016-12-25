@@ -18,7 +18,7 @@ export default {
 
 
 export function isLogin(that) {
-  AsyncStorage.getItem('user', (err, result) => {
+  AsyncStorage.getItem('token', (err, result) => {
     console.log('token : '+result);
     if(typeof(result) == 'string') {
       that.setState({
@@ -30,7 +30,7 @@ export function isLogin(that) {
 }
 
 export function getToken(callback) {
-  AsyncStorage.getItem('user', (err, result) => {
+  AsyncStorage.getItem('token', (err, result) => {
     console.log(result);
     callback(result);
   });
@@ -52,8 +52,8 @@ export function login(user_email, user_pwd) {
     .then((responseData) => {
       retCode = responseData.status;
       console.log(responseData);
-      if(responseData.token === PoplarEnv.SUCCESS_ACCOUNT_LOGIN) {
-        AsyncStorage.setItem('user', responseData.token);
+      if(responseData.token === PoplarEnv.dic.SUCCESS_ACCOUNT_LOGIN) {
+        AsyncStorage.setItem('token', responseData.token);
       }
       console.log('ret code code : ' + retCode);
       return retCode;
@@ -79,8 +79,8 @@ export function logout(that) {
   fetch(url, options).then((response) => response.json())
     .then((responseData) => {
       console.log(responseData);
-      if(responseData.token === PoplarEnv.SUCCESS_ACCOUNT_LOGOUT) {
-        AsyncStorage.removeItem('user', (err)=>{
+      if(responseData.status === PoplarEnv.dic.SUCCESS_ACCOUNT_LOGOUT) {
+        AsyncStorage.removeItem('token', (err)=>{
           that.setState({
             token: '',
             isLogin: false,

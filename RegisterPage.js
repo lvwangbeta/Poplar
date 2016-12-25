@@ -61,7 +61,7 @@ var RegisterPage = React.createClass({
         var retCode = responseData.status;
         console.log(responseData);
         if(retCode == PoplarEnv.dic.SUCCESS_ACCOUNT_REG) {
-          AsyncStorage.setItem('user', responseData.token, ()=> {
+          AsyncStorage.setItem('token', responseData.token, ()=> {
             this.props.hideRegPage();
             this.props.refresh(true, responseData.token);
           });

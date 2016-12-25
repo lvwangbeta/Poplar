@@ -28,6 +28,7 @@ export function getMyFeeds(that) {
         feeds: responseData.feeds,
         dataSource: that.state.dataSource.cloneWithRows(responseData.feeds),
         loaded: true,
+        page: that.state.page+1,
       });
     })
     .done();
@@ -134,7 +135,8 @@ export function load(id, page, that) {
         isRefreshing: false,
         isLoadingMore: false,
         loaded: true,
-        feedId: feeds[feeds.length-1].id,
+        page: page+1,
+        feedId: feeds != null&&feeds.length != 0 ? feeds[feeds.length-1].id: 0,
       });
     })
     .done();

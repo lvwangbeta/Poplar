@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 
 import Swiper from 'react-native-swiper';
-
+import PoplarWebView from './PoplarWebView';
 const windowWidth = Dimensions.get('window').width;
 const HEIGHT = 150;
 
@@ -73,6 +73,12 @@ var TopGallary = React.createClass({
 
   },
 
+  onPress: function() {
+    this.props.navigator.push({
+      component: PoplarWebView,
+      title: '正文'
+    });
+  },
 
   render: function(){
 
@@ -84,18 +90,18 @@ var TopGallary = React.createClass({
         paginationStyle={{
           bottom: -15, left: null, right: 10
         }} loop>
-        <View style={styles.slide} title={<Text numberOfLines={1} style={styles.title}>This is frist slide</Text>}>
+        <TouchableOpacity style={styles.slide} onPress={this.onPress}  title={<Text numberOfLines={1} style={styles.title}>This is frist slide</Text>}>
           <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag1.jpg')} />
-        </View>
-        <View style={styles.slide} title={<Text numberOfLines={1} style={styles.title}>This is second slide</Text>}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.slide} title={<Text numberOfLines={1} style={styles.title}>This is second slide</Text>}>
           <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag2.jpg')} />
-        </View>
-        <View style={styles.slide} title={<Text numberOfLines={1} style={styles.title}>This is third slide</Text>}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.slide} title={<Text numberOfLines={1} style={styles.title}>This is third slide</Text>}>
           <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag3.jpg')} />
-        </View>
-        <View style={styles.slide} title={<Text numberOfLines={1} style={styles.title}>Learn from Kim K to land that job</Text>}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.slide} title={<Text numberOfLines={1} style={styles.title}>Learn from Kim K to land that job</Text>}>
           <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag2.jpg')} />
-        </View>
+        </TouchableOpacity>
       </Swiper>
     );
   },
