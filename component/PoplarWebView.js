@@ -22,7 +22,7 @@ var PoplarWebView = React.createClass({
         <NavigationBar style={{borderBottomWidth: 0.5, borderBottomColor: '#F3F3F3'}}
                        title={{title: '正文'}}
                        leftButton={<BackBtn onPress={()=>this.props.navigator.pop()}/>}/>
-        <WebView url={'http://www.dgtle.com/article-16861-1.html'}
+        <WebView source={{uri:'http://www.dgtle.com/article-16861-1.html'}}
                  startInLoadingState={true}
                  domStorageEnabled={true}
                  javaScriptEnabled={true}
