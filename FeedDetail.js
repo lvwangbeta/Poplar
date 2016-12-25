@@ -169,7 +169,7 @@ var FeedDetail = React.createClass({
 
   render: function(){
     return (
-      <View style={{flex: 1, flexDirection: 'column'}}>
+      <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'white'}}>
         {this.state.shareModalVisible && <ShareModal hideShareModal={this.hideShareModal}/>}
         <NavigationBar style={{borderBottomWidth: 0.5, borderBottomColor: '#F3F3F3'}}
                        title={{title: '正文'}}
