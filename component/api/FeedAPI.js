@@ -56,6 +56,9 @@ export function refresh(id, that) {
         dataSource: that.state.dataSource.cloneWithRows(responseData.feeds),
         isRefreshing: false,
         loaded: true,
+        noMore: false,
+        page: 1,
+        feeds: responseData.feeds,
       });
     })
     .done();

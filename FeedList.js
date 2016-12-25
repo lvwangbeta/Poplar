@@ -49,8 +49,7 @@ var FeedList = React.createClass({
   },
 
   onRefresh: function() {
-    this.setState({isRefreshing: true});
-    refresh('', this);
+    this.setState({isRefreshing: true}, refresh('', this));
   },
 
   render: function() {
@@ -96,8 +95,12 @@ var FeedList = React.createClass({
         </View>
 
       );
-    } else {
-      return(<View/>);
+    } else if(this.state.noMore){
+      return(
+        <View style={styles.footer}>
+          <Text>没有更多了</Text>
+        </View>
+      );
     }
   },
 
