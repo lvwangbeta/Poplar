@@ -39,9 +39,9 @@ var FeedActions = React.createClass({
             <View>
               <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity onPress={this.pressComment}>
-                  <Image style={{marginRight: 5}} source={require('../../imgs/ios7-chatbubble-outline.png')} />
+                  <Image style={{width:22, height:22, marginRight: 5}} source={require('../../imgs/chat.png')} />
                 </TouchableOpacity>
-                <Text>{this.props.commentCounter}</Text>
+                {/* <Text>{this.props.commentCounter}</Text> */}
               </View>
             </View>
             {this.renderCommentTip(this.props.commentCounter)}
@@ -79,14 +79,15 @@ var styles = StyleSheet.create({
     padding: 20,
     paddingTop: 5,
     paddingBottom: 5,
+    paddingRight: 10
   },
   feedActionComment: {
-    width: 40,
+    width: 50,
     padding: 5,
     marginRight: 5,
   },
   feedActionLike: {
-    width: 40,
+    width: 50,
     padding: 5,
   },
 });

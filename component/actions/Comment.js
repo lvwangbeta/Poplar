@@ -20,8 +20,8 @@ var Comment = React.createClass({
     return (
       <View>
         <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity onPress={this.pressComment}>
-            <Image style={{marginRight: 5}} source={require('../../imgs/ios7-chatbubble-outline.png')} />
+          <TouchableOpacity onPress={this.pressComment} >
+            <Image style={{width:22, height:18, marginRight: 5}} source={require('../../imgs/chat.png')} />
           </TouchableOpacity>
           <Text>{this.props.counter}</Text>
         </View>
