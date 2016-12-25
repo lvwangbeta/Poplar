@@ -28,6 +28,7 @@ var CommentList = require('./CommentList');
 var PhotoSwiper = require('./component/PhotoSwiper');
 var TagDetail = require('./component/TagDetail');
 var HomePage = require('./component/HomePage');
+var PoplarEnv = require('./PoplarEnv');
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -134,15 +135,18 @@ var FeedDetail = React.createClass({
   },
 
   renderFeedContent: function(feed) {
-    if(this.props.feed.summary == null || this.props.feed.summary.length == 0) {
+    if(this.props.feed.object_type == PoplarEnv.COMMENT_OBJ_TYPE.ALBUM) {
       return (
-        <View style={styles.feedContentImages}>{this.renderFeedImages(this.props.feed.content)}</View>
+        <View>
+          <Text style={styles.feedContentText}>{this.props.feed.summary}</Text>
+          <View style={styles.feedContentImages}>{this.renderFeedImages(this.props.feed.content)}</View>
+        </View>
       );
     }
+    //short post
     return (
       <View>
         <Text style={styles.feedContentText}>{this.props.feed.summary}</Text>
-        <View style={styles.feedContentImages}>{this.renderFeedImages(this.props.feed.content)}</View>
       </View>
     );
   },
