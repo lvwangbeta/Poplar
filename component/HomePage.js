@@ -12,6 +12,7 @@ import {
     Dimensions,
     ScrollView,
     ListView,
+    TouchableOpacity
 } from 'react-native';
 
 var FollowBtn = require('./actions/Follow');
@@ -83,6 +84,11 @@ var HomePage = React.createClass({
     return (
       <ScrollView style={styles.container}>
         <View style={styles.card}>
+          <TouchableOpacity onPress={() => this.props.navigator.pop()} style={{position: 'absolute', top: 30, left: 20, zIndex: 10}}>
+            <Image
+              source={require('../imgs/back.png')}
+              style={{ width: 18, height: 18}}/>
+          </TouchableOpacity>
           <View>
             <Image resizeMode='cover' style={styles.background} source={require('../imgs/tag1.jpg')} />
             <Image style={styles.avatar} source={require('../imgs/tag2.jpg')} />

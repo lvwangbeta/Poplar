@@ -20,7 +20,7 @@ import {
 var TagFollow = require('./actions/TagFollow');
 var TagFeedList = require('./TagFeeds');
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
+// import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 
 const windowWidth = Dimensions.get('window').width;
 const window = Dimensions.get('window');
