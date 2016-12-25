@@ -18,7 +18,7 @@ import {
 var FollowBtn = require('./actions/Follow');
 var FeedDetail = require('../FeedDetail');
 var FeedCell = require('../FeedCell');
-import {getMyFeeds} from './api/FeedAPI';
+import {getFeedsOfUser} from './api/FeedAPI';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -30,6 +30,11 @@ var HomePage = React.createClass({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       loaded: false,
+      feeds: [],
+      isLoadingMore: false,
+      noMore: false,
+      page: 1,
+      feedId: 0,
     };
   },
   componentDidMount: function() {
@@ -37,7 +42,7 @@ var HomePage = React.createClass({
   },
 
   fetchData: function() {
-    getMyFeeds(this);
+    getFeedsOfUser(23, this.state.feedId, this.state.page, this);
   },
 
   renderLoadingView: function() {
@@ -74,9 +79,35 @@ var HomePage = React.createClass({
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderFeed}
+          renderFooter={this.renderFooter}
+          onEndReached={this.onEndReached}
+          onEndReachedThreshold={0}
         />
       </View>
     );
+  },
+
+  onEndReached: function() {
+    if(this.state.noMore || this.state.isLoadingMore) return;
+    console.log('is loading more...');
+    var page = this.state.page+1;
+    this.setState({isLoadingMore: true, page: this.state.page+1}, getFeedsOfUser(23, this.state.feedId, page, this));
+  },
+  renderFooter: function() {
+    if(this.state.isLoadingMore) {
+      return (
+        <View style={styles.footer}>
+          <Text>正在加载...</Text>
+        </View>
+
+      );
+    } else if(this.state.noMore){
+      return(
+        <View style={styles.footer}>
+          <Text>没有更多了</Text>
+        </View>
+      );
+    }
   },
 
   render: function() {
@@ -97,7 +128,7 @@ var HomePage = React.createClass({
             <View style={styles.desc}>
               <Text style={styles.name}>断鸿</Text>
               <Text style={styles.motto}>Time to do it</Text>
-              <FollowBtn/>
+              <FollowBtn refresh={this.props.refresh}/>
             </View>
             <View
               style={{flex: 1,
@@ -185,7 +216,13 @@ var styles = StyleSheet.create({
     marginBottom: 10,
     alignSelf: 'stretch',
     justifyContent: 'center'
-  }
+  },
+  footer: {
+    width:windowWidth,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 module.exports = HomePage;

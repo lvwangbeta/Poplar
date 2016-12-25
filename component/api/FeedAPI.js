@@ -33,6 +33,41 @@ export function getMyFeeds(that) {
     .done();
 }
 
+export function getFeedsOfUser(uid, feedId, page, that) {
+  var path = FEED_URL+'user/'+uid+'/page/'+page+'/startfrom/'+feedId;
+  var sign = Md5.hex_md5(path.replace(URLConf.APP_SERVER_HOST, '') + '?ts=123456&'+Secret.secret);
+  console.log('sign:' + sign);
+  var url = path+'?ts=123456&sign=' + sign;
+  var headers = {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'X-Auth-Token':that.props.token,
+  }};
+
+  fetch(url, headers)
+    .then((response) => response.json())
+    .then((responseData) => {
+      console.log(responseData);
+      var loadedFeeds = responseData.feeds;
+      if(loadedFeeds.length < PAGE_SIZE) {
+        that.setState({noMore: true});
+      }
+
+      var feeds = that.state.feeds;
+      for(var i=0; i < loadedFeeds.length; i++) {
+        feeds.push(loadedFeeds[i]);
+      }
+      that.setState({
+        dataSource: that.state.dataSource.cloneWithRows(feeds),
+        isLoadingMore: false,
+        loaded: true,
+        feedId: feeds[feeds.length-1].id,
+      });
+    })
+    .done();
+}
+
 /**
 * id 上送的当前第一个feed id作为上次刷新位置
 */
@@ -59,6 +94,7 @@ export function refresh(id, that) {
         noMore: false,
         page: 1,
         feeds: responseData.feeds,
+        feedId: 0,
       });
     })
     .done();
@@ -98,6 +134,7 @@ export function load(id, page, that) {
         isRefreshing: false,
         isLoadingMore: false,
         loaded: true,
+        feedId: feeds[feeds.length-1].id,
       });
     })
     .done();
