@@ -45,7 +45,8 @@ var FeedList = React.createClass({
   },
 
   fetchData: function() {
-    getMyFeeds(this);
+    //getMyFeeds(this);
+    load(0, this.state.page, this);
   },
 
   onRefresh: function() {
@@ -84,8 +85,7 @@ var FeedList = React.createClass({
   },
   onEndReached: function() {
     if(this.state.noMore || this.state.isLoadingMore) return;
-    var page = this.state.page+1;
-    this.setState({isLoadingMore: true, page: this.state.page+1}, load(this.state.feedId, page, this));
+    this.setState({isLoadingMore: true}, load(this.state.feedId, this.state.page, this));
   },
   renderFooter: function() {
     if(this.state.isLoadingMore) {

@@ -19,6 +19,7 @@ var LoginRegPage = require('./LoginRegPage');
 
 var App = React.createClass({
   getInitialState: function() {
+
     return {
       selectedTab:'mainTab',
       notifCount: 0,

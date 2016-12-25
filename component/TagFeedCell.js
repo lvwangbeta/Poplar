@@ -105,7 +105,7 @@ var TagFeedCell = React.createClass({
                     </TouchableOpacity>
                   </View>
                   <View style={styles.feedUserInfo}>
-                    <Text style={styles.feedUserName}>Kevin</Text>
+                    <Text style={styles.feedUserName}>{this.props.feed.user_name}</Text>
                     <Text style={styles.feedTime}>2015-1-5</Text>
                   </View>
               </View>
