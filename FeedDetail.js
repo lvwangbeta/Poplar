@@ -156,7 +156,7 @@ var FeedDetail = React.createClass({
     this.props.navigator.push({
       title: feed.user_name,
       component: HomePage,
-      params: {token: this.props.token}
+      params: {token: this.props.token, refresh:this.props.refresh}
       //passProps: {feed:feed, nav2TagDetail:this.nav2TagDetail},
     });
   },
