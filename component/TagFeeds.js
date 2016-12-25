@@ -78,7 +78,7 @@ var TagFeeds = React.createClass({
     this.props.navigator.push({
       title: feed.user_name,
       component: HomePage,
-      params: {token:this.props.token,feed,navigator, selectFeed: this.selectFeed, nav2TagDetail:this.props.nav2TagDetail},
+      params: {token:this.props.token,feed,navigator, selectFeed: this.selectFeed, nav2TagDetail:this.props.nav2TagDetail, refresh:this.props.refresh},
     });
   },
 
