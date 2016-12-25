@@ -12,13 +12,15 @@ import {
   TextInput,
   TouchableHighlight,
   TouchableNativeFeedback,
+  RefreshControl,
+  Alert
 } from 'react-native';
 
 var FeedCell = require('./FeedCell');
 var FeedDetail = require('./FeedDetail');
 var TagDetail = require('./component/TagDetail');
 var HomePage = require('./component/HomePage');
-import {getMyFeeds} from './component/api/FeedAPI';
+import {getMyFeeds, refresh, load} from './component/api/FeedAPI';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -29,7 +31,13 @@ var FeedList = React.createClass({
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
+      page: 1,
+      feedId: 0,
+      feeds:[],
+      noMore: false,
       loaded: false,
+      isRefreshing: false,
+      isLoadingMore: false,
     };
   },
   componentDidMount: function() {
@@ -38,6 +46,10 @@ var FeedList = React.createClass({
 
   fetchData: function() {
     getMyFeeds(this);
+  },
+
+  onRefresh: function() {
+    this.setState({isRefreshing: true}, refresh('', this));
   },
 
   render: function() {
@@ -50,11 +62,46 @@ var FeedList = React.createClass({
           isComment={this.state.isComment}
           dataSource={this.state.dataSource}
           renderRow={this.renderFeed}
+          renderFooter={this.renderFooter}
+          onEndReached={this.onEndReached}
+          onEndReachedThreshold={0}
           style={styles.listView}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.isRefreshing}
+              onRefresh={this.onRefresh}
+              tintColor="#F3F3F3"
+              title="刷新中..."
+              titleColor="#9B9B9B"
+              colors={['#F3F3F3', '#F3F3F3', '#F3F3F3']}
+              progressBackgroundColor="#F3F3F3"
+            />
+          }
         />
       </View>
     );
 
+  },
+  onEndReached: function() {
+    if(this.state.noMore || this.state.isLoadingMore) return;
+    var page = this.state.page+1;
+    this.setState({isLoadingMore: true, page: this.state.page+1}, load(this.state.feedId, page, this));
+  },
+  renderFooter: function() {
+    if(this.state.isLoadingMore) {
+      return (
+        <View style={styles.footer}>
+          <Text>正在加载...</Text>
+        </View>
+
+      );
+    } else if(this.state.noMore){
+      return(
+        <View style={styles.footer}>
+          <Text>没有更多了</Text>
+        </View>
+      );
+    }
   },
 
   renderLoadingView: function() {
@@ -112,6 +159,7 @@ var FeedList = React.createClass({
         navigator={this.props.navigator}
         onSelect={() => this.selectFeed(feed)}
         feed={feed}
+        page={this.state.page}
         token={this.props.token}
         pressAvatar={() =>this.pressAvatar(feed)}
         push2FeedDetail={() => this.selectFeed(feed)}
@@ -150,6 +198,12 @@ var styles = StyleSheet.create({
     //marginTop: 65,
     backgroundColor: 'white',
   },
+  footer: {
+    width:windowWidth,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
 
 module.exports = FeedList;

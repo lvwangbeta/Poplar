@@ -116,7 +116,7 @@ var FeedCell = React.createClass({
                   </View>
                   <View style={styles.feedUserInfo}>
                     <Text style={styles.feedUserName}>Kevin</Text>
-                    <Text style={styles.feedTime}>2015-1-5</Text>
+                    <Text style={styles.feedTime}>{this.props.feed.id+' '+this.props.page}</Text>
                   </View>
               </View>
               <View style={styles.feedContent}>

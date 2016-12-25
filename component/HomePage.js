@@ -12,12 +12,13 @@ import {
     Dimensions,
     ScrollView,
     ListView,
+    TouchableOpacity
 } from 'react-native';
 
 var FollowBtn = require('./actions/Follow');
 var FeedDetail = require('../FeedDetail');
 var FeedCell = require('../FeedCell');
-import {getMyFeeds} from './api/FeedAPI';
+import {getFeedsOfUser} from './api/FeedAPI';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -29,6 +30,11 @@ var HomePage = React.createClass({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       loaded: false,
+      feeds: [],
+      isLoadingMore: false,
+      noMore: false,
+      page: 1,
+      feedId: 0,
     };
   },
   componentDidMount: function() {
@@ -36,7 +42,7 @@ var HomePage = React.createClass({
   },
 
   fetchData: function() {
-    getMyFeeds(this);
+    getFeedsOfUser(23, this.state.feedId, this.state.page, this);
   },
 
   renderLoadingView: function() {
@@ -64,25 +70,14 @@ var HomePage = React.createClass({
     );
   },
 
-  renderFeedList: function() {
-    if(!this.state.loaded) {
-      return this.renderLoadingView();
-    }
+  renderHeader: function() {
     return (
-      <View>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderFeed}
-        />
-      </View>
-    );
-  },
-
-  render: function() {
-
-    return (
-      <ScrollView style={styles.container}>
         <View style={styles.card}>
+          <TouchableOpacity onPress={() => this.props.navigator.pop()} style={{position: 'absolute', top: 30, left: 20, zIndex: 10}}>
+            <Image
+              source={require('../imgs/back.png')}
+              style={{ width: 18, height: 18}}/>
+          </TouchableOpacity>
           <View>
             <Image resizeMode='cover' style={styles.background} source={require('../imgs/tag1.jpg')} />
             <Image style={styles.avatar} source={require('../imgs/tag2.jpg')} />
@@ -91,7 +86,7 @@ var HomePage = React.createClass({
             <View style={styles.desc}>
               <Text style={styles.name}>断鸿</Text>
               <Text style={styles.motto}>Time to do it</Text>
-              <FollowBtn/>
+              <FollowBtn refresh={this.props.refresh}/>
             </View>
             <View
               style={{flex: 1,
@@ -107,10 +102,54 @@ var HomePage = React.createClass({
             </View>
           </View>
         </View>
-        <View style={styles.myfeedsList}>
-          {this.renderFeedList()}
+      );
+  },
+
+  renderFeedList: function() {
+    if(!this.state.loaded) {
+      return this.renderLoadingView();
+    }
+    return (
+        <ListView
+          dataSource={this.state.dataSource}
+          renderHeader={this.renderHeader}
+          renderRow={this.renderFeed}
+          renderFooter={this.renderFooter}
+          onEndReached={this.onEndReached}
+          onEndReachedThreshold={0}
+        />
+    );
+  },
+
+  onEndReached: function() {
+    if(this.state.noMore || this.state.isLoadingMore) return;
+    console.log('is loading more..');
+    var page = this.state.page+1;
+    this.setState({isLoadingMore: true, page: this.state.page+1}, getFeedsOfUser(23, this.state.feedId, page, this));
+  },
+  renderFooter: function() {
+    if(this.state.isLoadingMore) {
+      return (
+        <View style={styles.footer}>
+          <Text>正在加载...</Text>
         </View>
-      </ScrollView>
+
+      );
+    } else if(this.state.noMore){
+      return(
+        <View style={styles.footer}>
+          <Text>没有更多了</Text>
+        </View>
+      );
+    }
+  },
+
+  render: function() {
+
+    return (
+      <View style={styles.myfeedsList}>
+        {this.renderFeedList()}
+      </View>
     );
   },
 
@@ -158,7 +197,8 @@ var styles = StyleSheet.create({
     lineHeight: 18,
   },
   myfeedsList: {
-
+    flex:1,
+    backgroundColor: 'white',
   },
   title: {
     fontSize: 30,
@@ -179,7 +219,13 @@ var styles = StyleSheet.create({
     marginBottom: 10,
     alignSelf: 'stretch',
     justifyContent: 'center'
-  }
+  },
+  footer: {
+    width:windowWidth,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 module.exports = HomePage;

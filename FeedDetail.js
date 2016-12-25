@@ -28,6 +28,7 @@ var CommentList = require('./CommentList');
 var PhotoSwiper = require('./component/PhotoSwiper');
 var TagDetail = require('./component/TagDetail');
 var HomePage = require('./component/HomePage');
+var PoplarEnv = require('./PoplarEnv');
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -134,15 +135,18 @@ var FeedDetail = React.createClass({
   },
 
   renderFeedContent: function(feed) {
-    if(this.props.feed.summary == null || this.props.feed.summary.length == 0) {
+    if(this.props.feed.object_type == PoplarEnv.COMMENT_OBJ_TYPE.ALBUM) {
       return (
-        <View style={styles.feedContentImages}>{this.renderFeedImages(this.props.feed.content)}</View>
+        <View>
+          <Text style={styles.feedContentText}>{this.props.feed.summary}</Text>
+          <View style={styles.feedContentImages}>{this.renderFeedImages(this.props.feed.content)}</View>
+        </View>
       );
     }
+    //short post
     return (
       <View>
         <Text style={styles.feedContentText}>{this.props.feed.summary}</Text>
-        <View style={styles.feedContentImages}>{this.renderFeedImages(this.props.feed.content)}</View>
       </View>
     );
   },
@@ -152,7 +156,7 @@ var FeedDetail = React.createClass({
     this.props.navigator.push({
       title: feed.user_name,
       component: HomePage,
-      params: {token: this.props.token}
+      params: {token: this.props.token, refresh:this.props.refresh}
       //passProps: {feed:feed, nav2TagDetail:this.nav2TagDetail},
     });
   },
@@ -165,7 +169,7 @@ var FeedDetail = React.createClass({
 
   render: function(){
     return (
-      <View style={{flex: 1, flexDirection: 'column'}}>
+      <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'white'}}>
         {this.state.shareModalVisible && <ShareModal hideShareModal={this.hideShareModal}/>}
         <NavigationBar style={{borderBottomWidth: 0.5, borderBottomColor: '#F3F3F3'}}
                        title={{title: '正文'}}
@@ -218,7 +222,7 @@ var FeedDetail = React.createClass({
                   {this.renderCommentTip(this.state.commentCounter)}
                 </View>
                 <View style={styles.feedActionLike}>
-                  <LikeAction counter={this.props.feed.like_count} />
+                  <LikeAction counter={this.props.feed.like_count} refresh={this.props.refresh}/>
                 </View>
             </View>
           </View>

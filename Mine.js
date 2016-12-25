@@ -32,40 +32,6 @@ var Mine = React.createClass({
       };
   },
 
-/*
-  onPress: function () {
-    // call getValue() to get the values of the form
-    var value = this.refs.form.getValue();
-    if (value) { // if validation fails, value will be null
-      console.log(value); // value here is an instance of Person
-      fetch('http://localhost:8080/com.lvwang.osf/api/v1/account/login', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({"user_email": value.email,"user_pwd": value.password})
-      })
-      .then((response) => response.json())
-      .then((responseData) => {
-        console.log(responseData);
-        //if(responseData.status == '104001') {
-        if(responseData.status == PoplarEnv.dic.SUCCESS_ACCOUNT_LOGIN) {
-          this.setState({
-            login: true,
-            api_key: responseData.api_key,
-          });
-          console.log('key:'+responseData.api_key);
-
-        }
-
-      }).done();
-    }
-  },
-*/
-
-
-
   upload: function() {
 
     //set your key
@@ -139,18 +105,6 @@ var Mine = React.createClass({
 
       return (
         <ScrollView style={styles.container}>
-          {/* display */}
-          {/*
-          <Form
-            ref="form"
-            type={Person}
-            value={value}
-            options={options}
-          />
-          <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
-            <Text style={styles.buttonText}>登录</Text>
-          </TouchableHighlight>
-          */}
           <View style={styles.card}>
             <View>
               <Image resizeMode='cover' style={styles.background} source={require('./imgs/tag1.jpg')} />
@@ -164,7 +118,7 @@ var Mine = React.createClass({
               <View style={styles.desc}>
                 <Text style={styles.name}>断鸿</Text>
                 <Text style={styles.motto}>Time to do it</Text>
-                <FollowBtn/>
+                {/* <FollowBtn/> */}
               </View>
               <View
                 style={{flex: 1,

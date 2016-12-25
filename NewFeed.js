@@ -90,12 +90,16 @@ var NewFeed = React.createClass({
          console.log(responseData);
          this.state.imagesID.push({key:responseData.hash });
          if(this.state.imagesID.length == this.state.images.length) {
-           newFeed(this.state.text, this.state.imagesID, '');
+           newFeed(this.state.text, this.state.imagesID, '', this.props.token);
+           this.cancle();
          }
         });
 
       }
 
+    } else {
+      newFeed(this.state.text, '', '', this.props.token);
+      this.cancle();
     }
   },
 
@@ -144,7 +148,7 @@ var NewFeed = React.createClass({
     return (
       //<View style={styles.container}>
         <Modal
-          animated={this.state.animated}
+          animationType={"slide"}
           transparent={this.state.transparent}
           visible={this.state.modalVisible}>
             <View style={{position: 'relative', flex: 1, flexDirection: 'column'}}>

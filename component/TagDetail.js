@@ -20,7 +20,7 @@ import {
 var TagFollow = require('./actions/TagFollow');
 var TagFeedList = require('./TagFeeds');
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
+// import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 
 const windowWidth = Dimensions.get('window').width;
 const window = Dimensions.get('window');
@@ -91,6 +91,8 @@ var TagDetail = React.createClass({
             <TagFollow token={this.props.token} refresh={this.props.refresh} />
           </View>
           )}>
+
+          <TagFeedList token={this.props.token} navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail} refresh={this.props.refresh}/>
 
           {/* <ScrollableTabView
                 style={{marginTop: 10, }}
