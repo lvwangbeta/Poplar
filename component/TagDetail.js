@@ -92,6 +92,8 @@ var TagDetail = React.createClass({
           </View>
           )}>
 
+          <TagFeedList token={this.props.token} navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail} refresh={this.props.refresh}/>
+
           {/* <ScrollableTabView
                 style={{marginTop: 10, }}
                 tabBarUnderlineStyle={{backgroundColor: '#00B5AD', height: 2,}}
