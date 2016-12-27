@@ -50,7 +50,9 @@ var FeedList = React.createClass({
   },
 
   onRefresh: function() {
-    this.setState({isRefreshing: true}, refresh('', this));
+    this.setState({isRefreshing: true, feeds: [], dataSource: new ListView.DataSource({
+      rowHasChanged: (row1, row2) => row1 !== row2,
+    })}, refresh('', this));
   },
 
   render: function() {
