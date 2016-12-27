@@ -89,6 +89,7 @@ var styles = StyleSheet.create({
   feedActionLike: {
     width: 50,
     padding: 5,
+    marginRight: 5,
   },
 });
 

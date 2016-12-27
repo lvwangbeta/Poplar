@@ -28,6 +28,7 @@ var Like = React.createClass({
       this.setState({loginRegPageVisible: true});
     } else {
       this.setState({
+        isLiked: !this.state.isLiked,
         counter : this.state.counter + 1,
       });
     }
@@ -54,9 +55,13 @@ var Like = React.createClass({
       <View style={{flexDirection: 'row', }}>
         {this.state.loginRegPageVisible && <PopupLoginRegPage hideLoginRegPage={this.hideLoginRegPage} refresh={this.refresh}/>}
         <TouchableOpacity onPress={this.pressLike}>
-          <Image style={{width:22, height:22, marginRight: 5}} source={require('../../imgs/like_empty.png')} />
+          {this.state.isLiked ?
+            <Image style={{width:22, height:22, marginRight: 5}} source={require('../../imgs/like.png')} /> :
+            <Image style={{width:22, height:22, marginRight: 5}} source={require('../../imgs/like_empty.png')} />
+          }
+
         </TouchableOpacity>
-        {/* <Text>{this.state.counter}</Text> */}
+        <Text style={{color: '#adadad'}}>{this.state.counter}</Text>
       </View>
     );
   }

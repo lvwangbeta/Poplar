@@ -19,7 +19,6 @@ var NewComment = require('./component/NewComment');
 var FeedActions = require('./component/actions/FeedActions');
 import {getCommentsOfObject} from './component/api/CommentAPI';
 
-var COMMENT_URL = 'http://localhost:8080/com.lvwang.osf/api/v1/comment/';
 
 var CommentList = React.createClass({
   getInitialState: function() {

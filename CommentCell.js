@@ -15,10 +15,10 @@ import {
   TouchableNativeFeedback,
 } from 'react-native';
 
+import URLConf from './component/api/URLConf';
 var Md5 = require('./Md5');
 var ReplyModal = require('./NewFeed');
 
-var COMMENT_URL = 'http://localhost:8080/com.lvwang.osf/api/v1/comment/';
 const avatar_thumbnail = '?imageView2/1/w/100/h/100';
 
 var CommentCell = React.createClass({
@@ -51,7 +51,7 @@ var CommentCell = React.createClass({
       <View>
         <TouchableOpacity onPress={this.onPress}>
           <View style={styles.commentBox}>
-            <Image style={styles.avatar} source={require('./imgs/avatar.png')} />
+            <Image style={styles.avatar} source={{uri:URLConf.IMG_BASE_URL+this.props.comment.comment_author_avatar+avatar_thumbnail}} />
             <View>
                 {this.renderAuthorName(this.props.comment)}
                 <Text style={styles.comment}>{this.props.comment.comment_content}</Text>
@@ -74,6 +74,7 @@ var styles = StyleSheet.create({
   avatar: {
     borderRadius: 16,
     width: 32,
+    height: 32,
     marginRight: 10,
   },
   username: {
@@ -87,8 +88,9 @@ var styles = StyleSheet.create({
   },
   comment: {
     fontSize: 14,
+    marginRight: 30,
     color: '#030303',
-    lineHeight: 13,
+    lineHeight: 18,
   },
 });
 
