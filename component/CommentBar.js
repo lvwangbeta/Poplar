@@ -87,7 +87,7 @@ var styles = StyleSheet.create({
     //flexDirection: 'column',
     //justifyContent: 'flex-end',
     position: 'absolute',
-    bottom: 50,
+    bottom: 0,
   },
   wrapper: {
     flex: 1,
@@ -112,6 +112,7 @@ var styles = StyleSheet.create({
   },
   commentBtn: {
     flex: 1,
+    marginTop: 5,
     color: '#00B5AD',
   }
 });
