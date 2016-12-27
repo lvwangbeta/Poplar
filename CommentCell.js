@@ -16,21 +16,61 @@ import {
 } from 'react-native';
 
 import URLConf from './component/api/URLConf';
+import {getToken} from './component/util/Secret';
 var Md5 = require('./Md5');
 var ReplyModal = require('./NewFeed');
+var PopupLoginRegPage = require('./PopupLoginRegPage');
 
 const avatar_thumbnail = '?imageView2/1/w/48/h/48';
 
 var CommentCell = React.createClass({
 
-  onPress: function() {
+  // onPress: function() {
+  //
+  //   if(this.props.from == 'FeedDetail') {
+  //     this.props.reply(this.props.comment);
+  //   } else {
+  //     this.props.push2FeedDetail();
+  //   }
+  // },
+
+  getInitialState: function(){
+    return {
+      loginRegPageVisible: false,
+    };
+
+  },
+
+  checkLogin:function(token) {
+    console.log('like btn token:' + token);
 
     if(this.props.from == 'FeedDetail') {
-      this.props.reply(this.props.comment);
+      if(!token) {
+        this.setState({loginRegPageVisible: true});
+      } else {
+        this.props.reply(this.props.comment);
+      }
     } else {
       this.props.push2FeedDetail();
     }
   },
+
+  onPress: function() {
+    getToken(this.checkLogin);
+  },
+
+  hideLoginRegPage: function() {
+    this.setState({
+      loginRegPageVisible: false,
+    });
+  },
+
+  refresh: function(isLogin, token) {
+    this.setState({
+      loginRegPageVisible: false,
+    }, this.props.refresh(isLogin, token));
+  },
+
 
   renderAuthorName: function(comment) {
     if(comment.comment_parent_author_name != undefined && comment.comment_parent_author_name != null) {
@@ -49,6 +89,7 @@ var CommentCell = React.createClass({
   render: function(){
     return (
       <View>
+        {this.state.loginRegPageVisible && <PopupLoginRegPage hideLoginRegPage={this.hideLoginRegPage} refresh={this.refresh}/>}
         <TouchableOpacity onPress={this.onPress}>
           <View style={styles.commentBox}>
             <Image style={styles.avatar} source={{uri:URLConf.IMG_BASE_URL+this.props.comment.comment_author_avatar+avatar_thumbnail}} />

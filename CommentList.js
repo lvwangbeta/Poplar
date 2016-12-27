@@ -166,6 +166,7 @@ var CommentList = React.createClass({
           hideCommentBar={this.props.hideCommentBar}
           from={this.props.from}
           reply={this.props.reply}
+          refresh={this.props.refresh}
         />
     );
   },

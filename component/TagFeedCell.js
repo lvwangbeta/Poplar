@@ -68,6 +68,7 @@ var TagFeedCell = React.createClass({
             commentCounter={this.props.feed.comment_count}
             push2FeedDetail={this.props.push2FeedDetail}
             limit={5}
+            refresh={this.props.refresh}
           />
         </View>
       );

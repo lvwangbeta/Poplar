@@ -70,17 +70,17 @@ var PopupLoginRegPage = React.createClass({
             }
             <View style={{flex:2, justifyContent: 'center',alignItems: 'center',}}>
               <Image source={require('./imgs/default-avatar.jpg')}/>
-              <Text style={{color: '#9B9B9B',fontSize: 14, width: 200, marginTop: 30, textAlign: 'center'}}>欢迎加入Poplar</Text>
+              <Text style={{color: '#9B9B9B',fontSize: 20, width: 200, marginTop: 30, textAlign: 'center'}}>欢迎加入Poplar</Text>
             </View>
             <View style={styles.container}>
               <View style={styles.loginBtn}>
                 <TouchableOpacity onPress={this.showLoginPage}>
-                  <Text style={{color:'#00B5AD', fontSize: 16}}>登录</Text>
+                  <Text style={{color:'#00B5AD', fontSize: 18}}>登录</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.regBtn}>
                 <TouchableOpacity onPress={this.showRegPage}>
-                  <Text style={{color: '#9B9B9B',fontSize: 16}}>注册</Text>
+                  <Text style={{color: '#9B9B9B',fontSize: 18}}>注册</Text>
                 </TouchableOpacity>
               </View>
             </View>

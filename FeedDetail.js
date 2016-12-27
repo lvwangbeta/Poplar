@@ -239,6 +239,7 @@ var FeedDetail = React.createClass({
             newComment={this.state.comment}
             from={'FeedDetail'}
             reply={this.reply}
+            refresh={this.props.refresh}
           />
 
         </ScrollView>
