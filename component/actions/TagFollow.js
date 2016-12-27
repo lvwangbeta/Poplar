@@ -22,19 +22,22 @@ var TagFollow = React.createClass({
     });
   },
 
-  onPress: function() {
-    if(!this.props.token) {
-      //this.props.showLoginRegPage();
+  checkLoginAndChangeState:function(token) {
+    console.log('follow btn token:' + token);
+    if(!token) {
+      this.setState({loginRegPageVisible: true});
+    } else {
       this.setState({
-        loginRegPageVisible: true,
+        isFollowed: !this.state.isFollowed,
+        isClicked: !this.state.isClicked,
       });
-      return;
     }
-    this.setState({
-      isFollowed: !this.state.isFollowed,
-      isClicked: !this.state.isClicked,
-    });
   },
+
+  onPress: function() {
+    getToken(this.checkLoginAndChangeState);
+  },
+
 
   showLoginRegPage: function() {
     this.setState({
@@ -57,10 +60,16 @@ var TagFollow = React.createClass({
     getToken(this.updateFollowBtnStatus);
   },
 
+  refresh: function(isLogin, token) {
+    this.setState({
+      loginRegPageVisible: false,
+    }, this.props.refresh(isLogin, token));
+  },
+
   render: function() {
     return(
       <View>
-        {this.state.loginRegPageVisible && <PopupLoginRegPage hideLoginRegPage={this.hideLoginRegPage} refresh={this.props.refresh}/>}
+        {this.state.loginRegPageVisible && <PopupLoginRegPage hideLoginRegPage={this.hideLoginRegPage} refresh={this.refresh}/>}
         <TouchableOpacity ref={'btn'} style={[styles.btn, {backgroundColor: this.state.isFollowed?'#FBBD08':'rgba(0,0,0,0.0)'}]} onPress={this.onPress} >
           <Text style={{color: this.state.isFollowed?'#F3F3F3':'#FBBD08'}}>{this.state.isFollowed?'已关注':'+ 关注'}</Text>
         </TouchableOpacity>
