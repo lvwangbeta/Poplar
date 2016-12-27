@@ -15,6 +15,7 @@ import {
   Dimensions
 } from 'react-native';
 
+import {formatDate} from './component/util/DateUtil';
 var CommentList = require('./CommentList');
 var FeedActions = require('./component/actions/FeedActions');
 var TagDetail = require('./component/TagDetail');
@@ -116,7 +117,8 @@ var FeedCell = React.createClass({
                   </View>
                   <View style={styles.feedUserInfo}>
                     <Text style={styles.feedUserName}>{this.props.feed.user_name}</Text>
-                    <Text style={styles.feedTime}>{this.props.feed.id+' '+this.props.page}</Text>
+                    <Text style={styles.feedTime}>{formatDate(this.props.feed.ts)}</Text>
+                    {/* <Text style={styles.feedTime}>{this.props.feed.id+' '+this.props.page}</Text> */}
                   </View>
               </View>
               <View style={styles.feedContent}>
@@ -161,14 +163,14 @@ var styles = StyleSheet.create({
 
   feedUserName: {
     marginTop: 3,
-    fontSize: 17,
+    fontSize: 16,
     color: '#00B5AD',
-    lineHeight: 18,
+    lineHeight: 16,
   },
   feedTime: {
-    fontSize: 15,
+    fontSize: 12,
     color: '#7B7C84',
-    lineHeight: 15,
+    lineHeight: 12,
     marginTop: 5,
   },
 

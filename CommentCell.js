@@ -19,7 +19,7 @@ import URLConf from './component/api/URLConf';
 var Md5 = require('./Md5');
 var ReplyModal = require('./NewFeed');
 
-const avatar_thumbnail = '?imageView2/1/w/100/h/100';
+const avatar_thumbnail = '?imageView2/1/w/48/h/48';
 
 var CommentCell = React.createClass({
 
