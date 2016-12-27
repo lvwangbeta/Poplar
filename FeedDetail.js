@@ -218,7 +218,7 @@ var FeedDetail = React.createClass({
             <View style={styles.feedActions}>
                 <View style={{flex:1}}></View>
                 <View style={styles.feedActionComment}>
-                  <CommentAction counter={this.state.commentCounter} showCommentBar={this.showCommentBar}/>
+                  <CommentAction counter={this.state.commentCounter} showCommentBar={this.showCommentBar} refresh={this.props.refresh}/>
                   {this.renderCommentTip(this.state.commentCounter)}
                 </View>
                 <View style={styles.feedActionLike}>

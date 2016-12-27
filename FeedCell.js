@@ -67,7 +67,8 @@ var FeedCell = React.createClass({
             <FeedActions
               likeCounter={this.props.feed.like_count}
               commentCounter={this.props.feed.comment_count}
-              push2FeedDetail={this.props.push2FeedDetail}/>
+              push2FeedDetail={this.props.push2FeedDetail}
+              refresh={this.props.refresh}/>
           </View>
           <CommentList
             secret={this.props.secret}
@@ -79,6 +80,7 @@ var FeedCell = React.createClass({
             commentCounter={this.props.feed.comment_count}
             push2FeedDetail={this.props.push2FeedDetail}
             limit={5}
+            refresh={this.props.refresh}
           />
         </View>
       );

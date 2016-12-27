@@ -66,6 +66,7 @@ var HomePage = React.createClass({
         navigator={this.props.navigator}
         push2FeedDetail={() => this.props.selectFeed(feed, false)}
         nav2TagDetail={this.props.nav2TagDetail}
+        refresh={this.props.refresh}
       />
     );
   },
@@ -117,6 +118,7 @@ var HomePage = React.createClass({
           renderFooter={this.renderFooter}
           onEndReached={this.onEndReached}
           onEndReachedThreshold={0}
+          refresh={this.props.refresh}
         />
     );
   },
