@@ -144,6 +144,7 @@ export function load(id, page, that) {
 
 
 export function newFeed(text, photos, tags, token) {
+  console.log('tag : ' + tags);
   var sign = Md5.hex_md5(NEW_FEED_URL.replace(URLConf.APP_SERVER_HOST, '') + '?ts=123456&'+Secret.secret);
   console.log('sign:' + sign);
   var url = NEW_FEED_URL+'?ts=123456&sign=' + sign;
