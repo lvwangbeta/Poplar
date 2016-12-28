@@ -321,7 +321,7 @@ var styles = StyleSheet.create({
     width: 20,
     height: 40,
     color: '#9B9B9B',
-    fontSize: 24,
+    fontSize: 23,
     marginLeft: 20,
   },
 
