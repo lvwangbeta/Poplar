@@ -10,12 +10,15 @@ import {
     Image,
     Dimensions,
     ScrollView,
-    Platform
+    Platform,
+    ListView
 } from 'react-native';
-var store = require('./Store');
+
 var FollowBtn = require('./component/actions/Follow');
-var FeedList = require('./FeedList');
+var FeedCell = require('./FeedCell');
+var FeedDetail = require('./FeedDetail');
 import {Auth,ImgOps,Conf,Rs,Rpc} from 'react-native-qiniu';
+import {getMyFeeds, refresh, load} from './component/api/FeedAPI';
 
 import ImagePicker from 'react-native-image-picker';
 
@@ -26,10 +29,27 @@ var Mine = React.createClass({
 
   getInitialState: function(){
       return {
-        login: false,
-        api_key: null,
         avatarSource: null,
+        dataSource: new ListView.DataSource({
+          rowHasChanged: (row1, row2) => row1 !== row2,
+        }),
+        page: 1,
+        feedId: 0,
+        feeds:[],
+        noMore: false,
+        loaded: false,
+        isRefreshing: false,
+        isLoadingMore: false,
       };
+  },
+
+  componentDidMount: function() {
+    this.fetchData();
+  },
+
+  fetchData: function() {
+    //getMyFeeds(this);
+    load(0, this.state.page, this);
   },
 
   upload: function() {
@@ -101,10 +121,58 @@ var Mine = React.createClass({
     });
   },
 
-  render: function() {
+  selectFeed: function(feed, avatarCanClick=false) {
+    //this.props.hideTabBar();
+    let navigator = this.props.navigator;
+    this.props.navigator.push({
+      title: '正文',
+      component: FeedDetail,
+      params: {token:this.props.token, navigator, feed, nav2TagDetail:this.nav2TagDetail, avatarCanClick:avatarCanClick}
+    });
+  },
 
+  pressAvatar: function(feed) {
+    return ;
+  },
+
+  onEndReached: function() {
+    if(this.state.noMore || this.state.isLoadingMore) return;
+    this.setState({isLoadingMore: true}, load(this.state.feedId, this.state.page, this));
+  },
+  renderFooter: function() {
+    if(this.state.isLoadingMore) {
       return (
-        <ScrollView style={styles.container}>
+        <View style={styles.footer}>
+          <Text>正在加载...</Text>
+        </View>
+
+      );
+    } else if(this.state.noMore){
+      return(
+        <View style={styles.footer}>
+          <Text>没有更多了</Text>
+        </View>
+      );
+    }
+  },
+
+  renderFeed: function(feed) {
+    return(
+      <FeedCell
+        navigator={this.props.navigator}
+        onSelect={() => this.selectFeed(feed)}
+        feed={feed}
+        page={this.state.page}
+        token={this.props.token}
+        pressAvatar={() =>this.pressAvatar(feed)}
+        push2FeedDetail={() => this.selectFeed(feed)}
+        nav2TagDetail={this.nav2TagDetail}
+      />
+    );
+  },
+
+  renderHeader: function() {
+    return (
           <View style={styles.card}>
             <View>
               <Image resizeMode='cover' style={styles.background} source={require('./imgs/tag1.jpg')} />
@@ -134,14 +202,66 @@ var Mine = React.createClass({
               </View>
             </View>
           </View>
-          <View style={styles.myfeedsList}>
-            <FeedList
-              {...this.props}
-            />
-
-          </View>
-        </ScrollView>
       );
+  },
+
+  render: function() {
+
+      return (
+        <View>
+          <ListView
+            isComment={this.state.isComment}
+            dataSource={this.state.dataSource}
+            renderHeader={this.renderHeader}
+            renderRow={this.renderFeed}
+            renderFooter={this.renderFooter}
+            onEndReached={this.onEndReached}
+            onEndReachedThreshold={0}
+            style={styles.listView}
+          />
+        </View>
+
+      );
+
+      // return (
+      //   <ScrollView style={styles.container}>
+      //     <View style={styles.card}>
+      //       <View>
+      //         <Image resizeMode='cover' style={styles.background} source={require('./imgs/tag1.jpg')} />
+      //         <TouchableOpacity onPress={this.selectPhotoTapped}>
+      //           {this.state.avatarSource === null ?
+      //             <Image style={styles.avatar} source={require('./imgs/tag2.jpg')} />:
+      //             <Image style={styles.avatar} source={this.state.avatarSource} />}
+      //         </TouchableOpacity>
+      //       </View>
+      //       <View style={styles.metas}>
+      //         <View style={styles.desc}>
+      //           <Text style={styles.name}>断鸿</Text>
+      //           <Text style={styles.motto}>Time to do it</Text>
+      //           {/* <FollowBtn/> */}
+      //         </View>
+      //         <View
+      //           style={{flex: 1,
+      //                   flexDirection: 'row',
+      //                   justifyContent: 'space-between',
+      //                   borderBottomWidth: 1,
+      //                   borderBottomColor: '#F3F3F3',
+      //                   marginTop: 10,
+      //                   paddingBottom: 10,}}>
+      //           <View style={{flex: 1, flexDirection: 'column', alignItems: 'center',}}><Text>12</Text><Text>关注</Text></View>
+      //           <View style={{flex: 1, flexDirection: 'column', alignItems: 'center',}}><Text>56</Text><Text>粉丝</Text></View>
+      //           <View style={{flex: 1, flexDirection: 'column', alignItems: 'center',}}><Text>108</Text><Text>状态</Text></View>
+      //         </View>
+      //       </View>
+      //     </View>
+      //     <View style={styles.myfeedsList}>
+      //       <FeedList
+      //         {...this.props}
+      //       />
+      //
+      //     </View>
+      //   </ScrollView>
+      // );
 
 
   }
@@ -151,6 +271,10 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
+  },
+  listView: {
+    //marginTop: 65,
+    backgroundColor: 'white',
   },
   card: {
     position: 'relative',
@@ -210,6 +334,12 @@ var styles = StyleSheet.create({
     marginBottom: 10,
     alignSelf: 'stretch',
     justifyContent: 'center'
+  },
+  footer: {
+    width:windowWidth,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
 

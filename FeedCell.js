@@ -142,10 +142,10 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    marginBottom: 10,
+    marginBottom: 0,
     paddingBottom: 10,
     backgroundColor: 'white',
-    borderTopWidth: 0.5,
+    //borderTopWidth: 0.5,
     borderBottomWidth: 0.5,
     borderColor: '#EEEEEE',
   },
