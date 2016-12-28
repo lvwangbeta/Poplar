@@ -151,6 +151,11 @@ var NewFeed = React.createClass({
     if(tag.indexOf(' ') > 0) {
       tag = tag.replace(/(^\s*)|(\s*$)/g,"");
       console.log('['+tag+']');
+      for(let i in this.state.tags) {
+        if(this.state.tags[i] == tag) {
+          return;
+        }
+      }
       this.state.tags.push(tag);
       this.setState({tag: ''});
     } else {
@@ -160,10 +165,24 @@ var NewFeed = React.createClass({
     //console.log('['+tag+']');
   },
 
+  delTag: function(tag) {
+    console.log('del ' + tag);
+    var tags = this.state.tags;
+    for(let i in tags) {
+      if(tags[i] == tag) {
+        tags.splice(i,1);
+        break;
+      }
+    }
+    this.setState({tags: tags});
+  },
+
   renderTags: function() {
     var tagViews = [];
     for(let i in this.state.tags) {
-      tagViews.push(<TouchableOpacity style={styles.tag}><Text style={{color: '#9B9B9B'}}>{this.state.tags[i]} X</Text></TouchableOpacity>);
+      tagViews.push(<TouchableOpacity style={styles.tag} onPress={() => this.delTag(this.state.tags[i])}>
+                      <Text style={{color: '#9B9B9B'}}>{this.state.tags[i]} X</Text>
+                    </TouchableOpacity>);
     }
     return tagViews;
   },
