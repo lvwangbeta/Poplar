@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   TouchableNativeFeedback,
   View,
+  ScrollView,
   Modal,
   Navigator,
   StyleSheet,
@@ -20,6 +21,7 @@ import {
 import {newFeed} from './component/api/FeedAPI';
 import {Auth,ImgOps,Conf,Rs,Rpc} from 'react-native-qiniu';
 var ImagePicker = NativeModules.ImageCropPicker;
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -36,6 +38,9 @@ var NewFeed = React.createClass({
       text: '',
       images: [],
       imagesID: [], //上传图片返回的 hash id
+      tags: [], //已经添加的tag
+      tag: '',  //正在输入的tag
+      tagCountLimit: 5,
       uploadAlready: false,
       animated: true,
       modalVisible: true,
@@ -90,7 +95,7 @@ var NewFeed = React.createClass({
          console.log(responseData);
          this.state.imagesID.push({key:responseData.hash });
          if(this.state.imagesID.length == this.state.images.length) {
-           newFeed(this.state.text, this.state.imagesID, '', this.props.token);
+           newFeed(this.state.text, this.state.imagesID, this.state.tags, this.props.token);
            this.cancle();
          }
         });
@@ -98,7 +103,7 @@ var NewFeed = React.createClass({
       }
 
     } else {
-      newFeed(this.state.text, '', '', this.props.token);
+      newFeed(this.state.text, '', this.state.tags, this.props.token);
       this.cancle();
     }
   },
@@ -138,6 +143,50 @@ var NewFeed = React.createClass({
     this.upload();
   },
 
+  checkTagInput: function(tag) {
+    //empty check
+    if(tag.indexOf(' ') == 0) return;
+
+    //end input with blank space
+    if(tag.indexOf(' ') > 0) {
+      tag = tag.replace(/(^\s*)|(\s*$)/g,"");
+      console.log('['+tag+']');
+      for(let i in this.state.tags) {
+        if(this.state.tags[i] == tag) {
+          return;
+        }
+      }
+      this.state.tags.push(tag);
+      this.setState({tag: ''});
+    } else {
+      this.setState({tag: tag});
+    }
+
+    //console.log('['+tag+']');
+  },
+
+  delTag: function(tag) {
+    console.log('del ' + tag);
+    var tags = this.state.tags;
+    for(let i in tags) {
+      if(tags[i] == tag) {
+        tags.splice(i,1);
+        break;
+      }
+    }
+    this.setState({tags: tags});
+  },
+
+  renderTags: function() {
+    var tagViews = [];
+    for(let i in this.state.tags) {
+      tagViews.push(<TouchableOpacity style={styles.tag} onPress={() => this.delTag(this.state.tags[i])}>
+                      <Text style={{color: '#9B9B9B'}}>{this.state.tags[i]} X</Text>
+                    </TouchableOpacity>);
+    }
+    return tagViews;
+  },
+
   render: function() {
     var modalBackgroundStyle = {
       backgroundColor: this.state.transparent ? 'rgba(0, 0, 0, 0.5)' : '#f5fcff',
@@ -151,36 +200,62 @@ var NewFeed = React.createClass({
           animationType={"slide"}
           transparent={this.state.transparent}
           visible={this.state.modalVisible}>
-            <View style={{position: 'relative', flex: 1, flexDirection: 'column'}}>
-              <View style={styles.nav}>
-                <View style={styles.cancleBtn}>
-                  <Text onPress={this.cancle}>取消</Text>
-                </View>
-                <View style={styles.title}><Text style={{textAlign: 'center', fontWeight: 'bold'}}>发状态</Text></View>
-                <View style={styles.sendBtn}>
-                  <TouchableOpacity onPress={this.send}>
-                    <Text style={{textAlign: 'right', color: '#00B5AD'}}>发送</Text>
-                  </TouchableOpacity>
-                </View>
+            <View style={styles.nav}>
+              <View style={styles.cancleBtn}>
+                <Text onPress={this.cancle}>取消</Text>
               </View>
+              <View style={styles.title}><Text style={{textAlign: 'center', fontWeight: 'bold'}}>发状态</Text></View>
+              <View style={styles.sendBtn}>
+                <TouchableOpacity onPress={this.send}>
+                  <Text style={{textAlign: 'right', color: '#00B5AD'}}>发送</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <ScrollView style={{ flex: 1, flexDirection: 'column'}}>
+
               <View style={styles.input}>
-                <TextInput
-                  style={styles.multiline}
-                  placeholder="说点什么吧..."
-                  returnKeyType="next"
-                  autoFocus={true}
-                  multiline={true}
-                  keyboardType='twitter'
-                  maxLength = {140}
-                  value={this.state.text}
-                  onChangeText={(text) => this.setState({text})}
-                />
-                <Text style={{position: 'absolute', bottom: -10, right: 20, color: '#9B9B9B'}}>{textLengthLimit-this.state.text.length}</Text>
+                <View>
+                  <TextInput
+                    style={styles.multiline}
+                    placeholder="说点什么吧..."
+                    returnKeyType="next"
+                    autoFocus={true}
+                    multiline={true}
+                    keyboardType='twitter'
+                    maxLength = {140}
+                    value={this.state.text}
+                    onChangeText={(text) => this.setState({text})}
+                  />
+                  <Text style={{position: 'absolute', bottom: 10, right: 20, color: '#9B9B9B'}}>{textLengthLimit-this.state.text.length}</Text>
+                </View>
+
               </View>
               <View style={styles.imgContainer}>
                   {this.renderImgsPicked()}
               </View>
-            </View>
+              <View style={styles.tagsContainer}>
+                <View style={{flex:1, flexDirection: 'row'}}>
+                  {/* <Image style={styles.tagIcon} source={require('./imgs/tag.png')} /> */}
+                  <Text style={styles.tagIcon}>#</Text>
+                  <TextInput
+                    style={styles.tagInput}
+                    placeholder="添加标签"
+                    returnKeyType="done"
+                    autoFocus={false}
+                    multiline={false}
+                    keyboardType='twitter'
+                    maxLength = {140}
+                    value={this.state.tag}
+                    onChangeText={(tag) => {this.checkTagInput(tag)}}
+                  />
+                  </View>
+                <View style={styles.tags}>
+                {this.state.tags.length > 0 &&  this.renderTags()}
+                </View>
+              </View>
+              <KeyboardSpacer/>
+            </ScrollView>
+
         </Modal>
 
       //</View>
@@ -226,7 +301,7 @@ var styles = StyleSheet.create({
   },
   input: {
     //flex:1,
-    position: 'relative',
+    //position: 'relative',
     //flexDirection:'column',
   },
   footer: {
@@ -234,21 +309,66 @@ var styles = StyleSheet.create({
     backgroundColor:'#ff99ff',
   },
   multiline: {
-    //borderTopWidth: 0.5,
-    //borderTopColor: '#0f0f0f',
+    // borderWidth: 1,
+    // borderColor: 'black',
     flex: 1,
-    fontSize: 16,
+    fontSize: 18,
     height: 150,
     padding: 20,
     paddingBottom: 40,
   },
+  tagIcon: {
+    width: 20,
+    height: 40,
+    color: '#9B9B9B',
+    fontSize: 23,
+    marginLeft: 20,
+  },
 
-  imgContainer: {
-    height: windowHeight - 70 - 150 - 30,
+  tagsContainer: {
+    flex:1,
+    height: 100,
+    marginBottom: 50,
+  },
+  tagInput: {
+    flex:1,
+    height: 30,
+    // borderWidth: 1,
+    // borderColor: 'black',
+    width: windowWidth-margin*4,
+    marginRight: 20,
+    //marginLeft: margin,
+  },
+  tags: {
+    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    paddingTop: 20,
+    width: windowWidth-margin*2,
+    height: 100,
+    margin: margin,
+    marginTop: 30,
+    // borderWidth: 1,
+    // borderColor: 'black',
+  },
+  tag: {
+    height: 26,
+    marginRight: 10,
+    marginBottom: 5,
+    padding: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: '#F3F3F3',
+    // borderColor: '#adadad',
+    // borderWidth: 0.5,
+    borderRadius: 5,
+  },
+  imgContainer: {
+    //height: windowHeight - 70 - 150 - 30,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingTop: 0,
     marginLeft: margin,
+    marginBottom: 20,
   },
   imgWrapper: {
     position: 'relative',
