@@ -43,6 +43,7 @@ var SettingsPage = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex:1,
+    backgroundColor: 'white',
   },
   logoutBtn: {
     width: windowWidth-margin*2,
