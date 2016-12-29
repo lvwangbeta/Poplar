@@ -58,7 +58,7 @@ var FeedCell = React.createClass({
               {
                 this.props.feed.tags.map(tag => <TouchableOpacity
                                                   onPress={() => this.props.nav2TagDetail(tag)}>
-                                                  <Text style={{color: '#9B9B9B', marginRight: 5}}>{tag.tag}</Text>
+                                                  <Text style={{fontSize: 16, color: '#9B9B9B', marginRight: 5}}>{tag.tag}</Text>
                                                 </TouchableOpacity>)
 
               }
