@@ -32,7 +32,7 @@ var TagFeeds = React.createClass({
     };
   },
   componentDidMount: function() {
-    getTagFeedsOfPage(29, 1, this);
+    getTagFeedsOfPage(this.props.tagId, 1, this);
   },
 
 
