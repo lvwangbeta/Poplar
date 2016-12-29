@@ -182,11 +182,12 @@ var styles = StyleSheet.create({
   },
   feedContentText: {
     flex: 1,
+    textAlign: 'justify',
     margin: margin,
     marginTop: -10,
     fontSize: 16,
     color: '#333333',
-    lineHeight: 22,
+    lineHeight: 20,
   },
   feedContentSingleImage: {
     flex: 1,
