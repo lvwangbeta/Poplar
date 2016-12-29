@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 
 import {getToken} from '../util/Secret';
+import {followTag, undoFollowTag} from '../api/ActionAPI';
+import {getDetails} from '../api/TagAPI';
 var PopupLoginRegPage = require('../../PopupLoginRegPage');
 
 var TagFollow = React.createClass({
@@ -17,8 +19,17 @@ var TagFollow = React.createClass({
   getInitialState: function() {
     return ({
       isFollowed: false,
-      isClicked: false,
       loginRegPageVisible: false,
+    });
+  },
+
+  componentWillMount: function() {
+    getDetails(this.props.tagId, (result, err) => {
+      if(result) {
+        this.setState({
+          isFollowed: true,
+        });
+      }
     });
   },
 
@@ -29,13 +40,37 @@ var TagFollow = React.createClass({
     } else {
       this.setState({
         isFollowed: !this.state.isFollowed,
-        isClicked: !this.state.isClicked,
       });
     }
   },
 
   onPress: function() {
-    getToken(this.checkLoginAndChangeState);
+    //getToken(this.checkLoginAndChangeState);
+    if(this.state.isFollowed)  {
+      undoFollowTag(this.props.tagId, (result, err) => {
+        if(!result) {
+          if(err == 'not logged in') {
+            this.setState({loginRegPageVisible: true});
+          }
+        } else {
+          this.setState({
+            isFollowed: false,
+          });
+        }
+      });
+    } else {
+      followTag(this.props.tagId, (result, err) => {
+        if(!result) {
+          if(err == 'not logged in') {
+            this.setState({loginRegPageVisible: true});
+          }
+        } else {
+          this.setState({
+            isFollowed: true,
+          });
+        }
+      });
+    }
   },
 
 

@@ -88,7 +88,7 @@ var TagDetail = React.createClass({
                 <Image style={{width: 18, height: 18}} source={require('../imgs/back.png')} />
               </TouchableOpacity>
             </View>
-            <TagFollow token={this.props.token} refresh={this.props.refresh} />
+            <TagFollow token={this.props.token} refresh={this.props.refresh} tagId={this.props.tag.id}/>
           </View>
           )}>
 
