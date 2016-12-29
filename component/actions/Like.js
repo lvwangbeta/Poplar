@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import {getToken} from '../util/Secret';
+import {like} from '../api/ActionAPI';
 var PopupLoginRegPage = require('../../PopupLoginRegPage');
 
 var Like = React.createClass({
@@ -27,15 +28,34 @@ var Like = React.createClass({
     if(!token) {
       this.setState({loginRegPageVisible: true});
     } else {
+      like();
+      let i = 1;
+      if(this.state.isLiked) {
+        i = -1;
+      }
       this.setState({
         isLiked: !this.state.isLiked,
-        counter : this.state.counter + 1,
+        counter : this.state.counter + i,
       });
     }
   },
 
   pressLike: function() {
-    getToken(this.checkLogin);
+    //getToken(this.checkLogin);
+    like('', '', '', (result) => {
+      if(!result) {
+        this.setState({loginRegPageVisible: true});
+      } else {
+        let i = 1;
+        if(this.state.isLiked) {
+          i = -1;
+        }
+        this.setState({
+          isLiked: !this.state.isLiked,
+          counter : this.state.counter + i,
+        });
+      }
+    });
   },
 
   hideLoginRegPage: function() {
