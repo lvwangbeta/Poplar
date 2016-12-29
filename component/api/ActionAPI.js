@@ -50,6 +50,7 @@ export function undoLike(objectType, objectId, callback) {
     if(!token) {
       //not login
       callback(false, 'not logged in');
+      return;
     }
 
     var path =  URLConf.API_HOST + '/action/undo/like/'+ objectType +'/' + objectId;
