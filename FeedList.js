@@ -122,7 +122,7 @@ var FeedList = React.createClass({
     this.props.navigator.push({
         title: tag.tag,
         component: TagDetail,
-        params: {token: this.props.token}
+        params: {token: this.props.token, tag: tag}
     });
   },
 

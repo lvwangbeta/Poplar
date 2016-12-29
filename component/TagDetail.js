@@ -70,14 +70,14 @@ var TagDetail = React.createClass({
         renderForeground={() => (
           <View key="parallax-header" style={ styles.parallaxHeader }>
             <View style={{flex: 1, flexDirection: 'row',justifyContent: 'center',alignItems: 'center', position: 'absolute',left:20, bottom: 40, backgroundColor: 'rgba(0,0,0,0)',}}>
-              <Text style={{color: 'white', fontSize: 24, opacity: 0.9, marginRight: 10}}>#摄影</Text>
+              <Text style={{color: 'white', fontSize: 24, opacity: 0.9, marginRight: 10}}>#{this.props.tag.tag}</Text>
             </View>
           </View>
         )}
 
         renderStickyHeader={() => (
           <View key="sticky-header" style={styles.stickySection}>
-            <Text style={styles.stickySectionText}>摄影</Text>
+            <Text style={styles.stickySectionText}>{this.props.tag.tag}</Text>
           </View>
         )}
 
@@ -88,11 +88,11 @@ var TagDetail = React.createClass({
                 <Image style={{width: 18, height: 18}} source={require('../imgs/back.png')} />
               </TouchableOpacity>
             </View>
-            <TagFollow token={this.props.token} refresh={this.props.refresh} />
+            <TagFollow token={this.props.token} refresh={this.props.refresh} tagId={this.props.tag.id}/>
           </View>
           )}>
 
-          <TagFeedList token={this.props.token} navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail} refresh={this.props.refresh}/>
+          <TagFeedList tagId={this.props.tag.id} token={this.props.token} navigator={this.props.navigator} nav2TagDetail={this.nav2TagDetail} refresh={this.props.refresh}/>
 
           {/* <ScrollableTabView
                 style={{marginTop: 10, }}

@@ -58,13 +58,14 @@ var FeedCell = React.createClass({
               {
                 this.props.feed.tags.map(tag => <TouchableOpacity
                                                   onPress={() => this.props.nav2TagDetail(tag)}>
-                                                  <Text style={{color: '#9B9B9B', marginRight: 5}}>{tag.tag}</Text>
+                                                  <Text style={{fontSize: 16, color: '#9B9B9B', marginRight: 5}}>{tag.tag}</Text>
                                                 </TouchableOpacity>)
 
               }
               </ScrollView>
             }
             <FeedActions
+              feed={this.props.feed}
               likeCounter={this.props.feed.like_count}
               commentCounter={this.props.feed.comment_count}
               push2FeedDetail={this.props.push2FeedDetail}
@@ -181,11 +182,12 @@ var styles = StyleSheet.create({
   },
   feedContentText: {
     flex: 1,
+    textAlign: 'justify',
     margin: margin,
     marginTop: -10,
     fontSize: 16,
     color: '#333333',
-    lineHeight: 22,
+    lineHeight: 20,
   },
   feedContentSingleImage: {
     flex: 1,
