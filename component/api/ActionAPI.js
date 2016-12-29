@@ -12,6 +12,7 @@ export function like(author, objectType, objectId, callback) {
     if(!token) {
       //not login
       callback(false, 'not logged in');
+      return ;
     }
 
     var path =  URLConf.API_HOST + '/action/' +author + '/do/like/'+ objectType +'/' + objectId;

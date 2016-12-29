@@ -18,6 +18,7 @@ import {
 var CommentList = require('../CommentList');
 var FeedActions = require('./actions/FeedActions');
 var TagDetail = require('./TagDetail');
+import {formatDate} from './util/DateUtil';
 
 const windowWidth = Dimensions.get('window').width;
 const margin = 20;
@@ -53,6 +54,7 @@ var TagFeedCell = React.createClass({
               </ScrollView>
             }
             <FeedActions
+              feed={this.props.feed}
               likeCounter={this.props.feed.like_count}
               commentCounter={this.props.feed.comment_count}
               push2FeedDetail={this.props.push2FeedDetail}
@@ -107,7 +109,7 @@ var TagFeedCell = React.createClass({
                   </View>
                   <View style={styles.feedUserInfo}>
                     <Text style={styles.feedUserName}>{this.props.feed.user_name}</Text>
-                    <Text style={styles.feedTime}>2015-1-5</Text>
+                    <Text style={styles.feedTime}>{formatDate(this.props.feed.ts)}</Text>
                   </View>
               </View>
               <View style={styles.feedContent}>
@@ -220,7 +222,7 @@ var styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   tagsContainer: {
-    flex: 3,
+    flex: 2,
     marginLeft: 20,
     marginTop: 10,
 
