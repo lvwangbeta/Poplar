@@ -65,6 +65,7 @@ var FeedCell = React.createClass({
               </ScrollView>
             }
             <FeedActions
+              feed={this.props.feed}
               likeCounter={this.props.feed.like_count}
               commentCounter={this.props.feed.comment_count}
               push2FeedDetail={this.props.push2FeedDetail}
