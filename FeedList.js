@@ -64,7 +64,17 @@ var FeedList = React.createClass({
   onRefresh: function() {
     this.setState({isRefreshing: true, feeds: [], dataSource: new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2,
-    })}, refresh('', this));
+    })}, refresh('', (result, feeds)=>{
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(feeds),
+        isRefreshing: false,
+        loaded: true,
+        noMore: false,
+        page: 1,
+        feeds: feeds,
+        feedId: 0,
+      });
+    }));
   },
 
   render: function() {
