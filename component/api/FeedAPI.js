@@ -2,6 +2,7 @@
 import URLConf from './URLConf';
 import Secret from '../util/Secret';
 import Md5 from '../util/Md5';
+import {getToken} from '../util/Secret';
 
 const FEED_URL = URLConf.API_HOST + '/timeline/';
 const NEW_FEED_URL = FEED_URL + 'new';
@@ -34,39 +35,46 @@ export function getMyFeeds(that) {
     .done();
 }
 
-export function getFeedsOfUser(uid, feedId, page, that) {
-  var path = FEED_URL+'user/'+uid+'/page/'+page+'/startfrom/'+feedId;
-  var sign = Md5.hex_md5(path.replace(URLConf.APP_SERVER_HOST, '') + '?ts=123456&'+Secret.secret);
-  console.log('sign:' + sign);
-  var url = path+'?ts=123456&sign=' + sign;
-  var headers = {
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'X-Auth-Token':that.props.token,
-  }};
+export function getFeedsOfUser(uid, feeds, feedId, page) {
 
-  fetch(url, headers)
-    .then((response) => response.json())
-    .then((responseData) => {
-      console.log(responseData);
-      var loadedFeeds = responseData.feeds;
-      if(loadedFeeds.length < PAGE_SIZE) {
-        that.setState({noMore: true});
-      }
-
-      var feeds = that.state.feeds;
-      for(var i=0; i < loadedFeeds.length; i++) {
-        feeds.push(loadedFeeds[i]);
-      }
-      that.setState({
-        dataSource: that.state.dataSource.cloneWithRows(feeds),
-        isLoadingMore: false,
-        loaded: true,
-        feedId: feeds[feeds.length-1].id,
-      });
-    })
-    .done();
+  // getToken((token) => {
+  //   var path = FEED_URL+'user/'+uid+'/page/'+page+'/startfrom/'+feedId;
+  //   var sign = Md5.hex_md5(path.replace(URLConf.APP_SERVER_HOST, '') + '?ts=123456&'+Secret.secret);
+  //   console.log('sign:' + sign);
+  //   var url = path+'?ts=123456&sign=' + sign;
+  //   var headers = {
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json',
+  //       'X-Auth-Token':token,
+  //   }};
+  //
+  //   fetch(url, headers)
+  //     .then((response) => response.json())
+  //     .then((responseData) => {
+  //       console.log(responseData);
+  //       var loadedFeeds = responseData.feeds;
+  //       var noMore = false;
+  //       if(loadedFeeds.length < PAGE_SIZE) {
+  //         //that.setState({noMore: true});
+  //         noMore = true;
+  //       }
+  //
+  //       for(var i=0; i < loadedFeeds.length; i++) {
+  //         feeds.push(loadedFeeds[i]);
+  //       }
+  //       callback(feeds);
+  //
+  //
+  //       that.setState({
+  //         dataSource: that.state.dataSource.cloneWithRows(feeds),
+  //         isLoadingMore: false,
+  //         loaded: true,
+  //         feedId: feeds[feeds.length-1].id,
+  //       });
+  //     })
+  //     .done();
+  //});
 }
 
 /**
@@ -105,41 +113,37 @@ export function refresh(id, that) {
 * 下滑持续加载
 * id 当前最后一条feed
 */
-export function load(id, page, that) {
-  var path = FEED_URL+'page/'+page+'/startfrom/'+id;
-  var sign = Md5.hex_md5(path.replace(URLConf.APP_SERVER_HOST, '') + '?ts=123456&'+Secret.secret);
-  console.log('sign:' + sign);
-  var url = path+'?ts=123456&sign=' + sign;
-  var headers = {
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'X-Auth-Token':that.props.token,
-  }};
+export function load(id, feeds, page, callback) {
 
-  fetch(url, headers)
-    .then((response) => response.json())
-    .then((responseData) => {
-      console.log(responseData);
-      var loadedFeeds = responseData.feeds;
-      if(loadedFeeds.length < PAGE_SIZE) {
-        that.setState({noMore: true});
-      }
+  console.log('call back fun: ' +callback);
+  getToken((token) => {
+    var path = FEED_URL+'page/'+page+'/startfrom/'+id;
+    var sign = Md5.hex_md5(path.replace(URLConf.APP_SERVER_HOST, '') + '?ts=123456&'+Secret.secret);
+    console.log('sign:' + sign);
+    var url = path+'?ts=123456&sign=' + sign;
+    var headers = {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-Auth-Token':token,
+    }};
 
-      var feeds = that.state.feeds;
-      for(var i=0; i < loadedFeeds.length; i++) {
-        feeds.push(loadedFeeds[i]);
-      }
-      that.setState({
-        dataSource: that.state.dataSource.cloneWithRows(feeds),
-        isRefreshing: false,
-        isLoadingMore: false,
-        loaded: true,
-        page: page+1,
-        feedId: feeds != null&&feeds.length != 0 ? feeds[feeds.length-1].id: 0,
-      });
-    })
-    .done();
+    fetch(url, headers)
+      .then((response) => response.json())
+      .then((responseData) => {
+        console.log(responseData);
+        var loadedFeeds = responseData.feeds;
+        var noMore = false;
+        if(loadedFeeds.length < PAGE_SIZE) {
+          noMore = true;
+        }
+        for(var i=0; i < loadedFeeds.length; i++) {
+          feeds.push(loadedFeeds[i]);
+        }
+        callback(feeds, noMore);
+      })
+      .done();
+  });
 }
 
 
