@@ -58,34 +58,32 @@ export function login(user_email, user_pwd) {
 
 }
 
-export function logout(that) {
+export function logout(callback) {
 
-  var sign = Md5.hex_md5(LOGOUT_URL.replace(URLConf.APP_SERVER_HOST, '') + '?ts=123456&'+secret);
-  console.log('sign:' + sign);
-  var url = LOGOUT_URL+'?ts=123456&sign=' + sign;
+  getToken((token) => {
+    var sign = Md5.hex_md5(LOGOUT_URL.replace(URLConf.APP_SERVER_HOST, '') + '?ts=123456&'+secret);
+    console.log('sign:' + sign);
+    var url = LOGOUT_URL+'?ts=123456&sign=' + sign;
 
-  var options = {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'X-Auth-Token':that.state.token,
-    },
-    body: JSON.stringify({token: that.state.token})
-  };
-  fetch(url, options).then((response) => response.json())
-    .then((responseData) => {
-      console.log(responseData);
-      if(responseData.status === PoplarEnv.dic.SUCCESS_ACCOUNT_LOGOUT) {
-        AsyncStorage.removeItem('token', (err)=>{
-          that.setState({
-            token: '',
-            isLogin: false,
-          })
-        });
-      }
-    }).done();
-
+    var options = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-Auth-Token':token,
+      },
+      body: JSON.stringify({token: token})
+    };
+    fetch(url, options).then((response) => response.json())
+      .then((responseData) => {
+        console.log(responseData);
+        if(responseData.status === PoplarEnv.dic.SUCCESS_ACCOUNT_LOGOUT) {
+          AsyncStorage.removeItem('token', (err)=>{
+            callback(true);
+          });
+        }
+      }).done();
+  });
 }
 
 export function register() {

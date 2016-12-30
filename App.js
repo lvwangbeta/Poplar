@@ -40,7 +40,14 @@ var App = React.createClass({
   },
 
   logout: function() {
-    logout(this);
+    logout((result) => {
+      if(result) {
+        this.setState({
+          token: '',
+          isLogin: false,
+        });
+      }
+    });
   },
 
   refresh: function(isLogin, token) {
