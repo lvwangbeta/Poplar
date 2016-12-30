@@ -1,0 +1,423 @@
+@CHARSET "UTF-8";
+
+
+
+.welcome .span4 {
+	text-align: center;
+}
+
+.welcome .span4  > .ui.circular.segment {
+	width: 200px;
+	height: 200px;
+	display: inline-block;
+	margin: 0 auto;
+	padding-top: 75px;
+}
+
+.section2 p { display: none;}
+.section3 .features { position: relative; bottom: -120%;}
+.section4 p { display: none;}
+
+
+
+.overview{
+	text-align: center;
+	margin-top: -15px;
+}
+
+.overview .initials {
+	font-family: Helvetica-Light, "Microsoft YaHei";
+	font-size: 100px;
+	color: #FFFFFF;
+	line-height: 120px;
+	margin-bottom: 20px;
+}
+.overview .en_initials{
+	font-family: Helvetica-Light, "Microsoft YaHei";
+	font-size: 40px;
+	color: #FFFFFF;
+	line-height: 48px;
+	letter-spacing: 1px;
+	margin-bottom: 10px;
+
+}
+.overview .zh_initials{
+	font-family: STHeitiSC-Light,"Microsoft YaHei";
+	font-size: 36px;
+	color: #FFFFFF;
+	line-height: 37px;
+	/* 开放 分享 自由: */	
+	
+}
+
+.login{
+	text-align: left;
+	margin-left: 100px;
+	margin-right: 60px;
+}
+.login .login_header{
+	font-family: STHeitiSC-Light, "Microsoft YaHei";
+	font-size: 48px;
+	color: #FFFFFF;
+	line-height: 49px;
+	margin-bottom: 20px;
+}
+.ui.form input[type="text"],
+.ui.form input[type="password"] {
+    border: none;
+    border-radius: 2px;
+    background: #FFF;
+    height: 45px;
+    width: 280px;
+    color: #9B9B9B;
+    font-size: 20px;
+    padding-left: 10px;
+}
+
+#error{
+	margin-right: 20px;
+	opacity: 0.8;
+	font-size: 14px;
+}
+#error ul{
+	margin: 0;
+}
+.hidden{
+	display: none;
+}
+.login input{
+	border: none;
+	border-radius: 2px;
+	background: #FFF;
+	height: 45px;
+	width: 280px;
+	margin-bottom: 10px;
+	color:#9B9B9B;
+	font-size: 20px;
+	padding-left: 10px;
+}
+.login .login_btn{
+	margin-top: 10px;
+	margin-right: 7.8%;
+	border: none;
+	border-radius: 2px;
+	background: #21ba45;
+	width: 42%;
+	height: 40px;	
+	font-size: 20px;
+	color:white;
+	text-decoration: none;
+	cursor: pointer;
+}
+.login .register_btn {
+	margin-top: 10px;
+	border: 1px solid;
+	border-radius: 2px;
+	background: transparent;
+	width: 42%;
+	height: 40px;	
+	font-size: 20px;
+	color:white;
+	opacity: 0.6;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.login .login_btn:hover {
+    background-color: #16ab39;
+    transition: 0.5s;
+}
+
+.login .register_btn:hover{
+	opacity:1;
+	transition: 0.5s;
+}
+
+.login .forget_pwd{
+	float: right;
+	margin-top: 20px;
+	margin-right: 20px;
+	color:white;
+	font-size: 15px;
+}
+.login .forget_pwd a{
+	text-decoration: none;
+	cursor: pointer;
+	color: white;
+}
+.section1 .container {
+	margin-top: -80px;
+}
+.pulldown_tip{
+	text-align: center;
+}
+.pulldown_tip img{
+	width:  40px;
+	position: absolute;
+	bottom: 20px;
+}
+.nav{
+	width: 100%;
+	position: fixed;
+	z-index: 100;
+}
+
+.navbar {
+	height: 60px;
+	padding: 0;
+	margin: 0;
+	background: none;
+}
+.navbar a{
+	text-decoration: none;
+}
+.navbar .github{
+	position: absolute;
+	top: 20px;
+	right: 100px;
+	color: white;
+	font-size: 42px;
+}
+
+.navbar .logo{
+	position: absolute;
+	top: 20px;
+	left:100px;
+}
+.navbar .logo span{
+	vertical-align: middle;
+    margin-left: 20px;
+    color: white;
+    font-size: 24px;	
+}
+
+.navbar .logo a{
+	color: white;
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.5s;
+}
+.navbar .logo a:hover{
+	opacity: 1;
+}	
+
+.navbar .logo > img{
+	vertical-align: middle;
+	width: 32px;
+	height: 42px;
+}
+
+.section .center{
+	text-align: center;
+}
+
+.section .header{
+	font-family: Helvetica-Light, "Microsoft YaHei";
+	font-size: 56px;
+	color: #000000;
+	line-height: 67px;
+	
+}
+.section .content{
+	margin-top: 20px;
+	font-family: STHeitiSC-Light, Helvetica-Light, "Microsoft YaHei";
+	font-size: 30px;
+	color: #9B9B9B;
+}
+.section .content p{
+	margin: 0;
+	padding: 0;
+	line-height: 50px;
+}
+
+.section2 .gallery{
+	margin: 0 auto;
+	margin-top: 40px;
+	width: 98%;
+	height: 500px;
+	overflow: hidden;
+}
+.section2 .gallery .box{
+	display: inline;
+}
+.gallery .box{
+	position: relative;
+	display: inline;
+	float: left;
+	margin-bottom: 5px;
+	overflow: hidden;
+}
+.gallery .box .meta{
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	height: 45px;
+	background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.6) 100%);
+}
+.gallery .meta a{
+	padding: 10px;
+}
+.gallery .meta span{
+	color: white;	
+}
+
+
+.tags {
+	text-align: center;
+	margin-top: 50px;
+	margin-bottom: 30px;
+}
+.tags .tagbox{
+	position: relative;
+	display: inline-block;
+	height: 180px;
+	width: 180px;
+	overflow: hidden;
+}
+.tags .tagbox .desc{
+	position: absolute;
+	left: 10px;
+	bottom: 10px;
+	font-size: 18px;
+	color: white;
+}
+
+
+/* clearfix */
+.gallery:before,
+.gallery:after {
+    content: "";
+    display: table;
+}
+.galleryafter {
+    clear: both;
+}
+
+.box {
+  float: left;
+  margin-bottom: 10px; 
+}
+.box img {
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: bottom;
+}
+.first-item {
+  clear: both;
+}
+/* remove margin bottom on last row */
+.last-row, .last-row ~ .item {
+  margin-bottom: 0;
+}
+
+
+.features.row1{
+	margin: 0 auto;
+	margin-top: 40px;
+	width: 60%;
+}
+.features.row2{
+	margin: 0 auto;
+	width: 40%;
+}
+
+.features.row1 .feature{
+	display: inline-table;
+	width: 32%;
+	margin: 0;
+	padding: 0;
+}
+
+.features.row2 .feature{
+	display: inline-table;
+	width: 49%;
+	margin: 0;
+	padding: 0;
+}
+
+.features .circle{
+	display: table;
+	margin: 0 auto;
+	background-color: white;
+	height: 150px;
+	width:150px;
+	border-radius: 150px;
+}
+.features .circle i.big{
+	display: table-cell;
+	font-size: 40px;
+}
+
+.features .header{
+	margin-top:10px;
+	margin-bottom: 10px;
+	text-align: center;
+	font-family: STHeitiSC-Medium;
+	font-size: 24px;
+	color: #555555;
+	line-height: 25px;
+}
+
+.features .desc{
+	margin-top:10px;
+	margin-bottom: 10px;
+	text-align: center;
+	font-family: STHeitiSC-Light, Helvetica-Light, "Microsoft YaHei";
+	font-size: 16px;
+	color: #555555;
+	line-height: 25px;
+
+}
+
+.footbar{
+	position: absolute;
+	bottom: 0px;
+	height: 120px;
+	width: 100%;
+	background-color: white;
+}
+
+.section4 .header{
+	color:white;
+}
+
+.section4 .login_btn{
+	  height: 50px;
+	  text-align: center;
+	  padding: 12px;
+	  font-size: 20px;
+	  color: white;
+	  border-radius: 3px;	
+	  border: none;
+	  background: #21ba45;
+	  text-decoration: none;
+	  cursor: pointer;
+}
+
+.section4 .login_btn:hover {
+    background-color: #16ab39;
+    transition: 0.5s;
+}
+
+.section4 .register_btn{
+	  height: 50px;
+	  text-align: center;
+	  padding: 12px;
+	  font-size: 20px;
+	  border-radius: 3px;	
+	  border: 1px solid;
+	  background: transparent;
+	  color:white;
+	  opacity: 0.6;
+	  text-decoration: none;
+	  cursor: pointer;
+}
+.section4 .register_btn:hover{
+	opacity: 1;
+	transition: 0.5s;
+}
+.section4 .row:FIRST-CHILD {
+	margin-bottom: 50px;
+}
+

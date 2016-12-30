@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+   <!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lvwang.osf.mappers.EventMapper"> 
+	<insert id="save" parameterType="com.lvwang.osf.model.Event" useGeneratedKeys="true" keyProperty="id">
+			insert into  osf_events   
+			 values(null,#{object_type},#{object_id},#{ts},
+			 #{user_id},#{user_name},#{user_avatar},#{like_count},
+			 #{share_count},#{comment_count},#{title},#{summary},
+			 #{content},#{tags_str},#{following_user_id},
+			 #{following_user_name},#{follower_user_id},
+			 #{follower_user_name})
+	</insert>
+	
+	<select id="getEvent" resultType="com.lvwang.osf.model.Event">
+		select * from osf_events where object_type=#{param1} and object_id=#{param2}
+	</select>
+	
+	<select id="getEvents" resultType="com.lvwang.osf.model.Event">
+		select * from osf_events limit #{param1},#{param2}
+	</select>
+	
+	<select id="getEventsWithIDs" parameterType="list" resultType="com.lvwang.osf.model.Event">
+		select * from osf_events 
+		<where>
+			 id in 
+			 <foreach item="event_id" collection="event_ids" open="(" separator="," close=")">
+			 	#{event_id}
+			 </foreach>
+		</where> 
+		order by ts desc
+	</select>
+	
+	<select id="getEventsWithRelations" parameterType="map" resultType="com.lvwang.osf.model.Event">
+		select * from osf_events 
+		<where>
+			<if test="0 != null">
+				(object_type=0 and 
+					<foreach item="object_id" collection="0" open="(" separator="," close=")">
+						#{object_id}
+					</foreach>
+				)
+			</if>
+			<if test="2 != null">
+				or (object_type=2 and 
+					<foreach item="object_id" collection="2" open="(" separator="," close=")">
+						#{object_id}
+					</foreach>
+				)
+			</if>
+		</where>
+	</select>
+	
+	<select id="getEventsOfUser" resultType="com.lvwang.osf.model.Event">
+		select * from osf_events where user_id=#{param1} order by ts desc limit #{param2}
+	</select>
+	
+	<select id="getEventsHasPhoto" resultType="com.lvwang.osf.model.Event">
+		select * from osf_events where (object_type=0 and content is not null) 
+		or (object_type=2 and title is not null) limit #{param1},#{param2}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete from osf_events where id=#{id}
+	</delete>
+	
+	<delete id="deleteByObject">
+		delete from osf_events where object_type=#{param1} and object_id=#{param2}
+	</delete>
+	
+	
+	
+</mapper>
