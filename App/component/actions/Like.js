@@ -10,7 +10,7 @@ import {
 
 import {getToken} from '../../util/Secret';
 import {like, undoLike} from '../../api/ActionAPI';
-var PopupLoginRegPage = require('../../PopupLoginRegPage');
+import PopupLoginRegPage from '../../PopupLoginRegPage';
 
 var Like = React.createClass({
 

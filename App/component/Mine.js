@@ -2,22 +2,19 @@ import React from 'react';
 
 import {
     StyleSheet,
-    AsyncStorage,
     Text,
     View,
     TouchableOpacity,
-    TouchableHighlight,
     Image,
     Dimensions,
     ScrollView,
-    Platform,
     ListView
 } from 'react-native';
 
-var PoplarEnv = require('../util/PoplarEnv');
-var FollowBtn = require('./actions/Follow');
-var FeedCell = require('./FeedCell');
-var FeedDetail = require('./FeedDetail');
+import PoplarEnv from '../util/PoplarEnv';
+import FollowBtn from './actions/Follow';
+import FeedCell from './FeedCell';
+import FeedDetail from './FeedDetail';
 import {Auth,ImgOps,Conf,Rs,Rpc} from 'react-native-qiniu';
 import {getMyFeeds, refresh, load} from '../api/FeedAPI';
 

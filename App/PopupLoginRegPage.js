@@ -10,10 +10,10 @@ import {
   Modal
 } from 'react-native';
 
-var NavigationBar = require('react-native-navbar');
-var CancleBtn = require('./component/navbar/CancleBtn');
-var LoginPage = require('./LoginPage');
-var RegisterPage = require('./RegisterPage');
+import NavigationBar from 'react-native-navbar';
+import CancleBtn from './component/navbar/CancleBtn';
+import LoginPage from './LoginPage';
+import RegisterPage from './RegisterPage';
 
 var PopupLoginRegPage = React.createClass({
 

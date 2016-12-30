@@ -3,21 +3,18 @@
 import React from 'react';
 import {
   ListView,
-  Platform,
   StyleSheet,
   Text,
   Image,
   View,
   TouchableOpacity,
-  TouchableHighlight,
-  TouchableNativeFeedback,
   Dimensions
 } from 'react-native';
 
 import {getTagFeedsOfPage} from '../api/TagAPI';
-var TagFeedCell = require('./TagFeedCell');
-var FeedDetail = require('./FeedDetail');
-var HomePage = require('./HomePage');
+import TagFeedCell from './TagFeedCell';
+import FeedDetail from './FeedDetail';
+import HomePage from './HomePage';
 
 const windowWidth = Dimensions.get('window').width;
 

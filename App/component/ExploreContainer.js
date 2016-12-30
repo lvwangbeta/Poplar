@@ -2,22 +2,18 @@
 
 import React from 'react';
 import {
-  ListView,
   StyleSheet,
   Text,
   Image,
   View,
   ScrollView,
   TouchableOpacity,
-  TouchableHighlight,
-  TouchableNativeFeedback,
-  Navigator,
 } from 'react-native';
 
-var TopGallery = require('./TopGallery');
-var TagsSection = require('./TagsSection');
-var UsersSection = require('./UsersSection');
-var TagDetail = require('./TagDetail');
+import TopGallery from './TopGallery';
+import TagsSection from './TagsSection';
+import UsersSection from './UsersSection';
+import TagDetail from './TagDetail';
 
 var ExploreContainer = React.createClass({
 

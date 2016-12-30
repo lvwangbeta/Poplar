@@ -9,10 +9,10 @@ import {
   Navigator,
 } from 'react-native';
 
-var Mine = require('./component/Mine');
-var SettingsBtn = require('./component/navbar/SettingsBtn');
-var SettingsPage = require('./SettingsPage');
-var NavigationBar = require('react-native-navbar');
+import Mine from './component/Mine';
+import SettingsBtn from './component/navbar/SettingsBtn';
+import SettingsPage from './SettingsPage';
+import NavigationBar from 'react-native-navbar';
 
 var MinePage = React.createClass({
   render: function(){

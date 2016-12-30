@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import {getToken} from '../../util/Secret';
-var PopupLoginRegPage = require('../../PopupLoginRegPage');
+import PopupLoginRegPage from '../../PopupLoginRegPage';
 
 var Comment = React.createClass({
 

@@ -10,8 +10,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-var TagBox = require('./TagBox');
-var TagDetail = require('./TagDetail');
+import TagBox from './TagBox';
+import TagDetail from './TagDetail';
 
 const windowWidth = Dimensions.get('window').width;
 const margin = 10;

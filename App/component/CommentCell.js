@@ -17,9 +17,9 @@ import {
 
 import URLConf from '../api/URLConf';
 import {getToken} from '../util/Secret';
-var Md5 = require('../util/Md5');
-var ReplyModal = require('../NewFeed');
-var PopupLoginRegPage = require('../PopupLoginRegPage');
+import Md5 from '../util/Md5';
+import ReplyModal from '../NewFeed';
+import PopupLoginRegPage from '../PopupLoginRegPage';
 
 const avatar_thumbnail = '?imageView2/1/w/48/h/48';
 

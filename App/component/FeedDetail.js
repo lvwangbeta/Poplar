@@ -3,15 +3,10 @@
 import React from 'react';
 import {
   Image,
-  PixelRatio,
-  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
-  TouchableHighlight,
-  TouchableNativeFeedback,
   View,
-  Modal,
   ScrollView,
   Dimensions
 } from 'react-native';
@@ -20,15 +15,15 @@ import URLConf from '../api/URLConf';
 import BackBtn from './navbar/BackBtn';
 import ShareBtn from './navbar/ShareBtn';
 import ShareModal from './ShareModal';
-var NavigationBar = require('react-native-navbar');
-var LikeAction = require('./actions/Like');
-var CommentAction = require('./actions/Comment');
-var CommentBar = require('./CommentBar');
-var CommentList = require('./CommentList');
-var PhotoSwiper = require('./PhotoSwiper');
-var TagDetail = require('./TagDetail');
-var HomePage = require('./HomePage');
-var PoplarEnv = require('../util/PoplarEnv');
+import NavigationBar from 'react-native-navbar';
+import LikeAction from './actions/Like';
+import CommentAction from './actions/Comment';
+import CommentBar from './CommentBar';
+import CommentList from './CommentList';
+import PhotoSwiper from './PhotoSwiper';
+import TagDetail from './TagDetail';
+import HomePage from './HomePage';
+import PoplarEnv from '../util/PoplarEnv';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;

@@ -14,8 +14,8 @@ import {
   Navigator,
 } from 'react-native';
 
-var NavigationBar = require('react-native-navbar');
-var ExploreContainer = require('./component/ExploreContainer');
+import NavigationBar from 'react-native-navbar';
+import ExploreContainer from './component/ExploreContainer';
 
 var ExplorePage = React.createClass({
   getInitialState: function(){

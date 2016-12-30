@@ -12,7 +12,7 @@ import {
 import {getToken} from '../../util/Secret';
 import {followTag, undoFollowTag} from '../../api/ActionAPI';
 import {getDetails} from '../../api/TagAPI';
-var PopupLoginRegPage = require('../../PopupLoginRegPage');
+import PopupLoginRegPage from '../../PopupLoginRegPage';
 
 var TagFollow = React.createClass({
 

@@ -4,7 +4,6 @@ import React from 'react';
 
 import {
   ListView,
-  Platform,
   StyleSheet,
   Text,
   Image,
@@ -13,12 +12,10 @@ import {
   Modal,
   Dimensions,
   TouchableOpacity,
-  TouchableHighlight,
-  TouchableNativeFeedback,
 } from 'react-native';
 
-var TagFollow = require('./actions/TagFollow');
-var TagFeedList = require('./TagFeeds');
+import TagFollow from './actions/TagFollow';
+import TagFeedList from './TagFeeds';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 // import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 

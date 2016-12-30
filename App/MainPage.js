@@ -8,8 +8,8 @@ import {
   View,
 } from 'react-native';
 
-var NavigationBar = require('react-native-navbar');
-var FeedList = require('./component/FeedList');
+import NavigationBar from 'react-native-navbar';
+import FeedList from './component/FeedList';
 
 var MainPage = React.createClass({
   render: function(){
