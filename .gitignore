@@ -45,5 +45,5 @@ npm-debug.log
 /target
 /.settings/
 .metadata/
-Servers/*
-RemoteSystemsTempFiles/*
+backend/Servers/*
+backend/RemoteSystemsTempFiles/*
