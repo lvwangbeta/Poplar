@@ -10,11 +10,11 @@ import {
 
 import TabNavigator from 'react-native-tab-navigator';
 import {isLogin, logout} from './util/Secret';
-var NewFeed = require('./NewFeed');
-var ExplorePage = require('./ExplorePage');
-var MainPage = require('./MainPage');
-var MinePage = require('./MinePage');
-var LoginRegPage = require('./LoginRegPage');
+import NewFeed from './NewFeed';
+import ExplorePage from './ExplorePage';
+import MainPage from './MainPage';
+import MinePage from './MinePage';
+import LoginRegPage from './LoginRegPage';
 
 var App = React.createClass({
   getInitialState: function() {

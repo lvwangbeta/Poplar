@@ -11,7 +11,7 @@ import {
   WebView
 } from 'react-native';
 
-var NavigationBar = require('react-native-navbar');
+import NavigationBar from 'react-native-navbar';
 import BackBtn from './navbar/BackBtn';
 
 var PoplarWebView = React.createClass({

@@ -8,12 +8,9 @@ import {
   Image,
   View,
   Dimensions,
-  TouchableHighlight,
   TouchableOpacity,
-  TouchableNativeFeedback,
-  Navigator,
 } from 'react-native';
-var TagDetail = require('./TagDetail');
+import TagDetail from './TagDetail';
 
 const windowWidth = Dimensions.get('window').width;
 const margin = 10;

@@ -9,8 +9,8 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-var LoginPage = require('./LoginPage');
-var RegisterPage = require('./RegisterPage');
+import LoginPage from './LoginPage';
+import RegisterPage from './RegisterPage';
 
 var LoginRegPage = React.createClass({
 

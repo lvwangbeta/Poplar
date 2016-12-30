@@ -13,10 +13,10 @@ import {
   TouchableNativeFeedback,
 } from 'react-native';
 
-var PoplarEnv = require('../util/PoplarEnv');
-var CommentCell = require('./CommentCell');
-var NewComment = require('./NewComment');
-var FeedActions = require('./actions/FeedActions');
+import PoplarEnv from '../util/PoplarEnv';
+import CommentCell from './CommentCell';
+import NewComment from './NewComment';
+import FeedActions from './actions/FeedActions';
 import {getCommentsOfObject} from '../api/CommentAPI';
 
 

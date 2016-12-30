@@ -9,8 +9,8 @@ import {
   Dimensions
 } from 'react-native';
 
-var NavigationBar = require('react-native-navbar');
-var BackBtn = require('./component/navbar/BackBtn');
+import NavigationBar from 'react-native-navbar';
+import BackBtn from './component/navbar/BackBtn';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;

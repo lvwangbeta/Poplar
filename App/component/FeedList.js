@@ -3,23 +3,20 @@
 import React from 'react';
 import {
   ListView,
-  Platform,
   StyleSheet,
   Text,
   Image,
   View,
   Dimensions,
   TextInput,
-  TouchableHighlight,
-  TouchableNativeFeedback,
   RefreshControl,
   Alert
 } from 'react-native';
 
-var FeedCell = require('./FeedCell');
-var FeedDetail = require('./FeedDetail');
-var TagDetail = require('./TagDetail');
-var HomePage = require('./HomePage');
+import FeedCell from './FeedCell';
+import FeedDetail from './FeedDetail';
+import TagDetail from './TagDetail';
+import HomePage from './HomePage';
 import {getMyFeeds, refresh, load} from '../api/FeedAPI';
 
 const windowWidth = Dimensions.get('window').width;

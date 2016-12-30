@@ -3,22 +3,18 @@
 import React from 'react';
 import {
   Image,
-  PixelRatio,
-  Platform,
   StyleSheet,
   Text,
   ScrollView,
   TouchableOpacity,
-  TouchableHighlight,
-  TouchableNativeFeedback,
   View,
   Dimensions
 } from 'react-native';
 
 import URLConf from '../api/URLConf';
-var CommentList = require('./CommentList');
-var FeedActions = require('./actions/FeedActions');
-var TagDetail = require('./TagDetail');
+import CommentList from './CommentList';
+import FeedActions from './actions/FeedActions';
+import TagDetail from './TagDetail';
 import {formatDate} from '../util/DateUtil';
 
 const windowWidth = Dimensions.get('window').width;

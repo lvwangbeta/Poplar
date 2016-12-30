@@ -8,7 +8,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-var LikeAction = require('./Like');
+import LikeAction from './Like';
 
 var FeedActions = React.createClass({
 

@@ -9,7 +9,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-var Md5 = require('../util/Md5');
+import Md5 from '../util/Md5';
 
 var COMMENT_URL = 'http://localhost:8080/com.lvwang.osf/api/v1/comment/';
 

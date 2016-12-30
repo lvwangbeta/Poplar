@@ -1,13 +1,10 @@
 'use strict';
 
 import React from 'react';
-
 import {
     StyleSheet,
-    AsyncStorage,
     Text,
     View,
-    TouchableHighlight,
     Image,
     Dimensions,
     ScrollView,
@@ -15,9 +12,9 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-var FollowBtn = require('./actions/Follow');
-var FeedDetail = require('./FeedDetail');
-var FeedCell = require('./FeedCell');
+import FollowBtn from './actions/Follow';
+import FeedDetail from './FeedDetail';
+import FeedCell from './FeedCell';
 import {getFeedsOfUser} from '../api/FeedAPI';
 
 const windowWidth = Dimensions.get('window').width;
