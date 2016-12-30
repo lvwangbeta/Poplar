@@ -44,15 +44,37 @@ var FeedList = React.createClass({
     this.fetchData();
   },
 
+  updateFeedList: function(feeds, noMore) {
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(feeds),
+      isRefreshing: false,
+      isLoadingMore: false,
+      loaded: true,
+      noMore: noMore,
+      page: this.state.page+1,
+      feedId: feeds != null&&feeds.length != 0 ? feeds[feeds.length-1].id: 0,
+    });
+  },
+
   fetchData: function() {
     //getMyFeeds(this);
-    load(0, this.state.page, this);
+    load(0, this.state.feeds, this.state.page, (feeds, noMore) => {this.updateFeedList(feeds, noMore)});
   },
 
   onRefresh: function() {
     this.setState({isRefreshing: true, feeds: [], dataSource: new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2,
-    })}, refresh('', this));
+    })}, refresh('', (result, feeds)=>{
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(feeds),
+        isRefreshing: false,
+        loaded: true,
+        noMore: false,
+        page: 1,
+        feeds: feeds,
+        feedId: 0,
+      });
+    }));
   },
 
   render: function() {
@@ -87,7 +109,7 @@ var FeedList = React.createClass({
   },
   onEndReached: function() {
     if(this.state.noMore || this.state.isLoadingMore) return;
-    this.setState({isLoadingMore: true}, load(this.state.feedId, this.state.page, this));
+    this.setState({isLoadingMore: true}, load(this.state.feedId, this.state.feeds, this.state.page, (feeds, noMore) => {this.updateFeedList(feeds, noMore)}));
   },
   renderFooter: function() {
     if(this.state.isLoadingMore) {

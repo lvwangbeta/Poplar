@@ -72,7 +72,13 @@ var CommentList = React.createClass({
 
   fetchData: function() {
     var type_str = this.getCommentObjType(this.props.object_type);
-    getCommentsOfObject(type_str, this.props.object_id,this.state.limit, this);
+    getCommentsOfObject(type_str, this.props.object_id,this.state.limit, (result, comments) => {
+      this.setState({
+        commentsArray: comments,
+        dataSource: this.state.dataSource.cloneWithRows(comments),
+        loaded: true,
+      });
+    });
   },
   renderLoadingView: function() {
     return (

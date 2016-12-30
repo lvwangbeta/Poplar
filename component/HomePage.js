@@ -42,7 +42,10 @@ var HomePage = React.createClass({
   },
 
   fetchData: function() {
-    getFeedsOfUser(23, this.state.feedId, this.state.page, this);
+    //getFeedsOfUser(23, this.state.feedId, this.state.page, this);
+    //getFeedsOfUser(23, this.state.feeds, this.state.feedId, this.state.page, () => {
+
+    //});
   },
 
   renderLoadingView: function() {
