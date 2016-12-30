@@ -32,7 +32,12 @@ var TagFeeds = React.createClass({
     };
   },
   componentDidMount: function() {
-    getTagFeedsOfPage(this.props.tagId, 1, this);
+    getTagFeedsOfPage(this.props.tagId, 1, (result, feeds) => {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(feeds),
+        loaded: true,
+      });
+    });
   },
 
 
