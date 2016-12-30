@@ -29,7 +29,14 @@ var App = React.createClass({
   },
 
   componentWillMount: function() {
-    isLogin(this);
+    isLogin((result, token) => {
+      if(result) {
+        this.setState({
+          isLogin: true,
+          token: token,
+        });
+      }
+    });
   },
 
   logout: function() {

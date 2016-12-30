@@ -17,14 +17,11 @@ export default {
 }
 
 
-export function isLogin(that) {
+export function isLogin(callback) {
   AsyncStorage.getItem('token', (err, result) => {
     console.log('token : '+result);
     if(typeof(result) == 'string') {
-      that.setState({
-        isLogin: true,
-        token: result,
-      });
+      callback(true, result);
     }
   });
 }
