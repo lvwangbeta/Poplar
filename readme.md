@@ -3,4 +3,8 @@ Poplar
 
 Screen Shot
 
-![screenshots](./screenshots/screenshot.png)
+![screenshots](./doc/imgs/screenshot.png)
+
+
+
+![framework](./doc/imgs/framework.png)

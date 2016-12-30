@@ -6,7 +6,7 @@ import {
   Navigator
 } from 'react-native';
 
-var App = require('./App');
+var App = require('./App/App');
 
 
 var Poplar = React.createClass({
