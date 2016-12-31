@@ -23,6 +23,7 @@ public interface EventDAO {
 	List<Event> getEventsWithIDs(@Param("event_ids")List<Integer> event_ids);
 	List<Event> getEventsWithRelations(Map<Integer, List<Integer>> relations);
 	List<Event> getEventsOfUser(int user_id, int count);
+	List<Event> getEventsOfUserFrom(int user_id, int start, int count);
 	List<Event> getEventsHasPhoto(int start, int step);
 	void delete(int id);
 	void deleteByObject(int object_type, int object_id);

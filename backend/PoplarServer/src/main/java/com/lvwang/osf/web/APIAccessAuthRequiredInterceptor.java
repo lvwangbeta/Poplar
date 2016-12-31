@@ -21,7 +21,8 @@ public class APIAccessAuthRequiredInterceptor implements HandlerInterceptor {
 
 	
 	public static final String SECRET = "osf";
-	public static final String URL_TIMELINE = "/**/timeline/user/*/page/*/startfrom/*";
+	
+	public static final String URL_TIMELINE = "/**/timeline/user/*/startfrom/*/limit/*";
 	public static final String URL_TAG_PATTERN = "/**/tag/*/page/*";
 	public static final String URL_COMMENT_PATTERN = "/**/comment/*/*";
 	public static AntPathMatcher matcher = new AntPathMatcher();

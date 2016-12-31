@@ -247,4 +247,34 @@ public class TimeLineAPI {
 		return map;
 	}
 	
+	
+	
+	/**
+	 * 获取用户发表的状态
+	 * @author_id
+	 * @id start from 
+	 * @limit return count
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/user/{account_id}/startfrom/{id}/limit/{limit}")
+	public Map<String, Object> getEventsOfUser(@PathVariable("account_id") Integer account_id, 
+											   @PathVariable("id") Integer id, 
+											   @PathVariable("limit") Integer limit, 
+											   @RequestAttribute("uid") Integer uid) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Event> events = new ArrayList<Event>();
+		if(id == 0) {
+			events = eventService.getEventsOfUser(account_id, limit);
+		} else {
+			events = eventService.getEventsOfUser(account_id, id, limit);
+		}
+				
+		feedService.addUserInfo(events);
+		feedService.updLikeCount(uid, events);
+		feedService.addCommentCount(events);
+		map.put("feeds", events);
+		map.put("status", Property.SUCCESS_FEED_LOAD);
+		return map;
+	}
 }

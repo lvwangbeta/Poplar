@@ -151,6 +151,10 @@ public class EventService {
 	public List<Event> getEventsOfUser(int user_id, int count){
 		return eventDao.getEventsOfUser(user_id, count);
 	}
+	
+	public List<Event> getEventsOfUser(int user_id, int start, int count){
+		return eventDao.getEventsOfUserFrom(user_id, start, count);
+	}
 		
 	
 	public void delete(int id){

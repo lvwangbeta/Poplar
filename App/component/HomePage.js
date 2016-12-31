@@ -40,9 +40,25 @@ var HomePage = React.createClass({
 
   fetchData: function() {
     //getFeedsOfUser(23, this.state.feedId, this.state.page, this);
-    //getFeedsOfUser(23, this.state.feeds, this.state.feedId, this.state.page, () => {
+    getFeedsOfUser(23, this.state.feeds, this.state.feedId, 10, (result, feeds, noMore) => {
+      if(result) {
+        if(!noMore) {
+          this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(feeds),
+            isLoadingMore: false,
+            loaded: true,
+            feedId: feeds[feeds.length-1].id,
+          });
+        } else {
+          this.setState({
+            isLoadingMore: false,
+            loaded: true,
+            noMore: true,
+          });
+        }
 
-    //});
+      }
+    });
   },
 
   renderLoadingView: function() {
@@ -127,7 +143,26 @@ var HomePage = React.createClass({
     if(this.state.noMore || this.state.isLoadingMore) return;
     console.log('is loading more..');
     var page = this.state.page+1;
-    this.setState({isLoadingMore: true, page: this.state.page+1}, getFeedsOfUser(23, this.state.feedId, page, this));
+    this.setState({isLoadingMore: true, page: this.state.page+1}, getFeedsOfUser(23, this.state.feeds, this.state.feedId, 10, (result, feeds, noMore) => {
+          if(result) {
+            if(!noMore) {
+              this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(feeds),
+                isLoadingMore: false,
+                loaded: true,
+                feedId: feeds[feeds.length-1].id,
+                noMore: noMore
+              });
+            } else {
+              this.setState({
+                isLoadingMore: false,
+                loaded: true,
+                noMore: true,
+              });
+            }
+
+          }
+        }));
   },
   renderFooter: function() {
     if(this.state.isLoadingMore) {
