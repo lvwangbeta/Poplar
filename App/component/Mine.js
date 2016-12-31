@@ -16,7 +16,7 @@ import FollowBtn from './actions/Follow';
 import FeedCell from './FeedCell';
 import FeedDetail from './FeedDetail';
 import {Auth,ImgOps,Conf,Rs,Rpc} from 'react-native-qiniu';
-import {getMyFeeds, refresh, load} from '../api/FeedAPI';
+import {getFeedsOfUser, refresh, load} from '../api/FeedAPI';
 
 import ImagePicker from 'react-native-image-picker';
 
@@ -45,21 +45,49 @@ var Mine = React.createClass({
     this.fetchData();
   },
 
-  updateFeedList: function(feeds, noMore) {
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(feeds),
-      isRefreshing: false,
-      isLoadingMore: false,
-      loaded: true,
-      noMore: noMore,
-      page: this.state.page+1,
-      feedId: feeds != null&&feeds.length != 0 ? feeds[feeds.length-1].id: 0,
-    });
+  updateFeedList: function(result, feeds, noMore) {
+    if(result) {
+      if(!noMore) {
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(feeds),
+          isRefreshing: false,
+          isLoadingMore: false,
+          loaded: true,
+          page: this.state.page+1,
+          feedId: feeds != null&&feeds.length != 0 ? feeds[feeds.length-1].id: 0,
+        });
+      } else {
+        this.setState({
+          isLoadingMore: false,
+          loaded: true,
+          noMore: true,
+        });
+      }
+    }
   },
 
   fetchData: function() {
     //getMyFeeds(this);
-    load(0, this.state.feeds, this.state.page, (feeds, noMore) => {this.updateFeedList(feeds, noMore)});
+    // load(0, this.state.feeds, this.state.page, (result, feeds, noMore) => {this.updateFeedList(result, feeds, noMore)});
+    getFeedsOfUser(23, this.state.feeds, this.state.feedId, 10, (result, feeds, noMore) => {
+      if(result) {
+        if(!noMore) {
+          this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(feeds),
+            isLoadingMore: false,
+            loaded: true,
+            feedId: feeds[feeds.length-1].id,
+          });
+        } else {
+          this.setState({
+            isLoadingMore: false,
+            loaded: true,
+            noMore: true,
+          });
+        }
+
+      }
+    });
   },
 
   upload: function() {
@@ -147,8 +175,26 @@ var Mine = React.createClass({
 
   onEndReached: function() {
     if(this.state.noMore || this.state.isLoadingMore) return;
-    this.setState({isLoadingMore: true}, load(this.state.feedId, this.state.feeds, this.state.page, (feeds, noMore) => {this.updateFeedList(feeds, noMore)}));
+    this.setState({isLoadingMore: true}, getFeedsOfUser(23, this.state.feeds, this.state.feedId, 10, (result, feeds, noMore) => {
+          if(result) {
+            if(!noMore) {
+              this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(feeds),
+                isLoadingMore: false,
+                loaded: true,
+                feedId: feeds[feeds.length-1].id,
+              });
+            } else {
+              this.setState({
+                isLoadingMore: false,
+                loaded: true,
+                noMore: true,
+              });
+            }
+          }
+        }));
   },
+
   renderFooter: function() {
     if(this.state.isLoadingMore) {
       return (
