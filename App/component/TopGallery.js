@@ -82,21 +82,21 @@ var TopGallary = React.createClass({
     return (
       <Swiper style={styles.wrapper} height={180}
         onMomentumScrollEnd={(e, state, context) => console.log('index:', state.index)}
-        dot={<View style={{backgroundColor: 'rgba(0,0,0,.2)', width: 5, height: 5, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
-        activeDot={<View style={{backgroundColor: '#000', width: 7, height: 7, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
+        dot={<View style={{backgroundColor: 'rgba(255,255,255,.2)', width: 5, height: 5, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
+        activeDot={<View style={{backgroundColor: 'rgba(255,255,255,.8)', width: 7, height: 7, borderRadius: 4, marginLeft: 5, marginRight: 5, marginTop: 3, marginBottom: 3}} />}
         paginationStyle={{
-          bottom: -15, left: null, right: 10
+          bottom: 5, justifyContent: 'center', alignItems: 'center'
         }} loop>
-        <TouchableOpacity style={styles.slide} onPress={this.onPress}  title={<Text numberOfLines={1} style={styles.title}>This is frist slide</Text>}>
+        <TouchableOpacity style={styles.slide} onPress={this.onPress}>
           <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag1.jpg')} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.slide} title={<Text numberOfLines={1} style={styles.title}>This is second slide</Text>}>
+        <TouchableOpacity style={styles.slide}>
           <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag2.jpg')} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.slide} title={<Text numberOfLines={1} style={styles.title}>This is third slide</Text>}>
+        <TouchableOpacity style={styles.slide}>
           <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag3.jpg')} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.slide} title={<Text numberOfLines={1} style={styles.title}>Learn from Kim K to land that job</Text>}>
+        <TouchableOpacity style={styles.slide}>
           <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag2.jpg')} />
         </TouchableOpacity>
       </Swiper>
