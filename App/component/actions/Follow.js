@@ -28,19 +28,8 @@ var Follow = React.createClass({
     });
   },
 
-  checkLoginAndChangeState:function(token) {
-    console.log('follow btn token:' + token);
-    if(!token) {
-      this.setState({loginRegPageVisible: true});
-    } else {
-      this.setState({
-        isFollowed: !this.state.isFollowed,
-      });
-    }
-  },
 
   onPress: function() {
-    //getToken(this.checkLoginAndChangeState);
     if(!this.state.isFollowed) {
       follow(this.props.uid, (result, err) => {
         if(result) {
