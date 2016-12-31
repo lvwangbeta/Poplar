@@ -129,7 +129,7 @@ var FeedList = React.createClass({
     } else if(this.state.noMore){
       return(
         <View style={styles.footer}>
-          <Text>没有更多了</Text>
+          <Text style={{color: '#adadad'}}>没有更多了</Text>
         </View>
       );
     }
