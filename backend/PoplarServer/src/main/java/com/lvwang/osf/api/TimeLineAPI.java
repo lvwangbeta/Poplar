@@ -175,10 +175,10 @@ public class TimeLineAPI {
 		//push to users who follow u
 		List<Integer> followers = followService.getFollowerIDs(user.getId());
 		followers.add(user.getId());
-		feedService.push(followers, event_id);
+		//feedService.push(followers, event_id);
 		
 		//push to users who follow the tags
-		Set<Integer> followers_set = new HashSet<Integer>();
+		Set<Integer> followers_set = new HashSet<Integer>(followers);
 		for(Tag tag : tags) {
 			List<Integer> i_users = interestService.getUsersInterestedInTag(tag.getId());
 			for(int u: i_users) {
