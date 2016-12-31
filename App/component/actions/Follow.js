@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import {getToken} from '../../util/Secret';
+import {isFollow, follow, undoFollow} from '../../api/ActionAPI';
 import PopupLoginRegPage from '../../PopupLoginRegPage';
 
 var Follow = React.createClass({
@@ -17,8 +18,13 @@ var Follow = React.createClass({
   getInitialState: function() {
     return ({
       isFollowed: false,
-      isClicked: false,
       loginRegPageVisible: false,
+    });
+  },
+
+  componentDidMount: function() {
+    isFollow(this.props.uid, (result) => {
+      this.setState({isFollowed: result});
     });
   },
 
@@ -29,13 +35,34 @@ var Follow = React.createClass({
     } else {
       this.setState({
         isFollowed: !this.state.isFollowed,
-        isClicked: !this.state.isClicked,
       });
     }
   },
 
   onPress: function() {
-    getToken(this.checkLoginAndChangeState);
+    //getToken(this.checkLoginAndChangeState);
+    if(!this.state.isFollowed) {
+      follow(this.props.uid, (result, err) => {
+        if(result) {
+          this.setState({
+            isFollowed: true,
+          });
+        } else {
+          if(err == 'not logged in') {
+            this.setState({loginRegPageVisible: true});
+          }
+        }
+      });
+    } else {
+      undoFollow(this.props.uid, (result, err) => {
+        if(result) {
+          this.setState({
+            isFollowed: false,
+          });
+        }
+      });
+    }
+
   },
 
   showLoginRegPage: function() {

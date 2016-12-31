@@ -101,9 +101,9 @@ var HomePage = React.createClass({
           </View>
           <View style={styles.metas}>
             <View style={styles.desc}>
-              <Text style={styles.name}>断鸿</Text>
+              <Text style={styles.name}>{this.props.feed.user_name}</Text>
               <Text style={styles.motto}>Time to do it</Text>
-              <FollowBtn refresh={this.props.refresh}/>
+              <FollowBtn refresh={this.props.refresh} uid={this.props.feed.user_id}/>
             </View>
             <View
               style={{flex: 1,
