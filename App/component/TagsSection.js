@@ -12,6 +12,7 @@ import {
 
 import TagBox from './TagBox';
 import TagDetail from './TagDetail';
+import {getRecommendTags} from '../api/RecommendAPI';
 
 const windowWidth = Dimensions.get('window').width;
 const margin = 10;
@@ -20,6 +21,25 @@ const tagWidth = (windowWidth-margin*2-interval*2 ) / 3;
 
 
 var TagsSection = React.createClass({
+
+  getInitialState: function() {
+    return {
+      tags: [],
+    };
+  },
+
+  componentDidMount: function() {
+    // getRecommendUsers((result, users) => {
+    //   this.setState({
+    //     users: users,
+    //   });
+    // });
+    // getRecommendTags((result, tags) => {
+    //   this.setState({
+    //     tags: tags,
+    //   });
+    // });
+  },
 
   render: function() {
     return (

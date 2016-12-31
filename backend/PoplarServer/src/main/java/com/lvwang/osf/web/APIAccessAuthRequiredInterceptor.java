@@ -25,6 +25,8 @@ public class APIAccessAuthRequiredInterceptor implements HandlerInterceptor {
 	public static final String URL_TIMELINE = "/**/timeline/user/*/startfrom/*/limit/*";
 	public static final String URL_TAG_PATTERN = "/**/tag/*/page/*";
 	public static final String URL_COMMENT_PATTERN = "/**/comment/*/*";
+	public static final String URL_RECOMMEND_PATTERN = "/**/recommend/*";
+	
 	public static AntPathMatcher matcher = new AntPathMatcher();
 	
 	@Autowired
@@ -107,6 +109,10 @@ public class APIAccessAuthRequiredInterceptor implements HandlerInterceptor {
 					return true;
 				} else if(matcher.match(URL_COMMENT_PATTERN, uri)) {
 					System.out.println("no auth access with uri match : " + URL_COMMENT_PATTERN);
+					req.setAttribute("uid", 0);
+					return true;
+				} else if(matcher.match(URL_RECOMMEND_PATTERN, uri)) {
+					System.out.println("no auth access with uri match : " + URL_RECOMMEND_PATTERN);
 					req.setAttribute("uid", 0);
 					return true;
 				}

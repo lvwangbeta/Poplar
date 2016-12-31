@@ -32,7 +32,7 @@ var ExploreContainer = React.createClass({
                        navigator={this.props.navigator}
                        nav2TagDetail={this.nav2TagDetail}
                        refresh={this.props.refresh}/>
-          <UsersSection />
+          <UsersSection navigator={this.props.navigator} refresh={this.props.refresh}/>
       </ScrollView>
     );
   },
