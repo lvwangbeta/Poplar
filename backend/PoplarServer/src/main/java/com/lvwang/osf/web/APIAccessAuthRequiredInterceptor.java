@@ -95,7 +95,8 @@ public class APIAccessAuthRequiredInterceptor implements HandlerInterceptor {
 		if(checkSign(req)){
 			String token = req.getHeader("X-Auth-Token");
 			System.out.println("token:"+token);
-			if(token == null || token.length() == 0) {
+			if(token == null || token.length() == 0 || "null".equalsIgnoreCase(token)) {
+				System.out.println("NO TOKEN");
 				if(matcher.match(URL_TIMELINE, uri)) {
 					System.out.println("no auth access with uri match : " + URL_TIMELINE );
 					req.setAttribute("uid", 0);
