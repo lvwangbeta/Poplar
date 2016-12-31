@@ -40,7 +40,7 @@ var HomePage = React.createClass({
 
   fetchData: function() {
     //getFeedsOfUser(23, this.state.feedId, this.state.page, this);
-    getFeedsOfUser(23, this.state.feeds, this.state.feedId, 10, (result, feeds, noMore) => {
+    getFeedsOfUser(this.props.feed.user_id, this.state.feeds, this.state.feedId, 10, (result, feeds, noMore) => {
       if(result) {
         if(!noMore) {
           this.setState({
@@ -143,7 +143,7 @@ var HomePage = React.createClass({
     if(this.state.noMore || this.state.isLoadingMore) return;
     console.log('is loading more..');
     var page = this.state.page+1;
-    this.setState({isLoadingMore: true, page: this.state.page+1}, getFeedsOfUser(23, this.state.feeds, this.state.feedId, 10, (result, feeds, noMore) => {
+    this.setState({isLoadingMore: true, page: this.state.page+1}, getFeedsOfUser(this.props.feed.user_id, this.state.feeds, this.state.feedId, 10, (result, feeds, noMore) => {
           if(result) {
             if(!noMore) {
               this.setState({
