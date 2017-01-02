@@ -10,7 +10,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import HomePage from './HomePage';
 import URLConf from '../api/URLConf';
+import FeedDetail from './FeedDetail';
+import TagDetail from './TagDetail';
 import {getRecommendUsers} from '../api/RecommendAPI';
 
 const IMAGE_BASE_URL = URLConf.IMG_BASE_URL;
@@ -38,6 +41,31 @@ var UsersSection = React.createClass({
     });
   },
 
+  nav2HomePage: function(user) {
+    let navigator = this.props.navigator;
+    this.props.navigator.push({
+      component: HomePage,
+      params: {userName: user.user_name, userId: user.id, navigator, selectFeed:this.selectFeed, nav2TagDetail:this.nav2TagDetail},
+    });
+  },
+
+  nav2TagDetail: function(tag) {
+    this.props.navigator.push({
+        title: tag.tag,
+        component: TagDetail,
+        params: {tag: tag}
+    });
+  },
+
+  selectFeed: function(feed, avatarCanClick=false) {
+    //this.props.hideTabBar();
+    let navigator = this.props.navigator;
+    this.props.navigator.push({
+      title: '正文',
+      component: FeedDetail,
+      params: {navigator, feed, nav2TagDetail:this.nav2TagDetail, avatarCanClick:avatarCanClick}
+    });
+  },
 
   renderUsers: function() {
     if(!this.state.loaded) {
@@ -47,8 +75,9 @@ var UsersSection = React.createClass({
     var userViews = [];
     var users = this.state.users;
     for(let i in users) {
+      let user = users[i];
       userViews.push(
-        <TouchableOpacity style={styles.tagBox}>
+        <TouchableOpacity style={styles.tagBox} onPress={() => {this.nav2HomePage(user)}}>
           <View style={styles.tagTitle}><Text style={{fontSize: 13,textAlign: 'center'}}>{users[i].user_name}</Text></View>
           <Image resizeMode='cover' style={styles.image} source={{uri: IMAGE_BASE_URL + users[i].user_avatar + avatar_thumbnail}} />
         </TouchableOpacity>

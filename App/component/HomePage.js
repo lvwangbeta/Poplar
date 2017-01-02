@@ -14,6 +14,7 @@ import {
 
 import FollowBtn from './actions/Follow';
 import FeedDetail from './FeedDetail';
+import TagDetail from './TagDetail';
 import FeedCell from './FeedCell';
 import {getFeedsOfUser} from '../api/FeedAPI';
 
@@ -40,7 +41,7 @@ var HomePage = React.createClass({
 
   fetchData: function() {
     //getFeedsOfUser(23, this.state.feedId, this.state.page, this);
-    getFeedsOfUser(this.props.feed.user_id, this.state.feeds, this.state.feedId, 10, (result, feeds, noMore) => {
+    getFeedsOfUser(this.props.userId, this.state.feeds, this.state.feedId, 10, (result, feeds, noMore) => {
       if(result) {
         if(!noMore) {
           this.setState({
@@ -78,7 +79,6 @@ var HomePage = React.createClass({
       <FeedCell
         onSelect={() => this.props.selectFeed(feed, false)}
         feed={feed}
-        token={this.props.token}
         navigator={this.props.navigator}
         push2FeedDetail={() => this.props.selectFeed(feed, false)}
         nav2TagDetail={this.props.nav2TagDetail}
@@ -101,9 +101,9 @@ var HomePage = React.createClass({
           </View>
           <View style={styles.metas}>
             <View style={styles.desc}>
-              <Text style={styles.name}>{this.props.feed.user_name}</Text>
+              <Text style={styles.name}>{this.props.userName}</Text>
               <Text style={styles.motto}>Time to do it</Text>
-              <FollowBtn refresh={this.props.refresh} uid={this.props.feed.user_id}/>
+              <FollowBtn refresh={this.props.refresh} uid={this.props.userId}/>
             </View>
             <View
               style={{flex: 1,
@@ -143,7 +143,7 @@ var HomePage = React.createClass({
     if(this.state.noMore || this.state.isLoadingMore) return;
     console.log('is loading more..');
     var page = this.state.page+1;
-    this.setState({isLoadingMore: true, page: this.state.page+1}, getFeedsOfUser(this.props.feed.user_id, this.state.feeds, this.state.feedId, 10, (result, feeds, noMore) => {
+    this.setState({isLoadingMore: true, page: this.state.page+1}, getFeedsOfUser(this.props.userId, this.state.feeds, this.state.feedId, 10, (result, feeds, noMore) => {
           if(result) {
             if(!noMore) {
               this.setState({
