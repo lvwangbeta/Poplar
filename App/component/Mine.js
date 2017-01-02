@@ -190,7 +190,7 @@ var Mine = React.createClass({
   },
 
   onEndReached: function() {
-    if(this.state.noMore || this.state.isLoadingMore) return;
+    if(this.state.noMore || this.state.isLoadingMore || this.state.feedId == 0) return;
     this.setState({isLoadingMore: true}, this.updateList());
   },
 

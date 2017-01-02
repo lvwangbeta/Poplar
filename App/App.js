@@ -25,6 +25,7 @@ var App = React.createClass({
       notifCount: 0,
       isLogin: false,
       token: '',
+      isLogout: false,
     };
   },
 
@@ -68,14 +69,14 @@ var App = React.createClass({
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/home.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/home_selected.png')} />}
           onPress={() => this.setState({ selectedTab: 'mainTab' })}>
-          {this.state.isLogin ? <MainPage token={this.state.token} {...this.props}/> : <LoginRegPage refresh={this.refresh}/>}
+          {this.state.isLogin ? <MainPage {...this.props}/> : <LoginRegPage refresh={this.refresh}/>}
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'exploreTab'}
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/search.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/search_selected.png')} />}
           onPress={() => this.setState({ selectedTab: 'exploreTab' })}>
-          <ExplorePage token={this.state.token} refresh={this.refresh} {...this.props}/>
+          <ExplorePage  refresh={this.refresh} {...this.props}/>
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'addTab'}
@@ -101,7 +102,7 @@ var App = React.createClass({
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/user.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/user_selected.png')} />}
           onPress={() => this.setState({ selectedTab: 'iTab' })}>
-          {this.state.isLogin ? <MinePage token={this.state.token} logout={this.logout} {...this.props}/> : <LoginRegPage refresh={this.refresh}/>}
+          {this.state.isLogin ? <MinePage  logout={this.logout} {...this.props}/> : <LoginRegPage refresh={this.refresh}/>}
         </TabNavigator.Item>
       </TabNavigator>
     );
