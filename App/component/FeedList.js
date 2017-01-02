@@ -41,21 +41,31 @@ var FeedList = React.createClass({
     this.fetchData();
   },
 
-  updateFeedList: function(feeds, noMore) {
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(feeds),
-      isRefreshing: false,
-      isLoadingMore: false,
-      loaded: true,
-      noMore: noMore,
-      page: this.state.page+1,
-      feedId: feeds != null&&feeds.length != 0 ? feeds[feeds.length-1].id: 0,
-    });
+  updateFeedList: function(result, feeds, noMore) {
+    if(result) {
+      if(!noMore) {
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(feeds),
+          isRefreshing: false,
+          isLoadingMore: false,
+          loaded: true,
+          page: this.state.page+1,
+          feedId: feeds != null&&feeds.length != 0 ? feeds[feeds.length-1].id: 0,
+        });
+      } else {
+        this.setState({
+          isLoadingMore: false,
+          loaded: true,
+          noMore: true,
+        });
+      }
+    }
+
   },
 
   fetchData: function() {
     //getMyFeeds(this);
-    load(0, this.state.feeds, this.state.page, (feeds, noMore) => {this.updateFeedList(feeds, noMore)});
+    load(0, this.state.feeds, this.state.page, (result, feeds, noMore) => {this.updateFeedList(result, feeds, noMore)});
   },
 
   onRefresh: function() {
@@ -106,7 +116,7 @@ var FeedList = React.createClass({
   },
   onEndReached: function() {
     if(this.state.noMore || this.state.isLoadingMore) return;
-    this.setState({isLoadingMore: true}, load(this.state.feedId, this.state.feeds, this.state.page, (feeds, noMore) => {this.updateFeedList(feeds, noMore)}));
+    this.setState({isLoadingMore: true}, load(this.state.feedId, this.state.feeds, this.state.page, (result, feeds, noMore) => {this.updateFeedList(result, feeds, noMore)}));
   },
   renderFooter: function() {
     if(this.state.isLoadingMore) {
@@ -119,7 +129,7 @@ var FeedList = React.createClass({
     } else if(this.state.noMore){
       return(
         <View style={styles.footer}>
-          <Text>没有更多了</Text>
+          <Text style={{color: '#adadad'}}>没有更多了</Text>
         </View>
       );
     }
@@ -151,7 +161,7 @@ var FeedList = React.createClass({
     this.props.navigator.push({
       title: '正文',
       component: FeedDetail,
-      params: {token:this.props.token, navigator, feed, nav2TagDetail:this.nav2TagDetail, avatarCanClick:avatarCanClick}
+      params: {navigator, feed, nav2TagDetail:this.nav2TagDetail, avatarCanClick:avatarCanClick}
     });
   },
 
@@ -160,7 +170,7 @@ var FeedList = React.createClass({
     this.props.navigator.push({
       title: feed.user_name,
       component: HomePage,
-      params: {token:this.props.token, feed,navigator, selectFeed: this.selectFeed, nav2TagDetail:this.nav2TagDetail},
+      params: {userName: feed.user_name, userId: feed.user_id,navigator,avatar: feed.user_avatar, selectFeed:this.selectFeed, nav2TagDetail:this.nav2TagDetail},
     });
   },
 

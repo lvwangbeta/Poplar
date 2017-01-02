@@ -12,6 +12,7 @@ import {
 
 import TagBox from './TagBox';
 import TagDetail from './TagDetail';
+import {getRecommendTags} from '../api/RecommendAPI';
 
 const windowWidth = Dimensions.get('window').width;
 const margin = 10;
@@ -21,6 +22,36 @@ const tagWidth = (windowWidth-margin*2-interval*2 ) / 3;
 
 var TagsSection = React.createClass({
 
+  getInitialState: function() {
+    return {
+      loaded: false,
+      tags: [],
+    };
+  },
+
+  componentDidMount: function() {
+    getRecommendTags((result, tags) => {
+      this.setState({
+        loaded: true,
+        tags: tags,
+      });
+    });
+  },
+
+  renderTags: function() {
+    if(!this.state.loaded) {
+      return <View><Text>Loading ... </Text></View>
+    }
+
+    var tagViews = [];
+    var tags = this.state.tags;
+    for(let i in tags) {
+      tagViews.push(<TagBox {...this.props} tag={tags[i]}/>);
+    }
+    return tagViews;
+
+  },
+
   render: function() {
     return (
       <View style={styles.container}>
@@ -28,11 +59,7 @@ var TagsSection = React.createClass({
           <Text style={{marginLeft: 5}}>热门标签</Text>
         </View>
         <View style={styles.main}>
-
-        <TagBox token={this.props.token} {...this.props}/>
-        <TagBox token={this.props.token} {...this.props} />
-        <TagBox token={this.props.token} {...this.props} />
-
+          {this.renderTags()}
         </View>
       </View>
     )

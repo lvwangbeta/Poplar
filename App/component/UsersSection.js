@@ -10,12 +10,82 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import HomePage from './HomePage';
+import URLConf from '../api/URLConf';
+import FeedDetail from './FeedDetail';
+import TagDetail from './TagDetail';
+import {getRecommendUsers} from '../api/RecommendAPI';
+
+const IMAGE_BASE_URL = URLConf.IMG_BASE_URL;
+const avatar_thumbnail = '?imageView2/1/w/100/h/100'
 const windowWidth = Dimensions.get('window').width;
 const margin = 10;
 const interval = 5;
 const tagWidth = (windowWidth-margin*2-interval*2 ) / 3;
 
 var UsersSection = React.createClass({
+
+  getInitialState: function() {
+    return {
+      loaded: false,
+      users: [],
+    };
+  },
+
+  componentDidMount: function() {
+    getRecommendUsers((result, users) => {
+      this.setState({
+        loaded: true,
+        users: users,
+      });
+    });
+  },
+
+  nav2HomePage: function(user) {
+    let navigator = this.props.navigator;
+    this.props.navigator.push({
+      component: HomePage,
+      params: {userName: user.user_name, userId: user.id, avatar:user.user_avatar, navigator, selectFeed:this.selectFeed, nav2TagDetail:this.nav2TagDetail},
+    });
+  },
+
+  nav2TagDetail: function(tag) {
+    this.props.navigator.push({
+        title: tag.tag,
+        component: TagDetail,
+        params: {tag: tag}
+    });
+  },
+
+  selectFeed: function(feed, avatarCanClick=false) {
+    //this.props.hideTabBar();
+    let navigator = this.props.navigator;
+    this.props.navigator.push({
+      title: '正文',
+      component: FeedDetail,
+      params: {navigator, feed, nav2TagDetail:this.nav2TagDetail, avatarCanClick:avatarCanClick}
+    });
+  },
+
+  renderUsers: function() {
+    if(!this.state.loaded) {
+      return <View><Text>Loading ... </Text></View>
+    }
+
+    var userViews = [];
+    var users = this.state.users;
+    for(let i in users) {
+      let user = users[i];
+      userViews.push(
+        <TouchableOpacity style={styles.tagBox} onPress={() => {this.nav2HomePage(user)}}>
+          <View style={styles.tagTitle}><Text style={{fontSize: 13,textAlign: 'center'}}>{users[i].user_name}</Text></View>
+          <Image resizeMode='cover' style={styles.image} source={{uri: IMAGE_BASE_URL + users[i].user_avatar + avatar_thumbnail}} />
+        </TouchableOpacity>
+      );
+    }
+    return userViews;
+
+  },
 
   render: function() {
     return (
@@ -24,30 +94,7 @@ var UsersSection = React.createClass({
           <Text style={{marginLeft: 5}}>热门用户</Text>
         </View>
         <View style={styles.main}>
-          <View style={styles.tagBox}>
-            <View style={styles.tagTitle}><Text style={{fontSize: 13,textAlign: 'center'}}>小菜鸡</Text></View>
-            <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag1.jpg')} />
-          </View>
-          <View style={styles.tagBox}>
-            <View style={styles.tagTitle}><Text style={{fontSize: 13,textAlign: 'center'}}>两排杨树</Text></View>
-            <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag2.jpg')} />
-          </View>
-          <View style={styles.tagBox}>
-            <View style={styles.tagTitle}><Text style={{fontSize: 13,textAlign: 'center'}}>Tomcat</Text></View>
-            <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag3.jpg')} />
-          </View>
-          <View style={styles.tagBox}>
-            <View style={styles.tagTitle}><Text style={{fontSize: 13,textAlign: 'center'}}>Tim Cook</Text></View>
-            <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag2.jpg')} />
-          </View>
-          <View style={styles.tagBox}>
-            <View style={styles.tagTitle}><Text style={{fontSize: 13,textAlign: 'center'}}>Happy end</Text></View>
-            <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag1.jpg')} />
-          </View>
-          <View style={styles.tagBox}>
-            <View style={styles.tagTitle}><Text style={{fontSize: 13,textAlign: 'center'}}>哆啦A梦</Text></View>
-            <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag3.jpg')} />
-          </View>
+          {this.renderUsers()}
         </View>
       </View>
     )
@@ -71,12 +118,12 @@ var styles = StyleSheet.create({
   main: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    //justifyContent: 'flex-start',
     flexWrap: 'wrap',
     margin: 5,
   },
   tagBox: {
-    position: 'relative',
+    //position: 'relative',
     width: tagWidth,
     height: tagWidth,
     marginLeft: interval,

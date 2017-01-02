@@ -3,18 +3,17 @@ package com.lvwang.osf.api;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lvwang.osf.model.Notification;
 import com.lvwang.osf.model.User;
+import com.lvwang.osf.service.FollowService;
 import com.lvwang.osf.service.InterestService;
 import com.lvwang.osf.service.LikeService;
 import com.lvwang.osf.service.NotificationService;
@@ -39,6 +38,10 @@ public class ActionAPI {
 	@Autowired
 	@Qualifier("interestService")
 	private InterestService interestService;
+	
+	@Autowired
+	@Qualifier("followService")
+	private FollowService followService;
 	
 	@Autowired
 	@Qualifier("notificationService")
@@ -81,6 +84,40 @@ public class ActionAPI {
 		return ret;
 	}
 	
+	@ResponseBody
+	@RequestMapping("/is/follow/{user_id}")
+	public Map<String, Object> isFollow(@PathVariable("user_id") int user_id, @RequestAttribute("uid") Integer id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean result = followService.isFollowing(id, user_id);
+		map.put("status", Property.SUCCESS);
+		map.put("isfollow", result);
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/do/follow/{user_id}")
+	public Map<String, Object> follow(@PathVariable("user_id") int user_id, @RequestAttribute("uid") Integer id) {
+		User user = (User) userService.findById(id);
+		Map<String, Object> map = followService.newFollowing(user.getId(), 
+															 user.getUser_name(), 
+															 user_id, 
+															 userService.findById(user_id).getUser_name());
+		Notification notification = new Notification(Dic.NOTIFY_TYPE_FOLLOW, 
+												     0, 
+												     Dic.OBJECT_TYPE_USER, 
+												     user_id, 
+												     user_id, 
+												     user.getId());
+		notificationService.doNotify(notification);
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/undo/follow/{user_id}")
+	public Map<String, Object> undoFollow(@PathVariable("user_id") int user_id, @RequestAttribute("uid") Integer id) {
+		Map<String, Object> map = followService.undoFollow(id, user_id);
+		return map;
+	}
 	
 	/**
 	 * 对某个标签感兴趣
@@ -90,7 +127,7 @@ public class ActionAPI {
 	public Map<String, Object> interest(@PathVariable("tag_id") int tag_id, @RequestAttribute("uid") Integer id) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
-		User user = (User) (User)userService.findById(id);
+		User user = (User) userService.findById(id);
 		interestService.interestInTag(user.getId(), tag_id);
 				
 		ret.put("status", Property.SUCCESS_INTEREST);
@@ -106,7 +143,7 @@ public class ActionAPI {
 	public Map<String, Object> undoInterest(@PathVariable("tag_id") int tag_id, @RequestAttribute("uid") Integer id) {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
-		User user = (User) (User)userService.findById(id);
+		User user = (User) userService.findById(id);
 		interestService.undoInterestInTag(user.getId(), tag_id);
 		
 		ret.put("status", Property.SUCCESS_INTEREST_UNDO);

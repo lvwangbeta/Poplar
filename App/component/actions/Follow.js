@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import {getToken} from '../../util/Secret';
+import {isFollow, follow, undoFollow} from '../../api/ActionAPI';
 import PopupLoginRegPage from '../../PopupLoginRegPage';
 
 var Follow = React.createClass({
@@ -17,25 +18,40 @@ var Follow = React.createClass({
   getInitialState: function() {
     return ({
       isFollowed: false,
-      isClicked: false,
       loginRegPageVisible: false,
     });
   },
 
-  checkLoginAndChangeState:function(token) {
-    console.log('follow btn token:' + token);
-    if(!token) {
-      this.setState({loginRegPageVisible: true});
-    } else {
-      this.setState({
-        isFollowed: !this.state.isFollowed,
-        isClicked: !this.state.isClicked,
-      });
-    }
+  componentDidMount: function() {
+    isFollow(this.props.uid, (result) => {
+      this.setState({isFollowed: result});
+    });
   },
 
+
   onPress: function() {
-    getToken(this.checkLoginAndChangeState);
+    if(!this.state.isFollowed) {
+      follow(this.props.uid, (result, err) => {
+        if(result) {
+          this.setState({
+            isFollowed: true,
+          });
+        } else {
+          if(err == 'not logged in') {
+            this.setState({loginRegPageVisible: true});
+          }
+        }
+      });
+    } else {
+      undoFollow(this.props.uid, (result, err) => {
+        if(result) {
+          this.setState({
+            isFollowed: false,
+          });
+        }
+      });
+    }
+
   },
 
   showLoginRegPage: function() {

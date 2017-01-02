@@ -56,6 +56,10 @@
 	<select id="getEventsOfUser" resultType="com.lvwang.osf.model.Event">
 		select * from osf_events where user_id=#{param1} order by ts desc limit #{param2}
 	</select>
+
+	<select id="getEventsOfUserFrom" resultType="com.lvwang.osf.model.Event">
+		select * from osf_events where user_id=#{param1} and id &lt; #{param2}  order by ts desc limit #{param3}
+	</select>
 	
 	<select id="getEventsHasPhoto" resultType="com.lvwang.osf.model.Event">
 		select * from osf_events where (object_type=0 and content is not null) 

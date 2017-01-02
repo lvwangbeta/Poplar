@@ -60,7 +60,8 @@ var LoginPage = React.createClass({
         var retCode = responseData.status;
         console.log(responseData);
         if(retCode == PoplarEnv.dic.SUCCESS_ACCOUNT_LOGIN) {
-          AsyncStorage.multiSet([['token', responseData.token], ['user', JSON.stringify(responseData.user)]], ()=> {
+          var user = responseData.user;
+          AsyncStorage.multiSet([['token', responseData.token], ['userId', user.id.toString()], ['userName', user.user_name], ['avatar', user.user_avatar]], ()=> {
             this.props.hideLoginPage();
             this.props.refresh(true, responseData.token);
           });

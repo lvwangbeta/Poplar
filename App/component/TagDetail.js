@@ -14,16 +14,17 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import URLConf from '../api/URLConf';
 import TagFollow from './actions/TagFollow';
 import TagFeedList from './TagFeeds';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
-// import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 
-const windowWidth = Dimensions.get('window').width;
+const IMAGE_BASE_URL = URLConf.IMG_BASE_URL;
 const window = Dimensions.get('window');
-
+const windowWidth = window.width;
 const PARALLAX_HEADER_HEIGHT = 220;
 const STICKY_HEADER_HEIGHT = 70;
+const tag_thumbnail = '?imageView2/1/w/'+windowWidth+'/h/'+PARALLAX_HEADER_HEIGHT;
 
 var TagDetail = React.createClass({
 
@@ -37,7 +38,7 @@ var TagDetail = React.createClass({
     this.props.navigator.push({
       title: tag.tag,
       component: TagDetail,
-      params: {token: this.props.token}
+      params: {tag: tag}
     });
   },
 
@@ -55,7 +56,7 @@ var TagDetail = React.createClass({
 
         renderBackground={() => (
           <View key="background">
-            <Image resizeMode='cover' style={styles.headerImg} source={require('../imgs/tag2.jpg')} />
+            <Image resizeMode='cover' style={styles.headerImg} source={{uri: IMAGE_BASE_URL + this.props.tag.cover + tag_thumbnail}} />
             <View style={{position: 'absolute',
                           top: 0,
                           width: windowWidth,

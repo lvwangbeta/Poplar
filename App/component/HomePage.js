@@ -14,9 +14,13 @@ import {
 
 import FollowBtn from './actions/Follow';
 import FeedDetail from './FeedDetail';
+import TagDetail from './TagDetail';
 import FeedCell from './FeedCell';
 import {getFeedsOfUser} from '../api/FeedAPI';
+import URLConf from '../api/URLConf';
 
+const IMAGE_BASE_URL = URLConf.IMG_BASE_URL;
+const avatar_thumbnail = '?imageView2/1/w/100/h/100';
 const windowWidth = Dimensions.get('window').width;
 
 var HomePage = React.createClass({
@@ -40,9 +44,25 @@ var HomePage = React.createClass({
 
   fetchData: function() {
     //getFeedsOfUser(23, this.state.feedId, this.state.page, this);
-    //getFeedsOfUser(23, this.state.feeds, this.state.feedId, this.state.page, () => {
+    getFeedsOfUser(this.props.userId, this.state.feeds, this.state.feedId, 10, (result, feeds, noMore) => {
+      if(result) {
+        if(!noMore) {
+          this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(feeds),
+            isLoadingMore: false,
+            loaded: true,
+            feedId: feeds[feeds.length-1].id,
+          });
+        } else {
+          this.setState({
+            isLoadingMore: false,
+            loaded: true,
+            noMore: true,
+          });
+        }
 
-    //});
+      }
+    });
   },
 
   renderLoadingView: function() {
@@ -62,7 +82,6 @@ var HomePage = React.createClass({
       <FeedCell
         onSelect={() => this.props.selectFeed(feed, false)}
         feed={feed}
-        token={this.props.token}
         navigator={this.props.navigator}
         push2FeedDetail={() => this.props.selectFeed(feed, false)}
         nav2TagDetail={this.props.nav2TagDetail}
@@ -81,13 +100,13 @@ var HomePage = React.createClass({
           </TouchableOpacity>
           <View>
             <Image resizeMode='cover' style={styles.background} source={require('../imgs/tag1.jpg')} />
-            <Image style={styles.avatar} source={require('../imgs/tag2.jpg')} />
+            <Image style={styles.avatar} source={{uri: IMAGE_BASE_URL + this.props.avatar + avatar_thumbnail}} />
           </View>
           <View style={styles.metas}>
             <View style={styles.desc}>
-              <Text style={styles.name}>断鸿</Text>
+              <Text style={styles.name}>{this.props.userName}</Text>
               <Text style={styles.motto}>Time to do it</Text>
-              <FollowBtn refresh={this.props.refresh}/>
+              <FollowBtn refresh={this.props.refresh} uid={this.props.userId}/>
             </View>
             <View
               style={{flex: 1,
@@ -127,7 +146,26 @@ var HomePage = React.createClass({
     if(this.state.noMore || this.state.isLoadingMore) return;
     console.log('is loading more..');
     var page = this.state.page+1;
-    this.setState({isLoadingMore: true, page: this.state.page+1}, getFeedsOfUser(23, this.state.feedId, page, this));
+    this.setState({isLoadingMore: true, page: this.state.page+1}, getFeedsOfUser(this.props.userId, this.state.feeds, this.state.feedId, 10, (result, feeds, noMore) => {
+          if(result) {
+            if(!noMore) {
+              this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(feeds),
+                isLoadingMore: false,
+                loaded: true,
+                feedId: feeds[feeds.length-1].id,
+                noMore: noMore
+              });
+            } else {
+              this.setState({
+                isLoadingMore: false,
+                loaded: true,
+                noMore: true,
+              });
+            }
+
+          }
+        }));
   },
   renderFooter: function() {
     if(this.state.isLoadingMore) {
@@ -140,7 +178,7 @@ var HomePage = React.createClass({
     } else if(this.state.noMore){
       return(
         <View style={styles.footer}>
-          <Text>没有更多了</Text>
+          <Text style={{color: '#adadad'}}>没有更多了</Text>
         </View>
       );
     }

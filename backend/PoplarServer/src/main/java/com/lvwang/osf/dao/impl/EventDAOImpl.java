@@ -208,6 +208,10 @@ public class EventDAOImpl implements EventDAO{
 //		});
 		return eventMapper.getEventsOfUser(user_id, count);
 	}
+	
+	public List<Event> getEventsOfUserFrom(int user_id, int start, int count) {
+		return eventMapper.getEventsOfUserFrom(user_id, start, count);
+	}
 
 	public List<Event> getEventsHasPhoto(int start, int step){
 //		String sql = "select * from " + TABLE + " where (object_type=? and content is not null) "

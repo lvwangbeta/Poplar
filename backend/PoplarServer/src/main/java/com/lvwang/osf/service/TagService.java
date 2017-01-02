@@ -196,6 +196,6 @@ public class TagService {
 		for(int i=0; i<ids.size(); i++) {
 			ids_str.add(String.valueOf(ids.get(i)));
 		}
-		return tagDao.getTags(ids_str);
+		return tagDao.getTags(ids_str.toString().replace('[', ' ').replace(']', ' '));
 	}
 }

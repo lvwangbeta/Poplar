@@ -35,46 +35,46 @@ export function getMyFeeds(that) {
     .done();
 }
 
-export function getFeedsOfUser(uid, feeds, feedId, page) {
+export function getFeedsOfUser(uid, feeds, start, limit, callback) {
 
-  // getToken((token) => {
-  //   var path = FEED_URL+'user/'+uid+'/page/'+page+'/startfrom/'+feedId;
-  //   var sign = Md5.hex_md5(path.replace(URLConf.APP_SERVER_HOST, '') + '?ts=123456&'+Secret.secret);
-  //   console.log('sign:' + sign);
-  //   var url = path+'?ts=123456&sign=' + sign;
-  //   var headers = {
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //       'X-Auth-Token':token,
-  //   }};
-  //
-  //   fetch(url, headers)
-  //     .then((response) => response.json())
-  //     .then((responseData) => {
-  //       console.log(responseData);
-  //       var loadedFeeds = responseData.feeds;
-  //       var noMore = false;
-  //       if(loadedFeeds.length < PAGE_SIZE) {
-  //         //that.setState({noMore: true});
-  //         noMore = true;
-  //       }
-  //
-  //       for(var i=0; i < loadedFeeds.length; i++) {
-  //         feeds.push(loadedFeeds[i]);
-  //       }
-  //       callback(feeds);
-  //
-  //
-  //       that.setState({
-  //         dataSource: that.state.dataSource.cloneWithRows(feeds),
-  //         isLoadingMore: false,
-  //         loaded: true,
-  //         feedId: feeds[feeds.length-1].id,
-  //       });
-  //     })
-  //     .done();
-  //});
+  getToken((token) => {
+    var path = FEED_URL+'user/'+uid+'/startfrom/'+start+'/limit/'+limit;
+    var sign = Md5.hex_md5(path.replace(URLConf.APP_SERVER_HOST, '') + '?ts=123456&'+Secret.secret);
+    console.log('sign:' + sign);
+    var url = path+'?ts=123456&sign=' + sign;
+    var headers = {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-Auth-Token':token,
+    }};
+
+    fetch(url, headers)
+      .then((response) => response.json())
+      .then((responseData) => {
+        console.log(responseData);
+        var loadedFeeds = responseData.feeds;
+        var noMore = false;
+        if(loadedFeeds.length == 0) {
+          //that.setState({noMore: true});
+          noMore = true;
+        }
+
+        for(var i=0; i < loadedFeeds.length; i++) {
+          feeds.push(loadedFeeds[i]);
+        }
+        callback(true, feeds, noMore);
+
+
+        // that.setState({
+        //   dataSource: that.state.dataSource.cloneWithRows(feeds),
+        //   isLoadingMore: false,
+        //   loaded: true,
+        //   feedId: feeds[feeds.length-1].id,
+        // });
+      })
+      .done();
+  });
 }
 
 /**
@@ -128,13 +128,13 @@ export function load(id, feeds, page, callback) {
         console.log(responseData);
         var loadedFeeds = responseData.feeds;
         var noMore = false;
-        if(loadedFeeds.length < PAGE_SIZE) {
+        if(loadedFeeds.length == 0) {
           noMore = true;
         }
         for(var i=0; i < loadedFeeds.length; i++) {
           feeds.push(loadedFeeds[i]);
         }
-        callback(feeds, noMore);
+        callback(true, feeds, noMore);
       })
       .done();
   });
