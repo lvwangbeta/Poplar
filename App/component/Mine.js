@@ -17,6 +17,7 @@ import FeedCell from './FeedCell';
 import FeedDetail from './FeedDetail';
 import {Auth,ImgOps,Conf,Rs,Rpc} from 'react-native-qiniu';
 import {getFeedsOfUser, refresh, load} from '../api/FeedAPI';
+import {getUserInfo} from '../util/Secret';
 
 import ImagePicker from 'react-native-image-picker';
 
@@ -66,28 +67,35 @@ var Mine = React.createClass({
     }
   },
 
+  updateList: function() {
+    getUserInfo((user) => {
+      getFeedsOfUser(user.userId, this.state.feeds, this.state.feedId, 10, (result, feeds, noMore) => {
+        if(result) {
+          if(!noMore) {
+            this.setState({
+              dataSource: this.state.dataSource.cloneWithRows(feeds),
+              isLoadingMore: false,
+              loaded: true,
+              feedId: feeds[feeds.length-1].id,
+            });
+          } else {
+            this.setState({
+              isLoadingMore: false,
+              loaded: true,
+              noMore: true,
+            });
+          }
+
+        }
+      });
+    });
+  },
+
   fetchData: function() {
     //getMyFeeds(this);
     // load(0, this.state.feeds, this.state.page, (result, feeds, noMore) => {this.updateFeedList(result, feeds, noMore)});
-    getFeedsOfUser(23, this.state.feeds, this.state.feedId, 10, (result, feeds, noMore) => {
-      if(result) {
-        if(!noMore) {
-          this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(feeds),
-            isLoadingMore: false,
-            loaded: true,
-            feedId: feeds[feeds.length-1].id,
-          });
-        } else {
-          this.setState({
-            isLoadingMore: false,
-            loaded: true,
-            noMore: true,
-          });
-        }
+    this.updateList();
 
-      }
-    });
   },
 
   upload: function() {
@@ -175,24 +183,7 @@ var Mine = React.createClass({
 
   onEndReached: function() {
     if(this.state.noMore || this.state.isLoadingMore) return;
-    this.setState({isLoadingMore: true}, getFeedsOfUser(23, this.state.feeds, this.state.feedId, 10, (result, feeds, noMore) => {
-          if(result) {
-            if(!noMore) {
-              this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(feeds),
-                isLoadingMore: false,
-                loaded: true,
-                feedId: feeds[feeds.length-1].id,
-              });
-            } else {
-              this.setState({
-                isLoadingMore: false,
-                loaded: true,
-                noMore: true,
-              });
-            }
-          }
-        }));
+    this.setState({isLoadingMore: true}, this.updateList());
   },
 
   renderFooter: function() {

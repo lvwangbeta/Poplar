@@ -33,6 +33,17 @@ export function getToken(callback) {
   });
 }
 
+export function getUserInfo(callback) {
+  //AsyncStorage.clear();
+  AsyncStorage.multiGet(['userId', 'userName', 'avatar'], (err, data) => {
+    var user = {};
+    user.userId = data[0][1];
+    user.userName = data[1][1];
+    user.avatart = data[2][1];
+    callback(user);
+  });
+}
+
 export function login(user_email, user_pwd) {
 
   var url = LOGIN_URL;
