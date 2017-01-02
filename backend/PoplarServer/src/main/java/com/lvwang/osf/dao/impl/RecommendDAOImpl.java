@@ -18,5 +18,9 @@ public class RecommendDAOImpl implements RecommendDAO{
 		return recommendMapper.getRecommendUsers(count);
 	}
 
+	public List<Integer> getRecommendTags(int count) {
+		return recommendMapper.getRecommendTags(count);
+	}
+
 	
 }

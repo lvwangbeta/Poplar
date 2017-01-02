@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.lvwang.osf.dao.RecommendDAO;
+import com.lvwang.osf.model.Tag;
 import com.lvwang.osf.model.User;
 
 @Service("recommendService")
@@ -17,14 +18,23 @@ public class RecommendService {
 	private UserService userService;
 	
 	@Autowired
+	@Qualifier("tagService")
+	private TagService tagService;
+	
+	@Autowired
 	@Qualifier("recommendDao")
 	private RecommendDAO recommendDao;
 	
 	public List<User> getRecommendUsers(int count) {
 		
-		List<Integer> ids = recommendDao.getRecommendUsers(3);
+		List<Integer> ids = recommendDao.getRecommendUsers(count);
 		List<User> users = userService.findAllbyIDs(ids);
 		return users;
 	}
 
+	public List<Tag> getRecommendTags(int count) {
+		List<Integer> ids = recommendDao.getRecommendTags(count);
+		return tagService.getTagsByIDs(ids);
+	}
+	
 }

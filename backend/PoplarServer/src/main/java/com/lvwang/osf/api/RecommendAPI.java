@@ -33,6 +33,9 @@ public class RecommendAPI {
 	@ResponseBody
 	@RequestMapping("/tags")
 	public Map<String, Object> recommendTags() {
-		return null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("tags", recommendService.getRecommendTags(10));
+		map.put("status", Property.SUCCESS);
+		return map;
 	}
 }

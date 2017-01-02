@@ -24,7 +24,10 @@ public interface TagDAO {
 	Integer getTagID(String tag);
 	
 	@Select("select * from "+ TABLE + " where FIND_IN_SET(id, #{tags_id}) <> 0")
-	List<Tag> getTags(@Param("tgs_id")List<String> tags_id);
+	List<Tag> getTags(@Param("tags_id")List<String> tags_id);
+	
+	@Select("select * from "+ TABLE + " where id in (${tags_id})")
+	List<Tag> getTags(@Param("tags_id")String tags_id);
 	
 	/**
 	 * 获取有封面的tag

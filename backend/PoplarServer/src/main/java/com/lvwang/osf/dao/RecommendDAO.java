@@ -11,4 +11,7 @@ public interface RecommendDAO {
 	
 	@Select("select id from " + TABLE + " where category='user' limit #{param1}")
 	List<Integer> getRecommendUsers(int count);
+	
+	@Select("select id from " + TABLE + " where category='tag' limit #{param1}")
+	List<Integer> getRecommendTags(int count);
 }

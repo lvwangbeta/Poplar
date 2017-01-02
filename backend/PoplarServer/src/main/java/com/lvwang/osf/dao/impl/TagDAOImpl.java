@@ -36,5 +36,9 @@ public class TagDAOImpl implements TagDAO{
 		return tagMapper.getTagsHasCover();
 	}
 
+	public List<Tag> getTags(String tags_id) {
+		return tagMapper.getTags(tags_id);
+	}
+
 	
 }

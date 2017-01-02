@@ -10,8 +10,12 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import TagDetail from './TagDetail';
 
+import TagDetail from './TagDetail';
+import URLConf from '../api/URLConf';
+
+const IMAGE_BASE_URL = URLConf.IMG_BASE_URL;
+const tag_thumbnail = '?imageView2/1/w/200/h/200';
 const windowWidth = Dimensions.get('window').width;
 const margin = 10;
 const interval = 5;
@@ -23,15 +27,15 @@ var TagBox = React.createClass({
     this.props.navigator.push({
       title: '正文',
       component: TagDetail,
-      params: {token: this.props.token, refresh:this.props.refresh, tag:{tag:'Life', id:29}}
+      params: {token: this.props.token, refresh:this.props.refresh, tag:this.props.tag}
     });
   },
 
   render: function() {
     return(
       <TouchableOpacity onPress={this.showTagDetail} style={styles.tagBox}>
-        <View style={styles.tagTitle}><Text style={{color: 'white', fontSize: 13,textAlign: 'center'}}>摄影</Text></View>
-        <Image resizeMode='cover' style={styles.image} source={require('../imgs/tag1.jpg')} />
+        <View style={styles.tagTitle}><Text style={{color: 'white', fontSize: 13,textAlign: 'center'}}>{this.props.tag.tag}</Text></View>
+        <Image resizeMode='cover' style={styles.image} source={{uri: IMAGE_BASE_URL + this.props.tag.cover + tag_thumbnail}} />
       </TouchableOpacity>
     );
   },
