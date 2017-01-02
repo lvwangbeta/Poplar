@@ -54,9 +54,9 @@ var Comment = React.createClass({
         <View style={{flexDirection: 'row'}}>
           {this.state.loginRegPageVisible && <PopupLoginRegPage hideLoginRegPage={this.hideLoginRegPage} refresh={this.refresh}/>}
           <TouchableOpacity onPress={this.pressComment} >
-            <Image style={{width:22, height:18, marginRight: 5}} source={require('../../imgs/chat.png')} />
+            <Image style={{width:22, height:22, marginRight: 5}} source={require('../../imgs/chat.png')} />
           </TouchableOpacity>
-          <Text>{this.props.counter}</Text>
+          {/* <Text>{this.props.counter}</Text> */}
         </View>
       </View>
     );
