@@ -170,7 +170,7 @@ var FeedList = React.createClass({
     this.props.navigator.push({
       title: feed.user_name,
       component: HomePage,
-      params: {userName: feed.user_name, userId: feed.user_id,navigator, selectFeed:this.selectFeed, nav2TagDetail:this.nav2TagDetail},
+      params: {userName: feed.user_name, userId: feed.user_id,navigator,avatar: feed.user_avatar, selectFeed:this.selectFeed, nav2TagDetail:this.nav2TagDetail},
     });
   },
 
