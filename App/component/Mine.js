@@ -18,6 +18,7 @@ import FeedDetail from './FeedDetail';
 import {Auth,ImgOps,Conf,Rs,Rpc} from 'react-native-qiniu';
 import {getFeedsOfUser, refresh, load} from '../api/FeedAPI';
 import {getUserInfo} from '../util/Secret';
+import URLConf from '../api/URLConf';
 
 import ImagePicker from 'react-native-image-picker';
 
@@ -39,7 +40,15 @@ var Mine = React.createClass({
         loaded: false,
         isRefreshing: false,
         isLoadingMore: false,
+        userName: '',
+        avatar: null,
       };
+  },
+
+  componentWillMount: function() {
+    getUserInfo((user) => {
+      this.setState({userId: user.userId, userName:user.userName, avatar: user.avatar});
+    });
   },
 
   componentDidMount: function() {
@@ -95,7 +104,6 @@ var Mine = React.createClass({
     //getMyFeeds(this);
     // load(0, this.state.feeds, this.state.page, (result, feeds, noMore) => {this.updateFeedList(result, feeds, noMore)});
     this.updateList();
-
   },
 
   upload: function() {
@@ -218,20 +226,24 @@ var Mine = React.createClass({
     );
   },
 
+  renderAvatar: function() {
+    return (
+      <TouchableOpacity onPress={this.selectPhotoTapped}>
+          <Image source={{uri:URLConf.IMG_BASE_URL + this.state.avatar + avatar_thumbnail}} style={styles.avatar}/>
+      </TouchableOpacity>
+    );
+  },
+
   renderHeader: function() {
     return (
           <View style={styles.card}>
             <View>
               <Image resizeMode='cover' style={styles.background} source={require('../imgs/tag1.jpg')} />
-              <TouchableOpacity onPress={this.selectPhotoTapped}>
-                {this.state.avatarSource === null ?
-                  <Image style={styles.avatar} source={require('../imgs/tag2.jpg')} />:
-                  <Image style={styles.avatar} source={this.state.avatarSource} />}
-              </TouchableOpacity>
+              {this.renderAvatar()}
             </View>
             <View style={styles.metas}>
               <View style={styles.desc}>
-                <Text style={styles.name}>断鸿</Text>
+                <Text style={styles.name}>{this.state.userName}</Text>
                 <Text style={styles.motto}>Time to do it</Text>
                 {/* <FollowBtn/> */}
               </View>
