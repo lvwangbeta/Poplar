@@ -57,6 +57,35 @@ public class NotificationService {
 		notificationDao.refreshNotification(notification);
 	}
 	
+	public List<Notification> getAllNotifications(int user_id){
+		List<Notification> notifications = notificationDao.getNotificationsOfTypes(user_id, Arrays.asList(Dic.NOTIFY_TYPE_COMMENT, 
+																										  Dic.NOTIFY_TYPE_COMMENT_REPLY, 
+																										  Dic.NOTIFY_TYPE_FOLLOW,
+																										  Dic.NOTIFY_TYPE_LIKE, 
+																										  Dic.NOTIFY_TYPE_SYSTEM));
+		if(notifications != null) {
+			for(Notification notification : notifications){
+				User user = userService.findById(notification.getNotifier());
+				notification.setNotifier_name(user.getUser_name());
+				notification.setNotifier_avatar(user.getUser_avatar());
+				
+				Event event = eventService.getEvent(notification.getObject_type(), notification.getObject_id());
+				
+				String object_title = null;
+				if(Dic.OBJECT_TYPE_POST == notification.getObject_type()) {
+					object_title = event.getTitle();
+				} else if(Dic.OBJECT_TYPE_ALBUM == notification.getObject_type()){
+					object_title = event.getTitle();
+				} else if(Dic.OBJECT_TYPE_SHORTPOST == notification.getObject_type()) {
+					object_title = event.getSummary();
+				} 
+
+				notification.setObject_title(object_title);
+			}
+		}
+		return notifications;
+	}
+	
 	public List<Notification> getNotifications(int user_id, int notify_type){
 		
 		List<Notification> notifications  = null;

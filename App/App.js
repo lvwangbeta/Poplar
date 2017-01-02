@@ -14,13 +14,14 @@ import NewFeed from './NewFeed';
 import ExplorePage from './ExplorePage';
 import MainPage from './MainPage';
 import MinePage from './MinePage';
+import AlarmPage from './AlarmPage';
 import LoginRegPage from './LoginRegPage';
 
 var App = React.createClass({
   getInitialState: function() {
 
     return {
-      selectedTab:'mainTab',
+      selectedTab:'alarmTab',
       notifCount: 0,
       isLogin: false,
       token: '',
@@ -93,7 +94,7 @@ var App = React.createClass({
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/alarm.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/alarm_selected.png')} />}
           onPress={() => this.setState({ selectedTab: 'alarmTab' })}>
-          <LoginRegPage/>
+          {this.state.isLogin ? <AlarmPage {...this.props}/> : <LoginRegPage refresh={this.refresh}/>}
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'iTab'}
