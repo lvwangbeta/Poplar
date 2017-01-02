@@ -18,7 +18,7 @@ import URLConf from '../api/URLConf';
 const { width, height } = Dimensions.get('window');
 const IMAGE_BASE_URL = URLConf.IMG_BASE_URL;
 const img_thumbnail = '?imageView2/1/w/200/h/200';
-const img_slide_thumbnail = '?imageView2/1/w/200';
+const img_slide_thumbnail = '?imageView2/1/w/'+ width;
 
 const renderPagination = (index, total, context) => {
   return (
