@@ -17,7 +17,10 @@ import FeedDetail from './FeedDetail';
 import TagDetail from './TagDetail';
 import FeedCell from './FeedCell';
 import {getFeedsOfUser} from '../api/FeedAPI';
+import URLConf from '../api/URLConf';
 
+const IMAGE_BASE_URL = URLConf.IMG_BASE_URL;
+const avatar_thumbnail = '?imageView2/1/w/100/h/100';
 const windowWidth = Dimensions.get('window').width;
 
 var HomePage = React.createClass({
@@ -97,7 +100,7 @@ var HomePage = React.createClass({
           </TouchableOpacity>
           <View>
             <Image resizeMode='cover' style={styles.background} source={require('../imgs/tag1.jpg')} />
-            <Image style={styles.avatar} source={require('../imgs/tag2.jpg')} />
+            <Image style={styles.avatar} source={{uri: IMAGE_BASE_URL + this.props.avatar + avatar_thumbnail}} />
           </View>
           <View style={styles.metas}>
             <View style={styles.desc}>

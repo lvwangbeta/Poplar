@@ -45,7 +45,7 @@ var UsersSection = React.createClass({
     let navigator = this.props.navigator;
     this.props.navigator.push({
       component: HomePage,
-      params: {userName: user.user_name, userId: user.id, navigator, selectFeed:this.selectFeed, nav2TagDetail:this.nav2TagDetail},
+      params: {userName: user.user_name, userId: user.id, avatar:user.user_avatar, navigator, selectFeed:this.selectFeed, nav2TagDetail:this.nav2TagDetail},
     });
   },
 
