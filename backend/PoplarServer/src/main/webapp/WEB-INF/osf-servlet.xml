@@ -63,6 +63,7 @@
 			<mvc:mapping path="/api/v1/**"/>
 			<mvc:exclude-mapping path="/api/v1/account/login"/>
 			<!-- <mvc:exclude-mapping path="/api/v1/account/logout"/> -->
+			<mvc:exclude-mapping path="/api/v1/account/check/email/*"/>
 			<mvc:exclude-mapping path="/api/v1/account/register"/>	
 			<bean class="com.lvwang.osf.web.APIAccessAuthRequiredInterceptor"></bean>		
 		</mvc:interceptor>
