@@ -78,7 +78,7 @@ var RegisterPage = React.createClass({
       }).done();
   },
 
-  register: function() {
+  checkInfo: function() {
 
     if(this.state.email == '' || trim(this.state.email).length == 0){
       Alert.alert('请输入邮箱');
@@ -147,7 +147,7 @@ var RegisterPage = React.createClass({
 
   },
 
-  setUserName: function() {
+  register: function() {
     if(this.state.userName.length == 0) {
       Alert.alert('请输入昵称');
       return;
@@ -157,6 +157,28 @@ var RegisterPage = React.createClass({
       Alert.alert('做多只能'+NAME_MAX_LEN+'个字符');
       return;
     }
+
+    var url = REGISTER_URL;
+    var options = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({user_email: this.state.email, user_pwd: this.state.password, user_cfm_pwd: this.state.cfmPassword, user_name: this.state.userName})
+    };
+    fetch(url, options).then((response) => response.json())
+      .then((responseData) => {
+        var retCode = responseData.status;
+        console.log(responseData);
+        if(retCode == PoplarEnv.dic.SUCCESS_ACCOUNT_REG) {
+          AsyncStorage.setItem('token', responseData.token, ()=> {
+            this.props.hideRegPage();
+            this.props.refresh(true, responseData.token);
+          });
+        }
+      }).done();
+
   },
 
   render: function() {
@@ -256,7 +278,7 @@ var RegisterPage = React.createClass({
                       <View style={[styles.regBtn, {backgroundColor: '#00ccc3'}]}>
                         <Text style={{color: 'white', fontSize: 16}}>注册中</Text>
                       </View> :
-                      <TouchableOpacity onPress={this.state.next ? this.setUserName: this.register} style={styles.regBtn}>
+                      <TouchableOpacity onPress={this.state.next ? this.register: this.checkInfo} style={styles.regBtn}>
                         <Text style={{color: 'white', fontSize: 16}}>{this.state.next ? '完成': '下一步'}</Text>
                       </TouchableOpacity>
                     }

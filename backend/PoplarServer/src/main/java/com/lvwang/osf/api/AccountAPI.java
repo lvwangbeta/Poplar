@@ -70,7 +70,7 @@ public class AccountAPI {
 	public Map<String, String> register(@RequestBody User user) {
 		System.out.println("resister....");
 		Map<String, String> map = new HashMap<String, String>();
-		String status = userService.register(user.getUser_email(), user.getUser_pwd(), user.getUser_cfm_pwd(), map);
+		String status = userService.register(user.getUser_name(), user.getUser_email(), user.getUser_pwd(), user.getUser_cfm_pwd(), map);
 		if(Property.SUCCESS_ACCOUNT_REG.equals(status)){
 			userService.activateUser(user.getUser_email(), map.get("activationKey"));
 			user.setUser_pwd(null);
