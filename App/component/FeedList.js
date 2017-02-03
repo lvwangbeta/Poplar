@@ -18,6 +18,7 @@ import FeedDetail from './FeedDetail';
 import TagDetail from './TagDetail';
 import HomePage from './HomePage';
 import {getMyFeeds, refresh, load} from '../api/FeedAPI';
+import {getToken} from '../util/Secret';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -37,8 +38,23 @@ var FeedList = React.createClass({
       isLoadingMore: false,
     };
   },
+
   componentDidMount: function() {
     this.fetchData();
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    refresh('', (result, feeds)=>{
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(feeds),
+        isRefreshing: false,
+        loaded: true,
+        noMore: false,
+        page: 1,
+        feeds: feeds,
+        feedId: 0,
+      });
+    });
   },
 
   updateFeedList: function(result, feeds, noMore) {

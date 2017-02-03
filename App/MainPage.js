@@ -13,7 +13,6 @@ import FeedList from './component/FeedList';
 
 var MainPage = React.createClass({
   render: function(){
-    console.log('token in MainPage : ' + this.props.token);
     return (
       <View style={styles.container}>
         <NavigationBar
@@ -22,7 +21,7 @@ var MainPage = React.createClass({
         {/* <View style={styles.header}>
           <Text style={{color: 'white'}}>发送中...</Text>
         </View> */}
-        <FeedList token={this.props.token} {...this.props}/>
+        <FeedList {...this.props}/>
       </View>
     );
   },
