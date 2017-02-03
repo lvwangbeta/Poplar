@@ -3,9 +3,9 @@ package com.lvwang.osf.api;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,12 +18,28 @@ import com.lvwang.osf.web.RequestAttribute;
 
 
 @Controller
-@RequestMapping("/api/v1/account")
+@RequestMapping("/api/v1/account/")
 public class AccountAPI {
 	
 	@Autowired
 	private UserService userService;
 
+
+	@ResponseBody
+	@RequestMapping(value="/check/email/", method=RequestMethod.POST)
+	public Map<String, String> isEmailExist(@RequestBody User u){
+
+		System.out.println("email :" +u.getUser_email());
+		Map<String, String> map = new HashMap<String, String>() ;
+		User user = userService.findByEmail(u.getUser_email());
+		if(user == null || user.getId() == 0) {
+			map.put("status", Property.ERROR_EMAIL_NOT_REG);
+		} else {
+			map.put("status", Property.ERROR_EMAIL_EXIST);
+		}
+		return map;
+	}
+	
 	@ResponseBody
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public Map<String, Object> login(@RequestBody User user) {
@@ -54,7 +70,7 @@ public class AccountAPI {
 	public Map<String, String> register(@RequestBody User user) {
 		System.out.println("resister....");
 		Map<String, String> map = new HashMap<String, String>();
-		String status = userService.register(user.getUser_email(), user.getUser_pwd(), user.getUser_cfm_pwd(), map);
+		String status = userService.register(user.getUser_name(), user.getUser_email(), user.getUser_pwd(), user.getUser_cfm_pwd(), map);
 		if(Property.SUCCESS_ACCOUNT_REG.equals(status)){
 			userService.activateUser(user.getUser_email(), map.get("activationKey"));
 			user.setUser_pwd(null);

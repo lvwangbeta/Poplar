@@ -22,7 +22,7 @@ var AlarmPage = React.createClass({
       <View style={{flex: 1, backgroundColor: 'white'}}>
         <NavigationBar style={{borderBottomWidth: 0.5, borderBottomColor: '#F3F3F3'}}
                      title={{title: '消息'}}/>
-        <NotificationList />
+        <NotificationList {...this.props} />
       </View>
     );
   },

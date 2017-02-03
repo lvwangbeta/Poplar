@@ -301,7 +301,7 @@ public class UserService {
 		int id =userDao.save(user);
 		
 		map.put("id", String.valueOf(id));
-		map.put("activationKey", URLEncoder.encode(activationKey));
+		map.put("activationKey", activationKey);
 		return Property.SUCCESS_ACCOUNT_REG;
 		
 	}
