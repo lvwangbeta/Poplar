@@ -33,6 +33,14 @@ var NotificationList = React.createClass({
     };
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    getNotifications((result, notifications) => {
+      if(result) {
+        this.setState({dataSource: this.state.dataSource.cloneWithRows(notifications)});
+      }
+    });
+  },
+
   componentWillMount: function() {
     getNotifications((result, notifications) => {
       if(result) {
