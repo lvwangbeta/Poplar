@@ -8,7 +8,8 @@ import {
     Image,
     Dimensions,
     ScrollView,
-    ListView
+    ListView,
+    Platform
 } from 'react-native';
 
 import PoplarEnv from '../util/PoplarEnv';
