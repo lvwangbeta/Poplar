@@ -2,6 +2,7 @@
 import URLConf from './URLConf';
 import Secret from '../util/Secret';
 import Md5 from '../util/Md5';
+import PoplarEnv from '../util/PoplarEnv';
 import {getToken} from '../util/Secret';
 
 const FEED_URL = URLConf.API_HOST + '/timeline/';
@@ -141,22 +142,28 @@ export function load(id, feeds, page, callback) {
 }
 
 
-export function newFeed(text, photos, tags, token) {
+export function newFeed(text, photos, tags, callback) {
   console.log('tag : ' + tags);
-  var sign = Md5.hex_md5(NEW_FEED_URL.replace(URLConf.APP_SERVER_HOST, '') + '?ts=123456&'+Secret.secret);
-  console.log('sign:' + sign);
-  var url = NEW_FEED_URL+'?ts=123456&sign=' + sign;
-  var options = {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'X-Auth-Token':token,
-    },
-    body: encodeURI(JSON.stringify({album_desc: text, photos: photos, tags: tags}), 'utf-8')
-  };
-  fetch(url, options).then((response) => response.json())
-    .then((responseData) => {
-      console.log(responseData);
-    }).done();
+  getToken((token) => {
+    var sign = Md5.hex_md5(NEW_FEED_URL.replace(URLConf.APP_SERVER_HOST, '') + '?ts=123456&'+Secret.secret);
+    console.log('sign:' + sign);
+    var url = NEW_FEED_URL+'?ts=123456&sign=' + sign;
+    var options = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-Auth-Token':token,
+      },
+      body: encodeURI(JSON.stringify({album_desc: text, photos: photos, tags: tags}), 'utf-8')
+    };
+    fetch(url, options).then((response) => response.json())
+      .then((responseData) => {
+        if(responseData.status == PoplarEnv.dic.SUCCESS_ALBUM_UPDATE) {
+          callback(true, responseData.album.id);
+        }
+        console.log(responseData);
+      }).done();
+  });
+
 }
