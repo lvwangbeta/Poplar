@@ -76,7 +76,7 @@ var CommentCell = React.createClass({
     if(comment.comment_parent_author_name != undefined && comment.comment_parent_author_name != null) {
       return (<View style={{flex: 1, flexDirection: 'row'}}>
                 <Text style={styles.username}>{comment.comment_author_name}</Text>
-                <Text> 回复 </Text>
+                <Text style={{fontSize: 12, color: '#9B9B9B'}}> 回复 </Text>
                 <Text style={styles.username}>{comment.comment_parent_author_name}</Text>
               </View>
             );

@@ -87,6 +87,8 @@ var FeedDetail = React.createClass({
     if(this.state.commentBarVisible) {
       return (<CommentBar
                 commentParent={this.state.commentParent}
+                commentObjectType={this.props.feed.object_type}
+                commentObjectId={this.props.feed.object_id}
                 visible={true}
                 pushNewComment2List={this.pushNewComment2List}
                 hideCommentBar={this.hideCommentBar}/>);
