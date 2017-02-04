@@ -64,7 +64,7 @@ public class CommentAPI {
 	
 	@ResponseBody
 	@RequestMapping(value="/create", method=RequestMethod.POST)	
-	public Map<String, String> createComment(@RequestBody Comment comment,
+	public Map<String, Object> createComment(@RequestBody Comment comment,
 											 @RequestAttribute("uid") Integer id) {
 		User user = (User)userService.findById(id);
 		User comment_parent_author = new User();
@@ -101,12 +101,23 @@ public class CommentAPI {
 		}
 		
 		
-		ret.put("avatar", userService.findById(user.getId()).getUser_avatar());
-		ret.put("author_id", String.valueOf(user.getId()));
-		ret.put("author_name", user.getUser_name());
-		ret.put("reply_to_author", String.valueOf(comment_parent_author.getId()));
-		ret.put("reply_to_authorname", comment_parent_author.getUser_name());
-		return ret;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("status", Property.SUCCESS_COMMENT_CREATE);
+		Comment comm = new Comment();
+		comm.setComment_author(user.getId());
+		comm.setComment_author_name(user.getUser_name());
+		comm.setComment_author_avatar(userService.findById(user.getId()).getUser_avatar());
+		comm.setComment_parent_author(comment_parent_author.getId());
+		comm.setComment_parent_author_name(comment_parent_author.getUser_name());
+		map.put("comment", comm);
+		return map;
+		
+//		ret.put("avatar", userService.findById(user.getId()).getUser_avatar());
+//		ret.put("author_id", String.valueOf(user.getId()));
+//		ret.put("author_name", user.getUser_name());
+//		ret.put("reply_to_author", String.valueOf(comment_parent_author.getId()));
+//		ret.put("reply_to_authorname", comment_parent_author.getUser_name());
+//		return ret;
 	}
 
 	/**

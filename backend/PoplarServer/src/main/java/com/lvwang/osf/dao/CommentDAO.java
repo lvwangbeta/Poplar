@@ -19,7 +19,7 @@ public interface CommentDAO {
 	@Select("select * from " + TABLE + " where id = #{id}")
 	Comment getCommentByID(int id);
 	
-	@Select("select comment_author,comment_author_name from " + TABLE + " where id=#{comment_id}")
+	@Select("select comment_author id,comment_author_name user_name from " + TABLE + " where id=#{comment_id}")
 	User getCommentAuthor(int comment_id);
 	
 	@Select("select * from " + TABLE + " where comment_object_type="+CommentService.COMMENT_TYPE_POST
