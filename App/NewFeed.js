@@ -91,19 +91,24 @@ var NewFeed = React.createClass({
         formData.append('file'+img.index, {uri: img.uri, type: 'application/octet-stream',name: img.index});
         formData.append('token', uptoken);
 
+        this.props.sendOk(false, 0);
         Rpc.uploadFile(img.uri, uptoken, formData).then((response) => response.json()).then((responseData) => {
          console.log(responseData);
          this.state.imagesID.push({key:responseData.hash });
          if(this.state.imagesID.length == this.state.images.length) {
-           newFeed(this.state.text, this.state.imagesID, this.state.tags, this.props.token);
-           this.cancle();
+           newFeed(this.state.text, this.state.imagesID, this.state.tags, (result, id) => {
+             this.props.sendOk(result, id);
+           });
          }
         });
-
+        this.cancle();
       }
 
     } else {
-      newFeed(this.state.text, '', this.state.tags, this.props.token);
+      this.props.sendOk(false, 0);
+      newFeed(this.state.text, '', this.state.tags, (result, id) => {
+        this.props.sendOk(result, id);
+      });
       this.cancle();
     }
   },

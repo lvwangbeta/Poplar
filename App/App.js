@@ -26,6 +26,8 @@ var App = React.createClass({
       isLogin: false,
       token: '',
       isLogout: false,
+      sent: false,
+      id: '',
     };
   },
 
@@ -37,6 +39,14 @@ var App = React.createClass({
           token: token,
         });
       }
+    });
+  },
+
+  sendOk: function(result, id) {
+    console.log('okokokoko ' + result + ' id:' +id);
+    this.setState({
+      sent: result,
+      id: id,
     });
   },
 
@@ -69,7 +79,7 @@ var App = React.createClass({
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/home.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/home_selected.png')} />}
           onPress={() => this.setState({ selectedTab: 'mainTab' })}>
-          {this.state.isLogin ? <MainPage {...this.props}/> : <LoginRegPage refresh={this.refresh}/>}
+          {this.state.isLogin ? <MainPage sent={this.state.sent} id={this.state.id} {...this.props}/> : <LoginRegPage refresh={this.refresh}/>}
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'exploreTab'}
@@ -85,7 +95,7 @@ var App = React.createClass({
           onPress={this.state.isLogin ? ()=>{this.props.navigator.push({
             title: '发状态',
             component: NewFeed,
-            params: {token:this.state.token ,pop: ()=>this.props.navigator.pop()}
+            params: {sendOk:(result, id)=>this.sendOk(result, id), pop: ()=>this.props.navigator.pop()}
           })} : ()=>this.setState({ selectedTab: 'addTab' })}
           >
           {this.state.isLogin ? <View/> : <LoginRegPage refresh={this.refresh}/>}

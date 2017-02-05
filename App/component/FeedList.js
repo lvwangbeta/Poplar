@@ -44,6 +44,7 @@ var FeedList = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
+    if(nextProps.token == this.props.token) return;
     refresh('', (result, feeds)=>{
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(feeds),

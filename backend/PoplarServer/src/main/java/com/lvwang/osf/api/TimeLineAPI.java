@@ -160,7 +160,7 @@ public class TimeLineAPI {
 			}
 			ShortPost spost = (ShortPost) shortPostService.newPost(user.getId(), album.getAlbum_desc()).get("spost");
 			event_id = eventService.newEvent(Dic.OBJECT_TYPE_SHORTPOST, spost);
-			
+			album.setId(spost.getId());
 		} else {
 			//new album
 			int albumID = ((Album) albumService.newAlbum(user.getId(), null, null, AlbumService.ALBUM_STAUS_TOBERELEASED,null).get("album")).getId();
