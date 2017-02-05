@@ -24,6 +24,7 @@ edit `/App/api/URLConf.js` to configue backend server url and image server addre
 * Image server address, upload and download images. Follow [qiniu-sdk](https://github.com/qiniu/react-native-sdk) to configue qiniu image storage.
 
 		const IMG_BASE_URL = 'http://ogj1ador4.bkt.clouddn.com/'; 
+		
 
 
 ## Server Configue 
@@ -67,8 +68,14 @@ edit `/backend/PoplarServer/src/main/resources/spring/property.properties` to co
 
 ## Screen Shot
 
+![detail](./doc/imgs/feedDetail.gif)
+![new](./doc/imgs/new.gif)
+![explore](./doc/imgs/explore.gif)
+![comment](./doc/imgs/comment.gif)
 
-![screenshots](./doc/imgs/screenshot.png)
+
+![screenshot](./doc/imgs/screenshot.png)
+
 
 
 ## Introduction

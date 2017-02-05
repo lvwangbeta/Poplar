@@ -21,7 +21,7 @@ var App = React.createClass({
   getInitialState: function() {
 
     return {
-      selectedTab:'alarmTab',
+      selectedTab:'mainTab',
       notifCount: 0,
       isLogin: false,
       token: '',
