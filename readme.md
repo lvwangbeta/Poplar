@@ -5,6 +5,16 @@ Poplar
 
 Poplar is a social networking application written by React Native, backend server is implemented by Spring framework. I choose MySQL and Redis as persistent and cache solution. The focus of Poplar is on social and interest, enables you to build a social theme application on Poplar quickly.
 
+## Screen Shot
+
+![detail](./doc/imgs/feedDetail.gif)
+![new](./doc/imgs/new.gif)
+![explore](./doc/imgs/explore.gif)
+![comment](./doc/imgs/comment.gif)
+
+
+![screenshot](./doc/imgs/screenshot.png)
+
 
 ## Install Poplar
 
@@ -65,16 +75,6 @@ edit `/backend/PoplarServer/src/main/resources/spring/property.properties` to co
 	react-native-tab-navigator
 	react-native-wechat
 
-
-## Screen Shot
-
-![detail](./doc/imgs/feedDetail.gif)
-![new](./doc/imgs/new.gif)
-![explore](./doc/imgs/explore.gif)
-![comment](./doc/imgs/comment.gif)
-
-
-![screenshot](./doc/imgs/screenshot.png)
 
 
 
