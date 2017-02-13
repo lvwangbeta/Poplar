@@ -23,6 +23,10 @@ const margin = 20;
 
 const LOGIN_URL = URLConf.API_HOST + '/account/login';
 
+function trim(str){
+  return str.replace(/(^\s*)|(\s*$)/g,"");
+}
+
 var LoginPage = React.createClass({
 
 
@@ -41,7 +45,22 @@ var LoginPage = React.createClass({
     this.props.hideLoginPage();
   },
 
+  checkInfo: function() {
+    if(this.state.email == '' || trim(this.state.email).length == 0) {
+      Alert.alert('请输入邮箱');
+      return false;
+    }
+
+    if(this.state.password == '' || trim(this.state.password).length == 0) {
+      Alert.alert('请输入密码');
+      return false;
+    }
+    return true;
+  },
+
   login: function() {
+
+    if(!this.checkInfo()) return;
 
     this.setState({
       inTheLog: true,
@@ -65,6 +84,19 @@ var LoginPage = React.createClass({
             this.props.hideLoginPage();
             this.props.refresh(true, responseData.token);
           });
+        } else {
+          if(retCode == PoplarEnv.dic.ERROR_EMAIL_EMPTY) {
+            Alert.alert('请输入邮箱');
+          } else if(retCode == PoplarEnv.dic.ERROR_EMAIL_NOT_REG) {
+            Alert.alert('您还没有注册哦');
+          } else if(retCode == PoplarEnv.dic.ERROR_PWD_EMPTY) {
+            Alert.alert('请输入密码');
+          } else if(retCode == PoplarEnv.dic.ERROR_PWD_DIFF) {
+            Alert.alert('密码错误');
+          } else {
+            Alert.alert('登录异常, 请重试');
+          }
+          this.setState({inTheLog: false});
         }
       }).done();
 
