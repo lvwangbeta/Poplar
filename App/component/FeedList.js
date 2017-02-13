@@ -17,6 +17,7 @@ import FeedCell from './FeedCell';
 import FeedDetail from './FeedDetail';
 import TagDetail from './TagDetail';
 import HomePage from './HomePage';
+import BlankTemplate from './BlankTemplate';
 import {getMyFeeds, refresh, load} from '../api/FeedAPI';
 import {getToken} from '../util/Secret';
 
@@ -45,7 +46,7 @@ var FeedList = React.createClass({
 
   componentWillReceiveProps: function(nextProps) {
     if(nextProps.token == this.props.token) return;
-    refresh('', (result, feeds)=>{
+    this.setState({loaded: false}, refresh('', (result, feeds)=>{
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(feeds),
         isRefreshing: false,
@@ -55,7 +56,8 @@ var FeedList = React.createClass({
         feeds: feeds,
         feedId: 0,
       });
-    });
+    }));
+
   },
 
   updateFeedList: function(result, feeds, noMore) {
@@ -154,12 +156,7 @@ var FeedList = React.createClass({
 
   renderLoadingView: function() {
     return (
-      <View style={styles.container}>
-        <Text>
-          Loading...
-        </Text>
-
-      </View>
+      <BlankTemplate/>
 
     );
   },
