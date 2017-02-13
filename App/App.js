@@ -112,7 +112,7 @@ var App = React.createClass({
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/user.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/user_selected.png')} />}
           onPress={() => this.setState({ selectedTab: 'iTab' })}>
-          {this.state.isLogin ? <MinePage  logout={this.logout} {...this.props}/> : <LoginRegPage refresh={this.refresh}/>}
+          {this.state.isLogin ? <MinePage token={this.state.token} logout={this.logout} {...this.props}/> : <LoginRegPage refresh={this.refresh}/>}
         </TabNavigator.Item>
       </TabNavigator>
     );

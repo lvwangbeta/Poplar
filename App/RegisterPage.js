@@ -172,7 +172,11 @@ var RegisterPage = React.createClass({
         var retCode = responseData.status;
         console.log(responseData);
         if(retCode == PoplarEnv.dic.SUCCESS_ACCOUNT_REG) {
-          AsyncStorage.setItem('token', responseData.token, ()=> {
+          // AsyncStorage.setItem('token', responseData.token, ()=> {
+          //   this.props.hideRegPage();
+          //   this.props.refresh(true, responseData.token);
+          // });
+          AsyncStorage.multiSet([['token', responseData.token], ['userId', responseData.id], ['userName', responseData.userName], ['avatar', responseData.avatar]], ()=> {
             this.props.hideRegPage();
             this.props.refresh(true, responseData.token);
           });

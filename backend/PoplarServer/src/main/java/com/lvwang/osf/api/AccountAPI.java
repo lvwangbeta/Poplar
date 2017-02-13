@@ -76,6 +76,8 @@ public class AccountAPI {
 			user.setUser_pwd(null);
 			user.setUser_cfm_pwd(null);
 			map.put("token", userService.newToken(user));
+			map.put("userId", map.get("id"));
+			map.put("userName", user.getUser_name());
 		} 
 		map.put("status", status);
 		return map;
