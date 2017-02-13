@@ -16,6 +16,7 @@ import PoplarEnv from '../util/PoplarEnv';
 import FollowBtn from './actions/Follow';
 import FeedCell from './FeedCell';
 import FeedDetail from './FeedDetail';
+import BlankTemplate from './BlankTemplate';
 import {Auth,ImgOps,Conf,Rs,Rpc} from 'react-native-qiniu';
 import {getFeedsOfUser, refresh, load} from '../api/FeedAPI';
 import {getUserInfo} from '../util/Secret';
@@ -42,7 +43,7 @@ var Mine = React.createClass({
         isRefreshing: false,
         isLoadingMore: false,
         userName: '',
-        avatar: null,
+        avatar: null,        
       };
   },
 
@@ -265,23 +266,32 @@ var Mine = React.createClass({
       );
   },
 
+  renderLoadingView: function() {
+    return (
+      <BlankTemplate/>
+
+    );
+  },
+
   render: function() {
+    if(!this.state.loaded) {
+      return this.renderLoadingView();
+    }
+    return (
+      <View>
+        <ListView
+          isComment={this.state.isComment}
+          dataSource={this.state.dataSource}
+          renderHeader={this.renderHeader}
+          renderRow={this.renderFeed}
+          renderFooter={this.renderFooter}
+          onEndReached={this.onEndReached}
+          onEndReachedThreshold={0}
+          style={styles.listView}
+        />
+      </View>
 
-      return (
-        <View>
-          <ListView
-            isComment={this.state.isComment}
-            dataSource={this.state.dataSource}
-            renderHeader={this.renderHeader}
-            renderRow={this.renderFeed}
-            renderFooter={this.renderFooter}
-            onEndReached={this.onEndReached}
-            onEndReachedThreshold={0}
-            style={styles.listView}
-          />
-        </View>
-
-      );
+    );
 
       // return (
       //   <ScrollView style={styles.container}>
