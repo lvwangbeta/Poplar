@@ -79,7 +79,7 @@ var App = React.createClass({
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/home.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/home_selected.png')} />}
           onPress={() => this.setState({ selectedTab: 'mainTab' })}>
-          {this.state.isLogin ? <MainPage sent={this.state.sent} id={this.state.id} {...this.props}/> : <LoginRegPage refresh={this.refresh}/>}
+          {this.state.isLogin ? <MainPage token={this.state.token} sent={this.state.sent} id={this.state.id} {...this.props}/> : <LoginRegPage refresh={this.refresh}/>}
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'exploreTab'}
@@ -112,7 +112,7 @@ var App = React.createClass({
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/user.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/user_selected.png')} />}
           onPress={() => this.setState({ selectedTab: 'iTab' })}>
-          {this.state.isLogin ? <MinePage  logout={this.logout} {...this.props}/> : <LoginRegPage refresh={this.refresh}/>}
+          {this.state.isLogin ? <MinePage token={this.state.token} logout={this.logout} {...this.props}/> : <LoginRegPage refresh={this.refresh}/>}
         </TabNavigator.Item>
       </TabNavigator>
     );

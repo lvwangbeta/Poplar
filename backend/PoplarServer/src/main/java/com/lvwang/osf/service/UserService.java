@@ -302,6 +302,7 @@ public class UserService {
 		
 		map.put("id", String.valueOf(id));
 		map.put("activationKey", activationKey);
+		map.put("avatar", DEFAULT_USER_AVATAR);
 		return Property.SUCCESS_ACCOUNT_REG;
 		
 	}
