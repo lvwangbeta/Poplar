@@ -21,7 +21,7 @@ Poplar is a social networking application written by React Native, backend serve
 	git clone https://github.com/lvwangbeta/Poplar.git 
 	cd Poplar && npm install
 	react-native link
-	react-native run-ios
+double click `ios/Poplar.xcodeproj` run it directly from `Xcode`
 
 
 ## App Configue 
@@ -38,7 +38,9 @@ edit `/App/api/URLConf.js` to configue backend server url and image server addre
 
 
 ## Server Configue 
-edit `/backend/PoplarServer/src/main/resources/spring/property.properties` to configue domain and database
+
+Make sure you have installed `MySQL` and `Redis`, edit `/backend/PoplarServer/src/main/resources/spring/property.properties` to configue domain and database.
+You can init database using `/Poplar/backend/PoplarServer/doc/osf.sql`
 
 	#domain
 	domain.name=localhost

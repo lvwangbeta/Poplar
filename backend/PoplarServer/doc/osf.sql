@@ -219,3 +219,11 @@ CREATE TABLE IF NOT EXISTS `osf`.`osf_notifications` (
 ENGINE = InnoDB;
 
 
+drop table if EXISTS `osf`.`osf_recommends`;
+CREATE TABLE `osf_recommends` (
+  `category` varchar(10) NOT NULL,
+  `id` int(11) NOT NULL,
+  UNIQUE KEY `category_id_unique_index` (`category`,`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
