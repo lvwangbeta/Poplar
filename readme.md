@@ -1,7 +1,9 @@
 Poplar
 =======
 
-![Poplar](./doc/imgs/poplar.png)
+![Poplar](./doc/imgs/poplar.png)  
+
+Poplar近期将进行一次升级，提供更加便捷的后端部署方式，以Docker化方式简化配置，更易于演示 :)
 
 Poplar is a social networking application written by React Native, backend server is implemented by Spring framework. I choose MySQL and Redis as persistent and cache solution. The focus of Poplar is on social and interest, enables you to build a social theme application on Poplar quickly.
 
