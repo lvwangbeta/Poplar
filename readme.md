@@ -3,8 +3,15 @@ Poplar
 
 ![Poplar](./doc/imgs/poplar.png)  
 
-Poplar近期将进行一次升级，提供更加便捷的后端部署方式，以Docker化方式简化配置，更易于演示 :) 
-没有状态管理的App页面跳转流程好乱啊，也要再改下，计划引入Redux  
+
+2.0版本将带来如下更新，敬请期待（预计2018年1月中完成）
+- React由15.3.2升级至16.0.0
+- React Native由0.36.1升级至0.50.4
+- 导航改用React Navigation
+- 应用全局状态（登录、账户信息），弹出层（登录、注册页面、 发送状态页面）使用react-redux管理
+- 后端框架由Spring/Spring MVC 3.X 迁移至Spring Boot 1.5.8
+- 后端部署方式采用Docker打包成3个独立镜像：集成Tomcat的应用服务器、MySQL数据库服务器、Redis服务器
+
 
 
 Poplar is a social networking application written by React Native, backend server is implemented by Spring framework. I choose MySQL and Redis as persistent and cache solution. The focus of Poplar is on social and interest, enables you to build a social theme application on Poplar quickly.
