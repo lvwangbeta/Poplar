@@ -6,12 +6,14 @@ Poplar
 ![show](./show.png)  
 
 2.0版本将带来如下更新，敬请期待（即将更新，久等了抱歉！！！）
+- 更统一的UI风格
 - React由15.3.2升级至16.0.0
 - React Native由0.36.1升级至0.50.4
 - 导航改用React Navigation
 - 应用全局状态（登录、账户信息），弹出层（登录、注册页面、 发送状态页面）使用react-redux管理
 - 后端框架由Spring/Spring MVC 3.X 迁移至Spring Boot 1.5.8
 - 后端部署方式采用Docker打包成3个独立镜像：集成Tomcat的应用服务器、MySQL数据库服务器、Redis服务器
+- 微服务化拆分
 
 
 
