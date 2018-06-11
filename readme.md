@@ -3,8 +3,9 @@ Poplar
 
 ![Poplar](./doc/imgs/poplar.png)  
 
+![show](./show.png)  
 
-2.0版本将带来如下更新，敬请期待（预计2018年1月中完成）
+2.0版本将带来如下更新，敬请期待（即将更新，久等了抱歉！！！）
 - React由15.3.2升级至16.0.0
 - React Native由0.36.1升级至0.50.4
 - 导航改用React Navigation
