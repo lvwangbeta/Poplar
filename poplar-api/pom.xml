@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.lvwangbeta</groupId>
+    <artifactId>poplar-api</artifactId>
+    <version>2.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>poplar-api</name>
+    <description>poplar api</description>
+
+    <parent>
+        <groupId>com.lvwangbeta</groupId>
+        <artifactId>poplar</artifactId>
+        <version>2.0.0</version>
+        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
+    </parent>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <imageName>lvwangbeta/poplar-api</imageName>
+                    <baseImage>java</baseImage>
+                    <maintainer>lvwangbeta lvwangbeta@163.com</maintainer>
+                    <workdir>/poplardir</workdir>
+                    <cmd>["java", "-version"]</cmd>
+                    <entryPoint>["java", "-jar", "${project.build.finalName}.jar"]</entryPoint>
+                    <resources>
+                        <resource>
+                            <targetPath>/poplardir</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
