@@ -8,6 +8,8 @@ import com.lvwangbeta.poplar.common.intr.UserService;
 import com.lvwangbeta.poplar.common.model.Message;
 import com.lvwangbeta.poplar.common.model.User;
 import com.lvwangbeta.poplar.common.util.Property;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/api/v1/action/") 
 public class ActionController {
+
+	public static final Logger logger = LoggerFactory.getLogger(ActionController.class);
 
 	@Reference
 	private UserService userService;
@@ -43,6 +47,7 @@ public class ActionController {
 						@PathVariable("object_type") int object_type,
 						@PathVariable("object_id") int object_id,
 						@RequestAttribute("uid") Integer id){
+		logger.debug("[Like begin]");
 		Message message = new Message();
 		User me = (User)userService.findById(id);
 				
@@ -58,6 +63,7 @@ public class ActionController {
 													 );
 		notificationService.doNotify(notification);
 		*/
+		logger.debug("[Like end]");
 		return message;
 	}
 	
@@ -67,10 +73,12 @@ public class ActionController {
 	public Message undolike(@PathVariable("object_type") int object_type,
 										@PathVariable("object_id") int object_id,
 										@RequestAttribute("uid") Integer id){
+		logger.debug("[UndoLike begin]");
 		Message message = new Message();
 		User me = (User)userService.findById(id);
 		likeService.undoLike(me.getId(), object_type, object_id);
 		message.setErrno(Property.SUCCESS_LIKE_UNDO);
+		logger.debug("[UndoLike end]");
 		return message;
 	}
 
@@ -78,9 +86,11 @@ public class ActionController {
 	@ResponseBody
 	@RequestMapping("/do/interest/tag/{tag_id}")
 	public Message interest(@PathVariable("tag_id") int tag_id, @RequestAttribute("uid") Integer id) {
+		logger.debug("[Interest begin]");
 		Message message = new Message();
 		interestService.interestInTag(id, tag_id);
 		message.setErrno(Property.SUCCESS_INTEREST);
+		logger.debug("[Interest end]");
 		return message;
 	}
 
@@ -88,9 +98,11 @@ public class ActionController {
 	@ResponseBody
 	@RequestMapping("/undo/interest/tag/{tag_id}")
 	public Message undoInterest(@PathVariable("tag_id") int tag_id, @RequestAttribute("uid") Integer id) {
+		logger.debug("[UndoInterest begin]");
 		Message message = new Message();
 		interestService.undoInterestInTag(id, tag_id);
 		message.setErrno(Property.SUCCESS_INTEREST_UNDO);
+		logger.debug("[UndoInterest end]");
 		return message;
 	}
 
@@ -106,6 +118,7 @@ public class ActionController {
 	@ResponseBody
 	@RequestMapping("/do/follow/user/{user_id}")
 	public Message follow(@PathVariable("user_id") int user_id, @RequestAttribute("uid") Integer id) {
+		logger.debug("[Follow begin]");
 		Message message = new Message();
 		User user = (User) userService.findById(id);
 		boolean result = followService.newFollowing(user.getId(),
@@ -127,12 +140,14 @@ public class ActionController {
 			message.setTransok("1");
 			message.setErrno(Property.ERROR_FOLLOW);
 		}
+		logger.debug("[Follow end]");
 		return message;
 	}
 
 	@ResponseBody
 	@RequestMapping("/undo/follow/user/{user_id}")
 	public Message undoFollow(@PathVariable("user_id") int user_id, @RequestAttribute("uid") Integer id) {
+		logger.debug("[UndoFollow begin]");
 		Message message = new Message();
 		boolean result = followService.undoFollow(id, user_id);
 		if(result) {
@@ -140,6 +155,7 @@ public class ActionController {
 		} else {
 			message.setErrno(Property.ERROR_FOLLOW_UNDO);
 		}
+		logger.debug("[UndoFollow end]");
 		return message;
 	}
 

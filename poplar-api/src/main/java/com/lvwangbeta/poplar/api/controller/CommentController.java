@@ -8,12 +8,18 @@ import com.lvwangbeta.poplar.common.model.Comment;
 import com.lvwangbeta.poplar.common.model.Message;
 import com.lvwangbeta.poplar.common.model.User;
 import com.lvwangbeta.poplar.common.util.Property;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/v1/comment")
 public class CommentController {
+
+    public static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
     @Reference
     private CommentService commentService;
@@ -47,6 +53,8 @@ public class CommentController {
     @ResponseBody
     @RequestMapping(value="/create", method=RequestMethod.POST)
     public Message createComment(@RequestBody Comment comment, @RequestAttribute("uid") Integer id) {
+        logger.debug("[New Comment begin] ");
+        logger.debug("{} add comment to feed type:{} id:{}", id, comment.getComment_object_type(), comment.getComment_object_id());
         Message message = new Message();
         User user = (User)userService.findById(id);
         User comment_parent_author = new User();
@@ -83,6 +91,7 @@ public class CommentController {
             notificationService.doNotify(notification);
         }
         */
+        logger.debug("[New Comment end] ");
         return message;
     }
 
@@ -95,10 +104,12 @@ public class CommentController {
     @ResponseBody
     @RequestMapping(value="/{type}/{id}")
     public Message getComments(@PathVariable("type") String type, @PathVariable("id") int id) {
-        System.out.println("comment to feed type:"+type + " id:"+id);
+        logger.debug("[Getting comment list]  feed type:"+type + " id:"+id);
         Message message = new Message();
-        message.add("comments", commentService.getComments(type, id));
+        List<Comment> comments = commentService.getComments(type, id);
+        message.add("comments", comments);
         message.setErrno(Property.SUCCESS);
+        logger.debug("Found {} comments", comments==null?0:comments.size());
         return message;
     }
 

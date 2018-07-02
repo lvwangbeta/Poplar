@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.lvwangbeta.poplar.api.service.AuthService;
 import com.lvwangbeta.poplar.common.model.User;
 import com.lvwangbeta.poplar.common.util.CipherUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Component
 public class APIAccessAuthRequiredInterceptor implements HandlerInterceptor {
 
-	
+	public static final Logger logger = LoggerFactory.getLogger(APIAccessAuthRequiredInterceptor.class);
+
 	public static final String SECRET = "osf";
 	
 	public static final String URL_TIMELINE = "/**/feed/user/*/startfrom/*/limit/*";
@@ -56,7 +59,7 @@ public class APIAccessAuthRequiredInterceptor implements HandlerInterceptor {
 			String key = keys.nextElement();
 			String value = req.getParameter(key);
 			
-			System.out.println("key:"+key + " value:"+value);
+			logger.debug("[REQ][PARAM] "+key + ": "+value);
 			
 			if(!"sign".equals(key)) {
 				try {
@@ -74,8 +77,8 @@ public class APIAccessAuthRequiredInterceptor implements HandlerInterceptor {
 		System.out.println("params:"+params_str);
 		
 		String sign2 = CipherUtil.sign(params_str);
-		System.out.println("sign:"+sign);
-		System.out.println("sign2:"+sign2);
+		logger.debug("[REQ] Sign:" + sign);
+		logger.debug("[CHK] Sign:" + sign2);
 		if(!sign.equalsIgnoreCase(sign2)) {
 			return false;
 		}
@@ -97,38 +100,38 @@ public class APIAccessAuthRequiredInterceptor implements HandlerInterceptor {
 		}
 		
 		String uri = req.getRequestURI();
-		System.out.println("uri: "+ uri);
-		System.out.println("api access required :"+req.getRequestURL());
-		System.out.println("query :"+req.getQueryString());		
+		logger.debug("[REQ] URI: " + uri);
+		logger.debug("[REQ] URL: " + req.getRequestURL());
+		logger.debug("[REQ] Query String:" + req.getQueryString());
 		if(checkSign(req)){
 			String token = req.getHeader("X-Auth-Token");
-			System.out.println("token:"+token);
+			logger.debug("[REQ] Token:" + token);
 			if(token == null || token.length() == 0 || "null".equalsIgnoreCase(token)) {
-				System.out.println("NO TOKEN");
+				logger.debug("[REQ] NO Token");
 				if(matcher.match(URL_TIMELINE, uri)) {
-					System.out.println("no auth access with uri match : " + URL_TIMELINE );
+					logger.debug("[REQ] No token access with uri match: " + URL_TIMELINE );
 					req.setAttribute("uid", 0);
 					return true;
 				} else if(matcher.match(URL_TAG_PATTERN, uri)) {
-					System.out.println("no auth access with uri match : " + URL_TAG_PATTERN );
+					logger.debug("[REQ] No token access with uri match: " + URL_TAG_PATTERN );
 					req.setAttribute("uid", 0);
 					return true;
 				} else if(matcher.match(URL_COMMENT_PATTERN, uri)) {
-					System.out.println("no auth access with uri match : " + URL_COMMENT_PATTERN);
+					logger.debug("[REQ] No token access with uri match: " + URL_COMMENT_PATTERN);
 					req.setAttribute("uid", 0);
 					return true;
 				} else if(matcher.match(URL_RECOMMEND_PATTERN, uri)) {
-					System.out.println("no auth access with uri match : " + URL_RECOMMEND_PATTERN);
+					logger.debug("[REQ] No token access with uri match: " + URL_RECOMMEND_PATTERN);
 					req.setAttribute("uid", 0);
 					return true;
 				}
 			}
 			User user = token2User(token);
 			if(user == null) {
-				System.out.println("can not find user by token:"+token);
+				logger.debug("[REQ] Token not found:" + token);
 				return false;
 			}
-			System.out.println("uid int" + user.getId());
+			logger.debug("[REQ] User ID:" + user.getId());
 			req.setAttribute("uid", user.getId());
 			req.setAttribute("token", token);
 			return true;

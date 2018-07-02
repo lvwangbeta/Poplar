@@ -4,6 +4,8 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.lvwangbeta.poplar.common.intr.*;
 import com.lvwangbeta.poplar.common.model.*;
 import com.lvwangbeta.poplar.common.util.Property;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
@@ -13,6 +15,8 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/v1/feed")
 public class FeedController {
+
+    public static final Logger logger = LoggerFactory.getLogger(FeedController.class);
 
     @Reference
     private UserService userService;
@@ -38,10 +42,11 @@ public class FeedController {
     @ResponseBody
     @RequestMapping("/new")
     public Message newFeed(@RequestAttribute("uid") Integer id, @RequestBody String params) throws UnsupportedEncodingException {
+        logger.debug("[New feed begin] user id:"+id);
         //int event_id = 0;
         //List<Tag> tags = new ArrayList<Tag>();
         String _params = URLDecoder.decode(params,"utf-8");
-        System.out.println("album upload params : " + _params);
+        logger.debug("album upload params: " + _params);
 
         Message message = new Message();
         message = feedService.newFeed(id, _params, message);
@@ -49,6 +54,7 @@ public class FeedController {
 
         Album album = (Album)message.get("album");
         int eventId = (int)message.get("event_id");
+        logger.debug("save feed done, event id:" + eventId);
         List<Tag> tags = album.getAlbum_tags_list();
 
         //push to users who follow u
@@ -68,17 +74,19 @@ public class FeedController {
                 feedService.cacheFeed2Tag(tag.getId(), eventId);
             }
         }
+        logger.debug("pushing feed to followers:"+followerSet.toArray());
         feedService.push(new ArrayList<Integer>(followerSet), eventId);
 
         message.setErrno(Property.SUCCESS_ALBUM_CREATE);
         message.add("event_id", eventId);
+        logger.debug("[New feed end]");
         return message;
     }
 
     @ResponseBody
     @RequestMapping("/page/{num}/startfrom/{id}")
     public Map<String, Object> nextPage(@PathVariable("num") Integer num, @PathVariable("id") Integer id, @RequestAttribute("uid") Integer uid) {
-        System.out.println(num);
+        logger.debug("[Getting feed list of page " + num + " start from " + id + " ]");
 
         Map<String, Object> map = new HashMap<String, Object>();
 
@@ -92,7 +100,7 @@ public class FeedController {
         map.put("feeds", feeds);
 
         decorateFeeds(uid, feeds);
-
+        logger.debug("Found {} feeds: {}", feeds.size(), feeds.toArray());
         return map;
     }
 
@@ -117,7 +125,6 @@ public class FeedController {
 
     private void decorateFeeds(int uid, List<Event> feeds){
         if(feeds != null && feeds.size() != 0 ) {
-            System.out.println("feeds size: " + feeds.size());
             addUserInfo(feeds);
             updLikeCount(uid, feeds);
             addCommentCount(feeds);
@@ -163,8 +170,8 @@ public class FeedController {
      */
     @ResponseBody
     @RequestMapping("/of/user/{account_id}/page/{num}/startfrom/{id}")
-    public Message getFeedsOfUser(@PathVariable("account_id") Integer account_id,  @PathVariable("num") Integer num,@PathVariable("id") Integer id) {
-        System.out.println("GET feeds of user " + account_id + " page " + num);
+    public Message getFeedsOfUser(@PathVariable("account_id") Integer account_id,  @PathVariable("num") Integer num, @PathVariable("id") Integer id) {
+        logger.debug("[Getting feed list of user " + account_id + "page " + num + " start from " + id + " ]");
 
         Message message = new Message();
         User user = (User)userService.findById(account_id);
@@ -182,6 +189,7 @@ public class FeedController {
         decorateFeeds(account_id, feeds);
         message.setErrno(Property.SUCCESS_FEED_LOAD);
         message.add("feeds", feeds);
+        logger.debug("Found {} feeds: {}", feeds.size(), feeds.toArray());
         return message;
     }
 }
