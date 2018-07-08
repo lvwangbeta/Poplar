@@ -17,7 +17,7 @@ Poplar is a social networking application written by React Native, backend  is i
 
 - Change to React Navigation
 
-- Using react-redux mange application status
+- Using react-redux manage application status
 
   
 
