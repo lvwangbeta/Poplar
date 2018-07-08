@@ -10,5 +10,6 @@ public interface UserService {
     User findByEmail(String email);
     Message login(String email, String password);
     String genToken(User user);
+    void delToken(String token);
     void replaceAvatar(int uid, String img);
 }

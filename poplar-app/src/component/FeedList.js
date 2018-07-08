@@ -82,14 +82,17 @@ export default class FeedList extends Component{
   fetchData() {
     //getMyFeeds(this);
     const {caller,tag} = this.props;
+    console.log('[FeedList] caller is ' + caller);
     if(caller == 'main') {
-        load(0, this.state.feeds, this.state.page, (result, feeds, noMore) => {this.updateFeedList(result, feeds, noMore)});
+        load(0, this.state.feeds, this.state.page, (result, feeds, noMore) => {
+          this.updateFeedList(result, feeds, noMore)});
     } else if(caller == 'tag') {
-        getTagFeedsOfPage(tag.id, 1, (result, feeds) => {
-          this.updateFeedList(result, feeds, false);
+        getTagFeedsOfPage(tag.id, this.state.feeds, this.state.page, (result, feeds, noMore) => {
+          this.updateFeedList(result, feeds, noMore);
         });
     } else if(caller == 'user') {
-        getFeedsOfUser(this.props.uid, this.state.feeds, this.state.page, 0, (result, feeds, noMore) => {this.updateFeedList(result, feeds, noMore)});
+        getFeedsOfUser(this.props.uid, this.state.feeds, this.state.page, 0, (result, feeds, noMore) => {
+          this.updateFeedList(result, feeds, noMore)});
     }
 
   }
@@ -118,8 +121,7 @@ export default class FeedList extends Component{
     if(this.state.noMore || this.state.isLoadingMore) return;
     this.setState({isLoadingMore: true});
     console.log('[FeedList] loading more feed, current page:'+this.state.page + ', last feed id:'+this.state.feedId);
-    load(this.state.feedId, this.state.feeds, this.state.page,
-      (result, feeds, noMore) => {this.updateFeedList(result, feeds, noMore)});
+    this.fetchData();
     console.log('[FeedList] loading done');
   }
 

@@ -9,8 +9,8 @@ import PoplarEnv from './PoplarEnv';
 // const token = '6b6478dd-33ab-492e-b06d-05b7f1106c47';
 const token = '';
 const secret = 'osf';
-const LOGIN_URL = URLConf.API_HOST + '/account/login';
-const LOGOUT_URL = URLConf.API_HOST + '/account/logout';
+const LOGIN_URL = URLConf.API_HOST + '/user/login';
+const LOGOUT_URL = URLConf.API_HOST + '/user/logout';
 
 export default {
   token, secret
@@ -83,9 +83,8 @@ export function logout(callback) {
 
   getToken((token) => {
     var sign = Md5.hex_md5(LOGOUT_URL.replace(URLConf.APP_SERVER_HOST, '') + '?ts=123456&'+secret);
-    console.log('sign:' + sign);
     var url = LOGOUT_URL+'?ts=123456&sign=' + sign;
-
+    console.log('[GET] ' + url);
     var options = {
       method: 'POST',
       headers: {
@@ -97,8 +96,8 @@ export function logout(callback) {
     };
     fetch(url, options).then((response) => response.json())
       .then((responseData) => {
-        console.log(responseData);
-        if(responseData.status === PoplarEnv.dic.SUCCESS_ACCOUNT_LOGOUT) {
+        console.log('[RET]' + responseData);
+        if(responseData.errno == PoplarEnv.dic.SUCCESS_ACCOUNT_LOGOUT) {
           AsyncStorage.removeItem('token', (err)=>{
             callback(true);
           });

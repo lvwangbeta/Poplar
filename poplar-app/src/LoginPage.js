@@ -18,7 +18,7 @@ import {
 import { connect } from 'react-redux';
 import PoplarEnv from './util/PoplarEnv';
 import URLConf from './api/URLConf';
-import {showLoginPage} from  './actions/loginAction';
+import {showLoginPage, isLogin} from  './actions/loginAction';
 import {showRegPage} from './actions/RegisterAction';
 import RegisterPage from './RegisterPage';
 
@@ -84,6 +84,7 @@ class LoginPage extends Component {
           var user = responseData.data.user;
           AsyncStorage.multiSet([['token', responseData.data.token], ['userId', user.id.toString()], ['userName', user.user_name], ['avatar', user.user_avatar]], ()=> {
             this.props.showLoginPage(false);
+            this.props.isLogin();
             //this.props.refresh(true, responseData.token);
           });
           //this.props.showLoginPage(false);
@@ -174,7 +175,7 @@ class LoginPage extends Component {
                             placeholder="邮箱"
                             editable={this.state.inTheLog ? false: true}
                             onChangeText={(email) => this.setState({email})}
-                            defaultValue='lvwangbeta1@163.com'
+                            defaultValue='lvwangbeta@163.com'
                           />
                   <TextInput
                             style={{height: 40,
@@ -260,6 +261,7 @@ var styles = StyleSheet.create({
 export default connect((state) => ({
   loginPageVisible: state.showLoginPage.loginPageVisible,
 }), (dispatch) => ({
+  isLogin: () => dispatch(isLogin()),
   showLoginPage: (flag) => dispatch(showLoginPage(flag)),
   showRegPage: (flag) => dispatch(showRegPage(flag)),
 }))(LoginPage)

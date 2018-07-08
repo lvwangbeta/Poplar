@@ -33,40 +33,19 @@ export function isLogin() {
   }
 }
 
-export function login() {
+export function logout() {
   return dispatch => {
-    dispatch(isLogging());
-    let result = fetch('https://www.baidu.com/')
-                 .then((res) => {
-                   dispatch(loginSuccess());
-                 }).catch((e) => {
-                   dispatch(loginError());
-                 })
-  }
-}
-
-
-function isLogging() {
-  console.log('logging');
-  return {
-    type: "LOGGIN_DONING"
-  }
-}
-
-function loginSuccess() {
-  console.log('loggin success');
-  return {
-    type: "LOGGIN_DONE",
-    user: {
-      id: '12313',
-      name: 'poplar'
-    }
-  }
-}
-
-function loginError() {
-  console.log('loggin error');
-  return {
-    type: "LOGGIN_ERROR"
+    Secret.isLogin((result, token) => {
+      console.log('[LOGOUT] token' + token);
+      if(result) {
+         Secret.logout((res) => {
+            if(res) {
+              dispatch({type: 'NOT_LOGGED_IN'});
+            }
+        });
+      } else {
+        dispatch({type: 'NOT_LOGGED_IN',});
+      }
+    });
   }
 }

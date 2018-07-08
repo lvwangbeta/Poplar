@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import LikeAction from './Like';
+import Share from './Share';
 
 export default class FeedActions extends Component{
 
@@ -56,6 +57,9 @@ export default class FeedActions extends Component{
                         decrLikeCount={this.props.decrLikeCount}
                         from={'FeedCell'}/>
           </View>
+          <View style={styles.feedActionShare}>
+            <Share/>
+          </View>
       </View>
     );
   }
@@ -80,6 +84,11 @@ var styles = StyleSheet.create({
     padding: 4,
     marginRight: 4,
   },
+  feedActionShare: {
+    width: 50,
+    padding: 4,
+    marginLeft: 8,    
+  }
 });
 
 // module.exports = FeedActions;

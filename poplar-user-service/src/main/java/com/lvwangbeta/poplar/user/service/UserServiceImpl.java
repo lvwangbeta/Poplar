@@ -136,7 +136,9 @@ public class UserServiceImpl implements UserService {
         userDao.insertToken(token, user);
         return token;
     }
-
+    public void delToken(String token) {
+        userDao.delToken(token);
+    }
     public void replaceAvatar(int uid, String img) {
         userDao.updateAvatar(uid, img);
     }

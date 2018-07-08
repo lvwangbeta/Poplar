@@ -14,7 +14,9 @@ import {
   TouchableHighlight,
   TouchableNativeFeedback,
 } from 'react-native';
-
+import { connect } from 'react-redux';
+import LoginPage from '../LoginPage';
+import {showLoginPage, isLogin} from  '../actions/loginAction';
 import URLConf from '../api/URLConf';
 import {getToken} from '../util/Secret';
 import Md5 from '../util/Md5';
@@ -22,31 +24,21 @@ import Md5 from '../util/Md5';
 
 const avatar_thumbnail = '?imageView2/1/w/48/h/48';
 
-export default class CommentCell extends Component{
+class CommentCell extends Component{
 
   constructor(props) {
     super(props);
     this.state = {
       loginRegPageVisible: false,
     };
-
-  }
-
-  checkLogin(token) {
-    console.log('like btn token:' + token);
-
-    if(this.props.from == 'FeedDetail') {
-      if(!token) {
-        this.setState({loginRegPageVisible: true});
-      } else {
-        this.props.reply(this.props.comment);
-      }
-    } else {
-      this.props.push2FeedDetail();
-    }
   }
 
   onPress() {
+    const {status,showLoginPage} = this.props;
+    if(status == 'NOT_LOGGED_IN') {
+      showLoginPage();
+      return;
+    }
     this.props.reply(this.props.comment);
   }
 
@@ -65,8 +57,10 @@ export default class CommentCell extends Component{
   }
 
   render(){
+    const {status} = this.props;
     return (
       <View >
+        {status == 'NOT_LOGGED_IN' && <LoginPage {...this.props}/>}
         <TouchableOpacity onPress={()=>this.onPress()}>
           <View style={styles.commentBox}>
             <Image style={styles.avatar} source={{uri:URLConf.IMG_BASE_URL+this.props.comment.comment_author_avatar+avatar_thumbnail}} />
@@ -112,3 +106,12 @@ var styles = StyleSheet.create({
     lineHeight: 18,
   },
 });
+
+
+export default connect((state) => ({
+  status: state.isLogin.status, //登录状态
+  loginPageVisible: state.showLoginPage.loginPageVisible
+}), (dispatch) => ({
+  isLogin: () => dispatch(isLogin()),
+  showLoginPage: () => dispatch(showLoginPage()),
+}))(CommentCell)

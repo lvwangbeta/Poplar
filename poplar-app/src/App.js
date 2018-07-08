@@ -1,7 +1,7 @@
 /**
  * Poplar React Native App
  * https://github.com/lvwangbeta/Poplar
- * @lvwangbeta@163.com
+ * lvwangbeta@163.com
  */
 
 import React, { Component } from 'react';
@@ -13,6 +13,7 @@ import {
   Image,
   TouchableOpacity
 } from 'react-native';
+import * as WeChat from 'react-native-wechat';
 import TabNavigator from 'react-native-tab-navigator';
 import { connect } from 'react-redux';
 import {showLoginPage, isLogin} from  './actions/loginAction';
@@ -37,6 +38,7 @@ class App extends Component<{}> {
       notifCount: 0,
       addTabSelected:false,
     }
+
   }
 
   componentWillMount() {
@@ -44,6 +46,9 @@ class App extends Component<{}> {
     this.props.isLogin();
   }
 
+  componentDidMount() {
+    WeChat.registerApp('appkey');
+  }
 
   showNewFeedPageIfLoggedIn() {
     const {status,showLoginPage,showNewFeedPage} = this.props;
@@ -66,8 +71,14 @@ class App extends Component<{}> {
           selected={this.state.selectedTab === 'mainTab'}
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/icons/home.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/icons/home_selected.png')} />}
-          onPress={() => this.setState({ selectedTab: 'mainTab' })}>
-          {/* {this.state.isLogin ? <MainPage token={this.state.token} sent={this.state.sent} id={this.state.id} {...this.props}/> : <LoginRegPage refresh={this.refresh}/>} */}
+          onPress={() => {
+                          this.setState({ selectedTab: 'mainTab' });
+                          if(status == 'NOT_LOGGED_IN') {
+                            showLoginPage();
+                          }
+                      }
+                   }
+        >
 
           {status == 'NOT_LOGGED_IN'?<LoginPage {...this.props}/>:<MainPage {...this.props}/>}
         </TabNavigator.Item>
@@ -108,9 +119,15 @@ class App extends Component<{}> {
           selected={this.state.selectedTab === 'iTab'}
           renderIcon={() => <Image style={styles.icon} source={require('./imgs/icons/user.png')} />}
           renderSelectedIcon={() => <Image style={styles.icon} source={require('./imgs/icons/user_selected.png')} />}
-          onPress={() => this.setState({ selectedTab: 'iTab' })}>
-          {/* {this.state.isLogin ? <MinePage token={this.state.token} logout={this.logout} {...this.props}/> : <LoginRegPage refresh={this.refresh}/>} */}
-          <MinePage {...this.props}/>
+          onPress={() => {
+                          this.setState({ selectedTab: 'iTab' });
+                          if(status == 'NOT_LOGGED_IN') {
+                            showLoginPage();
+                          }
+                      }
+                   }
+        >
+          {status == 'NOT_LOGGED_IN'?<LoginPage {...this.props}/>:<MinePage {...this.props}/>}
         </TabNavigator.Item>
       </TabNavigator>
     );

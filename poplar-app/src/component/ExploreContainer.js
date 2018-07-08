@@ -12,17 +12,8 @@ import {
 
 import TopGallery from './TopGallery';
 import TagsSection from './TagsSection';
-// import UsersSection from './UsersSection';
-// import TagDetail from './TagDetail';
 
 export default class ExploreContainer extends Component{
-
-  // nav2TagDetail: function(tag) {
-  //   this.props.navigator.push({
-  //       title: tag.tag,
-  //       component: TagDetail,
-  //   });
-  // },
 
   render(){
     return (

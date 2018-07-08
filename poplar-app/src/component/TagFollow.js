@@ -16,9 +16,12 @@ import {
 import {getToken} from '../util/Secret';
 import {followTag, undoFollowTag} from '../api/ActionAPI';
 import {isInterest} from '../api/TagAPI';
+import { connect } from 'react-redux';
+import LoginPage from '../LoginPage';
+import {showLoginPage, isLogin} from  '../actions/loginAction';
 // import PopupLoginRegPage from '../PopupLoginRegPage';
 
-export default class TagFollow extends Component{
+class TagFollow extends Component{
 
   constructor(props) {
     super(props);
@@ -28,7 +31,7 @@ export default class TagFollow extends Component{
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     isInterest(this.props.tagId, (result, err) => {
       if(result) {
         this.setState({
@@ -39,6 +42,12 @@ export default class TagFollow extends Component{
   }
 
   onPress() {
+    const {status,showLoginPage} = this.props;
+    if(status == 'NOT_LOGGED_IN') {
+      showLoginPage();
+      return;
+    }
+
     if(this.state.isFollowed)  {
       undoFollowTag(this.props.tagId, (result, err) => {
         if(!result) {
@@ -66,12 +75,6 @@ export default class TagFollow extends Component{
     }
   }
 
-  showLoginRegPage() {
-    this.setState({
-      loginRegPageVisible: true,
-    })
-  }
-
   updateFollowBtnStatus(token) {
     if(token) {
       this.setState({
@@ -80,23 +83,11 @@ export default class TagFollow extends Component{
     }
   }
 
-  hideLoginRegPage() {
-    this.setState({
-      loginRegPageVisible: false,
-    });
-    getToken(this.updateFollowBtnStatus);
-  }
-
-  refresh(isLogin, token) {
-    this.setState({
-      loginRegPageVisible: false,
-    }, this.props.refresh(isLogin, token));
-  }
-
   render() {
+    const {status} = this.props;
     return(
       <View>
-        {/* {this.state.loginRegPageVisible && <PopupLoginRegPage hideLoginRegPage={this.hideLoginRegPage} refresh={this.refresh}/>} */}
+        {status == 'NOT_LOGGED_IN' && <LoginPage {...this.props}/>}
         <TouchableOpacity ref={'btn'} style={[styles.btn, {backgroundColor: this.state.isFollowed?'#FBBD08':'rgba(0,0,0,0.0)'}]} onPress={()=>this.onPress()} >
           <Text style={{color: this.state.isFollowed?'#F3F3F3':'#FBBD08'}}>{this.state.isFollowed?'已关注':'+ 关注'}</Text>
         </TouchableOpacity>
@@ -122,3 +113,11 @@ var styles = StyleSheet.create({
   },
 
 });
+
+export default connect((state) => ({
+  status: state.isLogin.status, //登录状态
+  loginPageVisible: state.showLoginPage.loginPageVisible
+}), (dispatch) => ({
+  isLogin: () => dispatch(isLogin()),
+  showLoginPage: () => dispatch(showLoginPage()),
+}))(TagFollow)

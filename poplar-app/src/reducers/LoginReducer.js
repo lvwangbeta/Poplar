@@ -28,6 +28,20 @@ export function isLogin(state=loginStatus, action) {
     }
 }
 
+export function logout(state=loginStatus, action) {
+  switch (action.type) {
+    case 'NOT_LOGGED_IN':
+      return {
+        ...state,
+        status: 'NOT_LOGGED_IN',
+      }
+      break;
+    default:
+      return state;
+
+  }
+}
+
 export function showLoginPage(state=pageState, action) {
   switch (action.type) {
     case 'LOGIN_PAGE_VISIBLE':

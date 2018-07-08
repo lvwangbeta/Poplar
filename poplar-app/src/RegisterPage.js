@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 import PoplarEnv from './util/PoplarEnv';
 import URLConf from './api/URLConf';
 import {showRegPage} from './actions/RegisterAction';
+import {showLoginPage, isLogin} from  './actions/loginAction';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -126,6 +127,7 @@ class RegisterPage extends Component{
   }
 
   register() {
+
     if(this.state.userName.length == 0) {
       Alert.alert('请输入昵称');
       return;
@@ -159,14 +161,18 @@ class RegisterPage extends Component{
                                  ['userId', String(responseData.data.user.id)],
                                  ['userName', responseData.data.user.user_name],
                                  ['avatar', responseData.data.user.user_avatar]],
-            ()=>{
-              this.cancle();
-              //this.props.hideRegPage();
-              //this.props.refresh(true, responseData.token);
-            });
+                                 ()=>{this.hide()}
+            );
         }
       }).done();
 
+  }
+
+  hide() {
+    const {showRegPage, showLoginPage, isLogin} = this.props;
+    showRegPage(false);
+    showLoginPage(false);
+    isLogin();
   }
 
   hideKeyBoard() {
@@ -196,7 +202,6 @@ class RegisterPage extends Component{
        keyBoardIsShow: false
      });
    }
-
 
   render() {
     const {regPageVisible, showRegPage} = this.props;
@@ -353,6 +358,8 @@ var styles = StyleSheet.create({
 export default connect((state) => ({
   regPageVisible: state.showRegPage.regPageVisible,
 }), (dispatch) => ({
+  isLogin: () => dispatch(isLogin()),
+  showLoginPage: (flag) => dispatch(showLoginPage(flag)),
   showRegPage: (flag) => dispatch(showRegPage(flag)),
 }))(RegisterPage)
 

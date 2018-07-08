@@ -107,6 +107,12 @@ public class CommentController {
         logger.debug("[Getting comment list]  feed type:"+type + " id:"+id);
         Message message = new Message();
         List<Comment> comments = commentService.getComments(type, id);
+        //add avatars;
+        if(comments != null && comments.size() !=0) {
+            for(Comment comment: comments) {
+                comment.setComment_author_avatar(userService.findById(comment.getComment_author()).getUser_avatar());
+            }
+        }
         message.add("comments", comments);
         message.setErrno(Property.SUCCESS);
         logger.debug("Found {} comments", comments==null?0:comments.size());

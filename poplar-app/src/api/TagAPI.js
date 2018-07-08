@@ -7,7 +7,7 @@ import PoplarEnv from '../util/PoplarEnv';
 
 const TAG_FEED_URL = URLConf.API_HOST + '/feed/with/tag/';
 
-export function getTagFeedsOfPage(id, page, callback) {
+export function getTagFeedsOfPage(id, feeds, page, callback) {
 
   getToken((token) => {
     var sign = Md5.hex_md5(TAG_FEED_URL.replace(URLConf.APP_SERVER_HOST, '') + id + '/page/' + page + '?ts=123456&'+Secret.secret);
@@ -24,7 +24,17 @@ export function getTagFeedsOfPage(id, page, callback) {
       .then((response) => response.json())
       .then((responseData) => {
         console.log('[RTN] ' + responseData);
-        callback(true, responseData.data.feeds);
+        var noMore = false;
+        var loadedFeeds = responseData.data.feeds;
+        if(loadedFeeds.length == 0) {
+          //that.setState({noMore: true});
+          noMore = true;
+        }
+        for(var i=0; i < loadedFeeds.length; i++) {
+          feeds.push(loadedFeeds[i]);
+        }
+        console.log('[INFO] feeds' + feeds);
+        callback(true, feeds, noMore);
       })
       .done();
   });

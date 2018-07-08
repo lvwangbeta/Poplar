@@ -46,6 +46,17 @@ public class UserController {
     }
 
     @ResponseBody
+    @RequestMapping(value="/logout", method=RequestMethod.POST)
+    public Message logout(@RequestAttribute("token") String token) {
+        logger.debug("[Logout begin] token:" + token);
+        Message message = new Message();
+        userService.delToken(token);
+        message.setErrno(Property.SUCCESS_ACCOUNT_LOGOUT);
+        logger.debug("[Logout end]");
+        return message;
+    }
+
+    @ResponseBody
     @RequestMapping(value="/replace/avatar/{img}")
     public Message replaceAvatar(@RequestAttribute("uid") int uid, @PathVariable("img") String img) {
         logger.debug("[Replace Avatar begin] user id:" + uid + " , image url:" + img);

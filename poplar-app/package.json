@@ -20,6 +20,7 @@
     "react-native-scrollable-tab-view": "^0.8.0",
     "react-native-swiper": "^1.5.13",
     "react-native-tab-navigator": "^0.3.4",
+    "react-native-wechat": "^1.9.9",
     "react-navigation": "^1.0.0-beta.21",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",

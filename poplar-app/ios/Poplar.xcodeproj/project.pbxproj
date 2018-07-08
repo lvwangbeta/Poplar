@@ -12,6 +12,8 @@
 		00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
+		0CFDA47975234F0FB076395C /* libjschelpers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E8111045E404F10BA4C1569 /* libjschelpers.a */; };
+		0E596CA68B434F73A69FE167 /* libyoga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 144D8945FA3442D7BACAFDB0 /* libyoga.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -21,12 +23,22 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1411EB889E4141DAA49A97F0 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D657E024AE448EF8712F9C2 /* libimageCropPicker.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		1584B5C052AF40C9B847A7EB /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24E4572B9DA448C798E5FF37 /* libReact.a */; };
 		2D7CB12420CBF442004411A0 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D7CB12220CBF3F9004411A0 /* libRNImagePicker.a */; };
+		2D9C6D5B20EE5AE500FE0F97 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C6D3420EE5AE400FE0F97 /* SystemConfiguration.framework */; };
+		2D9C6D5D20EE5AF000FE0F97 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C6D5C20EE5AF000FE0F97 /* CoreTelephony.framework */; };
+		2D9C6D5F20EE5AF800FE0F97 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C6D5E20EE5AF800FE0F97 /* libsqlite3.0.tbd */; };
+		2D9C6D6120EE5B0500FE0F97 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C6D6020EE5B0500FE0F97 /* libc++.tbd */; };
+		2D9C6D6320EE5B1000FE0F97 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C6D6220EE5B1000FE0F97 /* libz.tbd */; };
+		2D9C6DA420EE5D8F00FE0F97 /* libRCTWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9C6DA120EE5D7500FE0F97 /* libRCTWeChat.a */; };
 		4B201B3CBEA94FA7B14B3B1A /* libRNPhotoView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35E9DA04564746CDA85D0601 /* libRNPhotoView.a */; };
+		4BC881C21FB04C26B88A29BA /* libthird-party.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16D6268C6E97423EA9668682 /* libthird-party.a */; };
+		59D175B2A03F477088CD4A3A /* libdouble-conversion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 088EE417A2E74B789A63B2BF /* libdouble-conversion.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		82CCE42A535570C723791628 /* libPods-Poplar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69D55A2F061566383FBE1534 /* libPods-Poplar.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
+		FC09E83D11634CF6BC089FCF /* libcxxreact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B9D4F20B0D646FCA5E18EFE /* libcxxreact.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +160,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3400A8081CEB54A6008A0BC7;
 			remoteInfo = imageCropPicker;
+		};
+		2D9C6DA020EE5D7500FE0F97 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 81E9D8E1804840C4A70CD26F /* RCTWeChat.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 86D238421BD0BB9E00C75D01;
+			remoteInfo = RCTWeChat;
+		};
+		2D9C6DA220EE5D7500FE0F97 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 81E9D8E1804840C4A70CD26F /* RCTWeChat.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 10D6D7A41F160C250066F0F3;
+			remoteInfo = RCTWeChatTests;
 		};
 		2DAD0A8F1FD6DBEF00BFD9C6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -305,6 +331,7 @@
 		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
 		00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTNetwork.xcodeproj; path = "../node_modules/react-native/Libraries/Network/RCTNetwork.xcodeproj"; sourceTree = "<group>"; };
 		00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVibration.xcodeproj; path = "../node_modules/react-native/Libraries/Vibration/RCTVibration.xcodeproj"; sourceTree = "<group>"; };
+		088EE417A2E74B789A63B2BF /* libdouble-conversion.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libdouble-conversion.a"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Poplar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Poplar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -314,15 +341,26 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Poplar/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Poplar/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Poplar/main.m; sourceTree = "<group>"; };
+		144D8945FA3442D7BACAFDB0 /* libyoga.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libyoga.a; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		16D6268C6E97423EA9668682 /* libthird-party.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libthird-party.a"; sourceTree = "<group>"; };
+		24E4572B9DA448C798E5FF37 /* libReact.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReact.a; sourceTree = "<group>"; };
 		2D7CB0F920CBF3F8004411A0 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
+		2D9C6D3420EE5AE400FE0F97 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		2D9C6D5C20EE5AF000FE0F97 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		2D9C6D5E20EE5AF800FE0F97 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		2D9C6D6020EE5B0500FE0F97 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		2D9C6D6220EE5B1000FE0F97 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		30FD33D31CF6212DBF7182E2 /* Pods-Poplar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Poplar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Poplar/Pods-Poplar.debug.xcconfig"; sourceTree = "<group>"; };
 		35E9DA04564746CDA85D0601 /* libRNPhotoView.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNPhotoView.a; sourceTree = "<group>"; };
+		3B9D4F20B0D646FCA5E18EFE /* libcxxreact.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libcxxreact.a; sourceTree = "<group>"; };
 		3D657E024AE448EF8712F9C2 /* libimageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libimageCropPicker.a; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		69D55A2F061566383FBE1534 /* libPods-Poplar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Poplar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		81E9D8E1804840C4A70CD26F /* RCTWeChat.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTWeChat.xcodeproj; path = "../node_modules/react-native-wechat/ios/RCTWeChat.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		8E8111045E404F10BA4C1569 /* libjschelpers.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libjschelpers.a; sourceTree = "<group>"; };
 		A6CBD79764B25A15E10B0850 /* Pods-Poplar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Poplar.release.xcconfig"; path = "Pods/Target Support Files/Pods-Poplar/Pods-Poplar.release.xcconfig"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		C5839C080D724F3785188E0B /* RNPhotoView.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNPhotoView.xcodeproj; path = "../node_modules/react-native-photo-view/ios/RNPhotoView.xcodeproj"; sourceTree = "<group>"; };
@@ -334,6 +372,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D9C6DA420EE5D8F00FE0F97 /* libRCTWeChat.a in Frameworks */,
+				2D9C6D6320EE5B1000FE0F97 /* libz.tbd in Frameworks */,
+				2D9C6D6120EE5B0500FE0F97 /* libc++.tbd in Frameworks */,
+				2D9C6D5F20EE5AF800FE0F97 /* libsqlite3.0.tbd in Frameworks */,
+				2D9C6D5D20EE5AF000FE0F97 /* CoreTelephony.framework in Frameworks */,
+				2D9C6D5B20EE5AE500FE0F97 /* SystemConfiguration.framework in Frameworks */,
 				2D7CB12420CBF442004411A0 /* libRNImagePicker.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -351,6 +395,12 @@
 				1411EB889E4141DAA49A97F0 /* libimageCropPicker.a in Frameworks */,
 				82CCE42A535570C723791628 /* libPods-Poplar.a in Frameworks */,
 				4B201B3CBEA94FA7B14B3B1A /* libRNPhotoView.a in Frameworks */,
+				1584B5C052AF40C9B847A7EB /* libReact.a in Frameworks */,
+				0E596CA68B434F73A69FE167 /* libyoga.a in Frameworks */,
+				FC09E83D11634CF6BC089FCF /* libcxxreact.a in Frameworks */,
+				0CFDA47975234F0FB076395C /* libjschelpers.a in Frameworks */,
+				4BC881C21FB04C26B88A29BA /* libthird-party.a in Frameworks */,
+				59D175B2A03F477088CD4A3A /* libdouble-conversion.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +525,12 @@
 			children = (
 				3D657E024AE448EF8712F9C2 /* libimageCropPicker.a */,
 				35E9DA04564746CDA85D0601 /* libRNPhotoView.a */,
+				24E4572B9DA448C798E5FF37 /* libReact.a */,
+				144D8945FA3442D7BACAFDB0 /* libyoga.a */,
+				3B9D4F20B0D646FCA5E18EFE /* libcxxreact.a */,
+				8E8111045E404F10BA4C1569 /* libjschelpers.a */,
+				16D6268C6E97423EA9668682 /* libthird-party.a */,
+				088EE417A2E74B789A63B2BF /* libdouble-conversion.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -483,6 +539,15 @@
 			isa = PBXGroup;
 			children = (
 				2D8524551FE63ADF00C2F1FA /* libimageCropPicker.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2D9C6D9C20EE5D7500FE0F97 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2D9C6DA120EE5D7500FE0F97 /* libRCTWeChat.a */,
+				2D9C6DA320EE5D7500FE0F97 /* RCTWeChatTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -522,6 +587,7 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				E398521C26574D5A95325425 /* imageCropPicker.xcodeproj */,
 				C5839C080D724F3785188E0B /* RNPhotoView.xcodeproj */,
+				81E9D8E1804840C4A70CD26F /* RCTWeChat.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -562,6 +628,11 @@
 		8BA51EA3DD09AFA4AC8FD35F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2D9C6D6220EE5B1000FE0F97 /* libz.tbd */,
+				2D9C6D6020EE5B0500FE0F97 /* libc++.tbd */,
+				2D9C6D5E20EE5AF800FE0F97 /* libsqlite3.0.tbd */,
+				2D9C6D5C20EE5AF000FE0F97 /* CoreTelephony.framework */,
+				2D9C6D3420EE5AE400FE0F97 /* SystemConfiguration.framework */,
 				69D55A2F061566383FBE1534 /* libPods-Poplar.a */,
 			);
 			name = Frameworks;
@@ -683,6 +754,10 @@
 				{
 					ProductGroup = 139FDEE71B06529A00C62182 /* Products */;
 					ProjectRef = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
+				},
+				{
+					ProductGroup = 2D9C6D9C20EE5D7500FE0F97 /* Products */;
+					ProjectRef = 81E9D8E1804840C4A70CD26F /* RCTWeChat.xcodeproj */;
 				},
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
@@ -822,6 +897,20 @@
 			fileType = archive.ar;
 			path = libimageCropPicker.a;
 			remoteRef = 2D8524541FE63ADF00C2F1FA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2D9C6DA120EE5D7500FE0F97 /* libRCTWeChat.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTWeChat.a;
+			remoteRef = 2D9C6DA020EE5D7500FE0F97 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2D9C6DA320EE5D7500FE0F97 /* RCTWeChatTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RCTWeChatTests.xctest;
+			remoteRef = 2D9C6DA220EE5D7500FE0F97 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		2DAD0A901FD6DBEF00BFD9C6 /* libRCTBlob-tvOS.a */ = {
@@ -1093,11 +1182,18 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-wechat/ios",
 				);
 				INFOPLIST_FILE = Poplar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/Poplar\"",
+					"\"$(SRCROOT)/Poplar\"",
+					"\"$(SRCROOT)/Poplar\"",
+					"\"$(SRCROOT)/Poplar\"",
+					"\"$(SRCROOT)/Poplar\"",
+					"\"$(SRCROOT)/Poplar\"",
 					"\"$(SRCROOT)/Poplar\"",
 					"\"$(SRCROOT)/Poplar\"",
 				);
@@ -1126,11 +1222,18 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-wechat/ios",
 				);
 				INFOPLIST_FILE = Poplar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/Poplar\"",
+					"\"$(SRCROOT)/Poplar\"",
+					"\"$(SRCROOT)/Poplar\"",
+					"\"$(SRCROOT)/Poplar\"",
+					"\"$(SRCROOT)/Poplar\"",
+					"\"$(SRCROOT)/Poplar\"",
 					"\"$(SRCROOT)/Poplar\"",
 					"\"$(SRCROOT)/Poplar\"",
 				);

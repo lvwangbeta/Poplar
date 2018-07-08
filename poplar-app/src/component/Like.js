@@ -11,10 +11,11 @@ import {
 
 import {getToken} from '../util/Secret';
 import {like, undoLike} from '../api/ActionAPI';
-// import PopupLoginRegPage from '../PopupLoginRegPage';
+import { connect } from 'react-redux';
+import LoginPage from '../LoginPage';
+import {showLoginPage, isLogin} from  '../actions/loginAction';
 
-export default class Like extends Component{
-
+class Like extends Component{
   constructor(props){
     super(props);
     this.state = {
@@ -22,28 +23,14 @@ export default class Like extends Component{
       isLiked: this.props.isLiked,
       loginRegPageVisible: false,
     };
-
   }
 
-  // checkLogin:function(token) {
-  //   console.log('like btn token:' + token);
-  //   if(!token) {
-  //     this.setState({loginRegPageVisible: true});
-  //   } else {
-  //     like();
-  //     let i = 1;
-  //     if(this.state.isLiked) {
-  //       i = -1;
-  //     }
-  //     this.setState({
-  //       isLiked: !this.state.isLiked,
-  //       counter : this.state.counter + i,
-  //     });
-  //   }
-  // },
-
   pressLike() {
-    //getToken(this.checkLogin);
+    const {status,showLoginPage} = this.props;
+    if(status == 'NOT_LOGGED_IN') {
+      showLoginPage();
+      return;
+    }
 
     if(this.props.isLiked)  {
       if(this.props.isLikedInDetail != undefined && this.props.isLikedInDetail == false) {
@@ -105,8 +92,10 @@ export default class Like extends Component{
   }
 
   render(){
+    const {status} = this.props;
     return (
       <View style={{flexDirection: 'row', }}>
+        {status == 'NOT_LOGGED_IN' && <LoginPage {...this.props}/>}
         {/* {this.state.loginRegPageVisible && <PopupLoginRegPage hideLoginRegPage={this.hideLoginRegPage} refresh={this.refresh}/>} */}
         <TouchableOpacity onPress={()=>this.pressLike()}>
           {this.props.from=='FeedCell'?(
@@ -136,4 +125,10 @@ export default class Like extends Component{
 
 };
 
-// module.exports = Like;
+export default connect((state) => ({
+  status: state.isLogin.status, //登录状态
+  loginPageVisible: state.showLoginPage.loginPageVisible
+}), (dispatch) => ({
+  isLogin: () => dispatch(isLogin()),
+  showLoginPage: () => dispatch(showLoginPage()),
+}))(Like)

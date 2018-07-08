@@ -13,12 +13,14 @@ import {
 import NavigationBar from 'react-native-navbar';
 import BackBtn from './component/navbar/BackBtn';
 import About from './About';
+import { connect } from 'react-redux';
+import {logout} from  './actions/loginAction';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const margin = 20;
 
-export default class SettingsPage extends Component{
+class SettingsPage extends Component{
 
   constructor(props) {
     super(props);
@@ -34,6 +36,11 @@ export default class SettingsPage extends Component{
     );
   }
 
+  logout() {
+    this.props.logout();
+    this.props.navigation.goBack();
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -46,7 +53,7 @@ export default class SettingsPage extends Component{
           <Text style={{fontSize: 16}}>关于</Text>
         </TouchableOpacity>
         <View style={{alignItems: 'center',}}>
-            <TouchableOpacity style={styles.logoutBtn} onPress={()=>this.props.navigation.goBack()}>
+            <TouchableOpacity style={styles.logoutBtn} onPress={()=>this.logout()}>
               <Text style={{color: 'red', fontSize: 16,}}>退出登录</Text>
             </TouchableOpacity>
         </View>
@@ -82,3 +89,18 @@ var styles = StyleSheet.create({
     borderWidth: 1,
   },
 });
+
+
+const mapStateToProps = (state) => {
+  return {
+    isLogin: state.isLogin.status,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => dispatch(logout()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsPage);
