@@ -46,4 +46,6 @@ docker run --net poplar-network --ip 172.18.0.4 --name=poplar-action-service -p 
 docker run --net poplar-network --ip 172.18.0.5 --name=poplar-tag-service -p 8085:8085 -d lvwangbeta/poplar-tag-service
 docker run --net poplar-network --ip 172.18.0.10 --name=poplar-api -p 8080:8080 -d lvwangbeta/poplar-api
 
+docker run --net poplar-network --ip 172.18.0.11 --name poplar-dubbo-admin -p 9092:8080 -d lvwangbeta/poplar-dubbo-admin
+
 docker ps
