@@ -21,7 +21,7 @@ Poplar is a social networking application written by React Native, backend  is i
 
   
 
-- Move Spring/Spring MVC 3.X to Spring Boot 1.5.8
+- Move Spring/Spring MVC 3.X to Spring Boot 1.5.13
 
 - Micro service resolution
 
