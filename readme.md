@@ -77,7 +77,7 @@ cd Poplar && ./build.sh
 
 ## Introduction
 
-![framework](./doc/imgs/framework.png)
+![framework](./doc/imgs/ms-architecture.png)
 
 
 

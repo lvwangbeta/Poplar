@@ -5,6 +5,8 @@ Poplar
 
 Poplar是一个社交主题的内容社区，但自身并不做社区，旨在提供可快速二次开发的开源基础套件。前端基于React Native与Redux构建，后端由Spring Boot、Dubbo、Zookeeper组成微服务对外提供一致的API访问。
 
+https://github.com/lvwangbeta/Poplar
+
 
 
 # 前端React Native & Redux
@@ -33,14 +35,220 @@ APP由5个基础页面构成，分别是Feed信息流主页(MainPage)、探索�
 
 ## Redux
 
-上面也提到过，
+引入Redux并不是赶潮流，而且早在2014年就已经提出了Flux的概念。使用Redux主要是不得不用了，Poplar组件结构并非特别复杂，但嵌套关系较多，而且需要同时支持登录与非登录情况的信息流访问，这就需要一个统一的状态管理器来协调组件之间的通信和状态更新，而Redux很好的解决了这个问题。
 
+这里不枯燥的讲解Redux的架构模型了，而是以Poplar中的登录状态为例来简单说下Redux在Poplar项目中是如何使用的。
+
+Poplar使用React-Redux库，一个将Redux架构在React的实现。
+
+### 1. 场景描述
+
+在未登录情况下，如果用户点击Feed流页面会弹出登录/注册页面，登录或注册成功之后页面收回，同时刷新出信息流内容。下图中的App组件是登录页面和信息流主页兄弟节点的共同父组件。
+
+![framework](imgs/without_redux.png)
+
+这个需求看似简单，但如果没有Redux，在React中实现起来会很蹩脚而且会冗余很多无用代码调用。
+
+
+
+首先我们看下在没有Redux的情况下是如何实现这一业务流程的？
+
+在点击Tabbar的第一个Item也就是信息流页签时，要做用户是否登录检查，这个检查可以通过查看应用是否本地化存储了token或其他验签方式验证，如果未登录，需要主动更新App组件的state状态，同时将这个状态修改通过props的方式传递给LoginPage，LoginPage得知有新的props传入后更新自己的state:{visible:true}来呼出自己，如果客户输入登录信息并且登录成功，则需要将LoginPage的state设置为{visible:false}来隐藏自己，同时回调App传给它的回调函数来告诉父附件用户已经登录成功，我们算一下这仅仅是两个组件之间的通信就要消耗1个props变量1个props回调函数和2个state更新，到这里只是完成了LoginPage通知App组件目前应用应该处于已登录状态，但是还没有刷新出用户的Feed流，因为此时MainPage还不知道用户已登录，需要App父组件来告知它已登录请刷新，可怎样通知呢？React是数据流单向的，要想让下层组件更新只能传递变化的props属性，这样就又多了一个props属性的开销，MainPage更新关联的state同时刷新自己获取Feed流，这才最终完成了一次登录后的MainPage信息展示。通过上面的分析可以看出Poplar在由未登录到登录的状态转变时冗余了很多但是又没法避免的参数传递，因为兄弟节点LoginPage与MainPage之间无法简单的完成通信告知彼此的状态，就需要App父组件这个桥梁来先向上再向下的传递消息。
+
+
+
+再来看下引入Redux之后是如何完成这一同样的过程的：
+
+还是在未登录情况下点击主页，此时Poplar由于Redux的引入已经为应用初始了全局登录状态{status: 'NOT_LOGGED_IN'}，当用户登录成功之后会将该状态更新为{status: 'LOGGED_IN'}，同时LoginPage与此状态进行了绑定，Redux会第一时间通知其更新组件自己的状态为{visible:false}。与此同时App也绑定了这个由Redux管理的全局状态，因此也同样可以获得{status: 'LOGGED_IN'}的通知，这样就可以很简单的在客户登录之后隐藏LoginPage显示MainPage，是不是很简单也很神奇，完全不用依赖参数的层层传递，组件想要获得哪个全局状态就与其关联就好，Redux会第一时间通知你。
+
+
+
+### 2. 实现
+
+以实际的代码为例来讲解下次场景的React-Redux实现：
+
+#### connect
+
+在App组件中，通过connect方法将UI组件生成Redux容器组件，可以理解为架起了UI组件与Redux沟通的桥梁，将store于组件关联在一起。
+
+```javascript
+import {showLoginPage, isLogin} from  './actions/loginAction';
+import {showNewFeedPage} from './actions/NewFeedAction';
+
+export default connect((state) => ({
+  status: state.isLogin.status, //登录状态
+  loginPageVisible: state.showLoginPage.loginPageVisible
+}), (dispatch) => ({
+  isLogin: () => dispatch(isLogin()),
+  showLoginPage: () => dispatch(showLoginPage()),
+  showNewFeedPage: () => dispatch(showNewFeedPage()),
+}))(App)
+```
+
+connect方法的第一个参数是`mapStateToProps`函数，建立一个store中的数据到UI组件props对象的映射关系，只要store更新了就会调用`mapStateToProps`方法，`mapStateToProps`返回一个对象，是一个UI组件props与store数据的映射。上面代码中，`mapStateToProps`接收state作为参数，返回一个UI组件登陆状态与store中state的登陆状态的映射关系以及一个登陆页面是否显示的映射关系。这样App组件状态就与Redux的store关联上了。
+
+
+
+第二个参数`mapDispatchToProps`函数允许将action作为props绑定到组件上，返回一个UI组件props与Redux action的映射关系，上面代码中App组件的`isLogin` `showLoginPage` `showNewFeedPage`props与Redux的action建立了映射关系。调用isLogin实际调用的是Redux中的`store.dispatch(isLogin)` action，dispatch完成对action到reducer的分发。
+
+
+
+#### Provider
+
+connect中的state是如何传递进去的呢？React-Redux 提供`Provider`组件，可以让容器组件拿到`state`
+
+```javascript
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import configureStore from './src/store/index';
+
+const store = configureStore();
+
+export default class Root extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <Main />
+      </Provider>
+    )
+  }
+}
+```
+
+上面代码中，`Provider`在根组件外面包了一层，这样一来，`App`的所有子组件就默认都可以拿到`state`了。
+
+
+
+#### Action & Reducer
+
+组件与Redux全局状态的关联已经搞定了，可如何实现状态的流转呢？登录状态是如何扩散到整个应用的呢？
+
+这里就需要Redux中的Action和Reducer了，Action负责接收UI组件的事件，Reducer负责响应Action，返回新的store，触发与store关联的UI组件更新。
+
+
+
+```javascript
+export default connect((state) => ({
+  loginPageVisible: state.showLoginPage.loginPageVisible,
+}), (dispatch) => ({
+  isLogin: () => dispatch(isLogin()),
+  showLoginPage: (flag) => dispatch(showLoginPage(flag)),
+  showRegPage: (flag) => dispatch(showRegPage(flag)),
+}))(LoginPage)
+
+this.props.showLoginPage(false);
+this.props.isLogin();
+```
+
+在这个登录场景中，如上代码，LoginPage将自己的props与store和action绑定，如果登录成功，调用`showLoginPage(false)`action来隐藏自身，Reducer收到这个dispatch过来的action更新store状态：
+
+```javascript
+//Action
+export function showLoginPage(flag=true) {
+  if(flag == true) {
+    return {
+      type: 'LOGIN_PAGE_VISIBLE'
+    }
+  } else {
+    return {
+      type: 'LOGIN_PAGE_INVISIBLE'
+    }
+  }
+}
+
+//Reducer
+export function showLoginPage(state=pageState, action) {
+  switch (action.type) {
+    case 'LOGIN_PAGE_VISIBLE':
+      return {
+        ...state,
+        loginPageVisible: true,
+      }
+      break;
+    case 'LOGIN_PAGE_INVISIBLE':
+      return {
+        ...state,
+        loginPageVisible: false,
+      }
+      break;
+    default:
+      return state;
+  }
+}
+```
+
+同时调用isLogin这个action更新应用的全局状态为已登录：
+
+```javascript
+//Action
+export function isLogin() {
+  return dispatch => {
+      Secret.isLogin((result, token) => {
+        if(result) {
+          dispatch({
+            type: 'LOGGED_IN',
+          });
+        } else {
+          dispatch({
+            type: 'NOT_LOGGED_IN',
+          });
+        }
+      });
+  }
+}
+
+//Reducer
+export function isLogin(state=loginStatus, action) {
+    switch (action.type) {
+      case 'LOGGED_IN':
+        return {
+          ...state,
+          status: 'LOGGED_IN',
+        }
+        break;
+      case 'NOT_LOGGED_IN':
+        return {
+          ...state,
+          status: 'NOT_LOGGED_IN',
+        }
+        break;
+      default:
+        return state;
+    }
+}
+```
+
+
+
+App组件由于已经关联了这个全局的登录状态，在reducer更新了此状态之后，App也会收到该更新，进而重新渲染自己，此时MainPage就会渲染出来了：
+
+```javascript
+const {status} = this.props;
+return (
+  <TabNavigator>
+    <TabNavigator.Item
+      selected={this.state.selectedTab === 'mainTab'}
+      renderIcon={() => <Image style={styles.icon} 
+                         source={require('./imgs/icons/home.png')} />}
+      renderSelectedIcon={() => <Image style={styles.icon} 
+                          source={require('./imgs/icons/home_selected.png')} />}
+      onPress={() => {
+                      this.setState({ selectedTab: 'mainTab' });
+                      if(status == 'NOT_LOGGED_IN') {
+                        showLoginPage();
+                      }
+                  }
+               }
+    >
+	  //全局状态已由NOT_LOGGED_IN变为LOGGED_IN
+      {status == 'NOT_LOGGED_IN'?<LoginPage {...this.props}/>:<MainPage {...this.props}/>}
+```
 
 
 后端微服务架构
 =====
 
-![framework](imgs/framework.png)
+![framework](imgs/ms-architecture.png)
 
 
 项目构建 & 开发
@@ -468,7 +676,7 @@ docker run --net poplar-network --ip 172.18.0.10 --name=poplar-api -p 8080:8080 
 
 
 
-至此，poplar项目的后端已完整的构建和启动，对外提供服务，客户端（无论是Web还是App）看到只有一个统一的API，关于API的约定请见下一章
+至此，poplar项目的后端已完整的构建和启动，对外提供服务，客户端（无论是Web还是App）看到只有一个统一的API。
 
 
 
